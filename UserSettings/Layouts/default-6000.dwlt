@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 649.3334
+    y: 594.6667
     width: 1309
     height: 323.3333
   m_SerializedDataModeController:
@@ -334,7 +334,7 @@ MonoBehaviour:
   m_UseMipMap: 0
   m_SimulatorState:
     controlPanelVisible: 0
-    controlPanelWidth: 0
+    controlPanelWidth: NaN
     controlPanelFoldoutKeys:
     - UnityEditor.AdaptivePerformance.Editor.AdaptivePerformanceUIExtension
     - UnityEditor.DeviceSimulation.ApplicationSettingsPlugin
@@ -485,8 +485,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1310
-    y: 78.66667
+    x: 1311
+    y: 24
     width: 395.66663
     height: 894
   m_SerializedDataModeController:
@@ -535,7 +535,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 78.66667
+    y: 24
     width: 272.33334
     height: 544.6667
   m_SerializedDataModeController:
@@ -552,8 +552,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 78c60000
-      m_LastClickedID: 50808
+      m_SelectedIDs: 
+      m_LastClickedID: 0
       m_ExpandedIDs: 9e55ffff0e57ffffc857ffff8058ffff1466fffff866ffffba67ffff806affff2c6bffffa26dffff4c6effff2a70ffffd670ffff9880ffffb892ffff7094ffff0c95ffffae95ffff5cc1ffff4ac6000078c60000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -600,8 +600,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 273.33334
-    y: 78.66667
+    x: 274.33334
+    y: 24
     width: 1034.6666
     height: 544.6667
   m_SerializedDataModeController:
@@ -1208,11 +1208,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.03994319, y: 0.04735157, z: -0.0018945539, w: -0.9980563}
     speed: 2
-    m_Value: {x: -0.038945906, y: 0.047354445, z: -0.0018472433, w: -0.9981169}
+    m_Value: {x: -0.039943192, y: 0.047351573, z: -0.0018945539, w: -0.9980563}
   m_Size:
     m_Target: 51.579323
     speed: 2
-    m_Value: 54.00976
+    m_Value: 51.579323
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1312,7 +1312,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 5cc10000
     m_LastClickedID: 49500
-    m_ExpandedIDs: 0000000058c100005ac1000000ca9a3b
+    m_ExpandedIDs: 
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1487,7 +1487,7 @@ MonoBehaviour:
   m_UseMipMap: 0
   m_SimulatorState:
     controlPanelVisible: 0
-    controlPanelWidth: 0
+    controlPanelWidth: NaN
     controlPanelFoldoutKeys:
     - UnityEditor.AdaptivePerformance.Editor.AdaptivePerformanceUIExtension
     - UnityEditor.DeviceSimulation.ApplicationSettingsPlugin
@@ -1500,7 +1500,7 @@ MonoBehaviour:
     - '{"m_SerializationStates":{"thermalFoldout":false,"performanceFoldout":false,"developerFoldout":false,"indexerFoldout":false,"scalersFoldout":false,"deviceSettingsFoldout":false}}'
     - '{}'
     - '{}'
-    scale: 21
+    scale: 10
     fitToScreenEnabled: 1
     rotationDegree: 0
     highlightSafeAreaEnabled: 0
