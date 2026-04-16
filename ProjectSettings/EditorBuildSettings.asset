@@ -8,6 +8,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main roomLiving room.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Dining room.unity
+    guid: 411f96b57b433d347ab780230860700e
+  - enabled: 1
+    path: Assets/Scenes/Playroom.unity
+    guid: 6ef05d1b42e354f4d90f9532d8272818
+  - enabled: 1
+    path: Assets/Scenes/Scanner.unity
+    guid: 4e9ddb1c805e36e4c939efd94cdc4fee
+  - enabled: 1
+    path: Assets/Scenes/Supermarket.unity
+    guid: 9cc7de9c7c80cea4192bca4b15f2f393
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: da9c204af26973940a14ef610eb7f582, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
