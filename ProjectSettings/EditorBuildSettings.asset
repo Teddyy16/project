@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Room.unity
     guid: fa04c6bdfb58be241859f5fbf77dd998
+  - enabled: 1
+    path: Assets/Scenes/Scanner.unity
+    guid: be256809f2f986841a40b2888b19aff5
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: f09960d0f023a184bb73f398ca683cb3, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: da9c204af26973940a14ef610eb7f582, type: 2}
