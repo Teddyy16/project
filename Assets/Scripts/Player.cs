@@ -1,44 +1,37 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    // Health
-    public float health = 100f;
-    public float maxHealth = 100f;
-    public HealthBar healthBar;
-
-    // Mana
-    public float mana = 100f;
-    public float maxMana = 100f;
-    public HealthBar manaBar;
+    public HealthBar hungerBar;
+    public HealthBar energyBar;
 
     void Update()
     {
-        // Health
-        healthBar.fillAmount = health / maxHealth;
+        // --- HUNGER ---
+        float newHunger = hungerBar.currentValue - (5f * Time.deltaTime);
+        hungerBar.SetValue(newHunger);
 
-        health -= 5f * Time.deltaTime;
-        health = Mathf.Max(health, 0f);
+        if (Input.GetMouseButtonDown(0))
+        {
+            hungerBar.SetValue(hungerBar.currentValue - 10f);
+        }
 
-        if (Input.GetMouseButtonDown(0)) // Left click
-            TakeDamage(10f);
+        if (Input.GetMouseButtonDown(1))
+        {
+            hungerBar.SetValue(hungerBar.maxValue);
+        }
 
-        if (Input.GetMouseButtonDown(1)) // Right click
-            health = maxHealth;
+        // --- ENERGY ---
+        float newEnergy = energyBar.currentValue - (10f * Time.deltaTime);
+        energyBar.SetValue(newEnergy);
 
+        if (Input.GetMouseButtonDown(2))
+        {
+            energyBar.SetValue(energyBar.maxValue);
+        }
 
-        // Mana
-        manaBar.fillAmount = mana / maxMana;
-
-        mana -= 10f * Time.deltaTime;
-        mana = Mathf.Max(mana, 0f);
-
-        if (Input.GetMouseButtonDown(2)) // Middle click
-            mana = maxMana;
-
-
-        // Scene Switching
+        // --- SCENE SWITCHING ---
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SceneManager.LoadScene("Scene1");
 
@@ -47,11 +40,5 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
             SceneManager.LoadScene("Scene3");
-    }
-
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        health = Mathf.Max(health, 0f);
     }
 }
