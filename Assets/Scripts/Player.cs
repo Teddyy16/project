@@ -3,42 +3,65 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    // Health
-    public float health = 100f;
-    public float maxHealth = 100f;
-    public HealthBar healthBar;
+    private const string HungerKey = "PlayerHunger";
+    private const string EnergyKey = "PlayerEnergy";
 
-    // Mana
-    public float mana = 100f;
-    public float maxMana = 100f;
-    public HealthBar manaBar;
+    // Hunger
+    public float hunger = 100f;
+    public float maxHunger = 100f;
+    public HealthBar hungerBar;
+
+    // Energy
+    public float energy = 100f;
+    public float maxEnergy = 100f;
+    public HealthBar energyBar;
+
+    void Start()
+    {
+        hunger = PlayerPrefs.GetFloat(HungerKey, maxHunger);
+        energy = PlayerPrefs.GetFloat(EnergyKey, maxEnergy);
+
+        hungerBar.SetValue(hunger);
+        energyBar.SetValue(energy);
+    }
 
     void Update()
     {
-        // Health
-        healthBar.fillAmount = health / maxHealth;
+        // --- HUNGER ---
+        hunger -= 5f * Time.deltaTime;
+        hunger = Mathf.Clamp(hunger, 0f, maxHunger);
+        hungerBar.SetValue(hunger);
+        PlayerPrefs.SetFloat(HungerKey, hunger);
 
-        health -= 5f * Time.deltaTime;
-        health = Mathf.Max(health, 0f);
+        if (Input.GetMouseButtonDown(0))
+        {
+            hunger -= 10f;
+            hunger = Mathf.Clamp(hunger, 0f, maxHunger);
+            hungerBar.SetValue(hunger);
+            PlayerPrefs.SetFloat(HungerKey, hunger);
+        }
 
-        if (Input.GetMouseButtonDown(0)) // Left click
-            TakeDamage(10f);
+        if (Input.GetMouseButtonDown(1))
+        {
+            hunger = maxHunger;
+            hungerBar.SetValue(hunger);
+            PlayerPrefs.SetFloat(HungerKey, hunger);
+        }
 
-        if (Input.GetMouseButtonDown(1)) // Right click
-            health = maxHealth;
+        // --- ENERGY ---
+        energy -= 10f * Time.deltaTime;
+        energy = Mathf.Clamp(energy, 0f, maxEnergy);
+        energyBar.SetValue(energy);
+        PlayerPrefs.SetFloat(EnergyKey, energy);
 
+        if (Input.GetMouseButtonDown(2))
+        {
+            energy = maxEnergy;
+            energyBar.SetValue(energy);
+            PlayerPrefs.SetFloat(EnergyKey, energy);
+        }
 
-        // Mana
-        manaBar.fillAmount = mana / maxMana;
-
-        mana -= 10f * Time.deltaTime;
-        mana = Mathf.Max(mana, 0f);
-
-        if (Input.GetMouseButtonDown(2)) // Middle click
-            mana = maxMana;
-
-
-        // Scene Switching
+        // --- SCENE SWITCHING ---
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SceneManager.LoadScene("Scene1");
 
@@ -49,9 +72,13 @@ public class Player : MonoBehaviour
             SceneManager.LoadScene("Scene3");
     }
 
-    public void TakeDamage(float damage)
+    void OnApplicationFocus(bool hasFocus)
     {
-        health -= damage;
-        health = Mathf.Max(health, 0f);
+        if (!hasFocus)
+        {
+            PlayerPrefs.SetFloat(HungerKey, hunger);
+            PlayerPrefs.SetFloat(EnergyKey, energy);
+            PlayerPrefs.Save();
+        }
     }
 }

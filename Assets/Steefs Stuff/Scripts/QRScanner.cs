@@ -1,104 +1,141 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
 using ZXing;
+using TMPro;
 
 public class QRScanner : MonoBehaviour
 {
-    WebCamTexture webcamTexture;
+    // Global webcam instance shared across scenes
+    public static WebCamTexture webcamTexture;
+
+    Texture2D snap;
     string QrCode = string.Empty;
+    Coroutine scanRoutine;
 
-    void Start()
+    [Header("UI Output")]
+    public TextMeshProUGUI scannedCodeText;   // Drag your TMP text here
+
+    void Awake()
     {
-        // List all cameras
-        WebCamDevice[] devices = WebCamTexture.devices;
-
-        for (int i = 0; i < devices.Length; i++)
+        // Create webcam ONCE globally
+        if (webcamTexture == null)
         {
-            Debug.Log($"Camera {i}: {devices[i].name} | FrontFacing: {devices[i].isFrontFacing}");
+            webcamTexture = new WebCamTexture(1920, 1080);
+            Debug.Log("Created global webcam texture");
         }
 
-        // Your original camera setup
-        var renderer = GetComponent<RawImage>();
-        webcamTexture = new WebCamTexture(512, 512);
-        renderer.texture = webcamTexture;
+        // Assign webcam feed to RawImage
+        GetComponent<RawImage>().texture = webcamTexture;
+    }
 
-        StartCoroutine(GetQRCode());
+    void OnEnable()
+    {
+        // Start camera if not already running
+        if (!webcamTexture.isPlaying)
+        {
+            webcamTexture.Play();
+            Debug.Log("Webcam started");
+        }
+
+        // Start scanning
+        scanRoutine = StartCoroutine(GetQRCode());
+    }
+
+    void OnDisable()
+    {
+        StopScanner();
+    }
+
+    void OnDestroy()
+    {
+        StopScanner();
+    }
+
+    void OnApplicationQuit()
+    {
+        StopScanner(true);
+    }
+
+    void StopScanner(bool quitting = false)
+    {
+        if (scanRoutine != null)
+        {
+            StopCoroutine(scanRoutine);
+            scanRoutine = null;
+        }
+
+        if (webcamTexture != null && webcamTexture.isPlaying)
+        {
+            webcamTexture.Stop();
+            Debug.Log("Webcam stopped");
+        }
+
+        // Only destroy webcam on quit
+        if (quitting)
+        {
+            webcamTexture = null;
+            Debug.Log("Webcam destroyed on quit");
+        }
     }
 
     IEnumerator GetQRCode()
     {
-        IBarcodeReader barCodeReader = new BarcodeReader();
-        webcamTexture.Play();
+        IBarcodeReader reader = new BarcodeReader();
 
-        var snap = new Texture2D(webcamTexture.width, webcamTexture.height, TextureFormat.ARGB32, false);
+        // Wait for camera to initialize
+        while (webcamTexture.width < 100)
+            yield return null;
+
+        // Create snap texture AFTER webcam is ready
+        snap = new Texture2D(webcamTexture.width, webcamTexture.height, TextureFormat.ARGB32, false);
 
         while (true)
         {
-            try
-            {
-                snap.SetPixels32(webcamTexture.GetPixels32());
-                var Result = barCodeReader.Decode(
-                    snap.GetRawTextureData(),
-                    webcamTexture.width,
-                    webcamTexture.height,
-                    RGBLuminanceSource.BitmapFormat.ARGB32
-                );
+            snap.SetPixels32(webcamTexture.GetPixels32());
 
-                if (Result != null)
+            var result = reader.Decode(
+                snap.GetRawTextureData(),
+                webcamTexture.width,
+                webcamTexture.height,
+                RGBLuminanceSource.BitmapFormat.ARGB32
+            );
+
+            if (result != null)
+            {
+                QrCode = result.Text;
+                Debug.Log("DECODED: " + QrCode);
+
+                // Show scanned code in UI
+                if (scannedCodeText != null)
+                    scannedCodeText.text = QrCode;
+
+                // Add coins if numeric
+                if (IsNumeric(QrCode))
                 {
-                    QrCode = Result.Text;
-                    Debug.Log("DECODED TEXT: " + QrCode);
-
-                    if (IsNumeric(QrCode))
-                    {
-                        Debug.Log("Numeric barcode detected → +1 coin");
-                        FindObjectOfType<CoinManager>().AddCoins(1);
-                    }
-
-                    StartCoroutine(ClearAndRestart());
-                    yield break;
+                    var coinManager = FindAnyObjectByType<CoinManager>();
+                    if (coinManager != null)
+                        coinManager.AddCoins(1);
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning(ex.Message);
+
+                // Wait before clearing
+                yield return new WaitForSeconds(2f);
+
+                QrCode = "";
+                if (scannedCodeText != null)
+                    scannedCodeText.text = "";
             }
 
             yield return null;
         }
     }
 
-    IEnumerator ClearAndRestart()
-    {
-        yield return new WaitForSeconds(2f);
-        QrCode = string.Empty;
-
-        StartCoroutine(GetQRCode());
-    }
-
     bool IsNumeric(string text)
     {
         foreach (char c in text)
-        {
             if (!char.IsDigit(c))
                 return false;
-        }
         return true;
-    }
-
-    private void OnGUI()
-    {
-        int w = Screen.width, h = Screen.height;
-
-        GUIStyle style = new GUIStyle();
-        Rect rect = new Rect(0, 0, w, h * 2 / 100);
-        style.alignment = TextAnchor.UpperLeft;
-        style.fontSize = h * 2 / 50;
-        style.normal.textColor = new Color(0.0f, 0.0f, 0.5f, 1.0f);
-
-        GUI.Label(rect, QrCode, style);
     }
 }

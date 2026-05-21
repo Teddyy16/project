@@ -3,17 +3,21 @@ using TMPro;
 
 public class CoinManager : MonoBehaviour
 {
-    public int coins = 0;
-    public TMP_Text coinText; // Drag the TMP_Text here you want to change
+    private const string CoinsKey = "PlayerCoins";
+
+    public TMP_Text coinText;
+    public int coins;
 
     void Start()
     {
+        LoadCoins();
         UpdateUI();
     }
 
     public void AddCoins(int amount)
     {
         coins += amount;
+        SaveCoins();
         UpdateUI();
     }
 
@@ -21,5 +25,16 @@ public class CoinManager : MonoBehaviour
     {
         if (coinText != null)
             coinText.text = "Coins: " + coins;
+    }
+
+    void SaveCoins()
+    {
+        PlayerPrefs.SetInt(CoinsKey, coins);
+        PlayerPrefs.Save();
+    }
+
+    void LoadCoins()
+    {
+        coins = PlayerPrefs.GetInt(CoinsKey, 0);
     }
 }
