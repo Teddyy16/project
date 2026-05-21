@@ -21,6 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Scanner.unity
     guid: be256809f2f986841a40b2888b19aff5
   m_configObjects:
+    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 7af4d6db02b1e134da8feaa85769e751, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: f09960d0f023a184bb73f398ca683cb3, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: da9c204af26973940a14ef610eb7f582, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
