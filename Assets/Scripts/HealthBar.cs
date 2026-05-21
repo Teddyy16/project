@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
@@ -14,6 +14,7 @@ public class HealthBar : MonoBehaviour
 
     void Start()
     {
+        // Load last saved value (or max if none)
         currentValue = PlayerPrefs.GetFloat(saveKey, maxValue);
 
         float ratio = currentValue / maxValue;
@@ -32,6 +33,24 @@ public class HealthBar : MonoBehaviour
     public void SetValue(float value)
     {
         currentValue = Mathf.Clamp(value, 0f, maxValue);
+
+        // Save immediately
         PlayerPrefs.SetFloat(saveKey, currentValue);
+
+        float ratio = currentValue / maxValue;
+        fill.fillAmount = ratio;
+        fill.color = gradient.Evaluate(ratio);
+    }
+
+    public void ChangeValue(float amount)
+    {
+        SetValue(currentValue + amount);
+    }
+
+    void OnDisable()
+    {
+        // Extra safety: ensure latest value is flushed when object is disabled / scene changes / quit
+        PlayerPrefs.SetFloat(saveKey, currentValue);
+        PlayerPrefs.Save();
     }
 }
