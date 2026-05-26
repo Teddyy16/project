@@ -3,7 +3,7 @@ using TMPro;
 
 public class CoinManager : MonoBehaviour
 {
-    private const string CoinsKey = "PlayerCoins";
+    private const string CoinsKey = "Coin";
 
     public TMP_Text coinText;
     public int coins;

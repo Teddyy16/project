@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         // --- HUNGER ---
-        float newHunger = hungerBar.currentValue - (5f * Time.deltaTime);
+        float newHunger = hungerBar.currentValue - (1f * Time.deltaTime);
         hungerBar.SetValue(newHunger);
 
         if (Input.GetMouseButtonDown(0))
@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
         }
 
         // --- ENERGY ---
-        float newEnergy = energyBar.currentValue - (10f * Time.deltaTime);
+        float newEnergy = energyBar.currentValue - (0f * Time.deltaTime);
         energyBar.SetValue(newEnergy);
 
         if (Input.GetMouseButtonDown(2))
