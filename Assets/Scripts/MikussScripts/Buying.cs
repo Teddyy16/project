@@ -40,7 +40,7 @@ public class Buying : MonoBehaviour
         Meat = PlayerPrefs.GetInt("Meat");
         Soda = PlayerPrefs.GetInt("Soda");
 
-        //Coin = 100;
+       
         Coin_Text.text = Coin.ToString();
         Apple_Text.text = Apple.ToString();
         Avocado_Text.text = Avocado.ToString();
@@ -50,6 +50,8 @@ public class Buying : MonoBehaviour
         Bread_Text.text = Bread.ToString();
         Meat_Text.text = Meat.ToString();
         Soda_Text.text = Soda.ToString();
+
+        Coin = 100;
     }
 
     public void BuyApple()
