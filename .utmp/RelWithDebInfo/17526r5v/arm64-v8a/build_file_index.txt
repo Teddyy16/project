@@ -1,0 +1,3 @@
+C:\Users\Steef\OneDrive\Documenten\Unity\GameBlock3Year1RESET4\project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\Steef\OneDrive\Documenten\Unity\GameBlock3Year1RESET4\project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\FramePacing\CMakeLists.txt
+C:\Users\Steef\OneDrive\Documenten\Unity\GameBlock3Year1RESET4\project\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

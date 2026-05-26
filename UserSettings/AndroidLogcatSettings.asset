@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "RZCW507CG6D",
         "name": "com.UnityTechnologies.Mobile3DTemplate",
-        "processId": 14649,
+        "processId": 21370,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -12,6 +12,12 @@
             "deviceId": "RZCW507CG6D",
             "name": "com.UnityTechnologies.Mobile3DTemplate",
             "processId": 14649,
+            "exited": false
+        },
+        {
+            "deviceId": "RZCW507CG6D",
+            "name": "com.UnityTechnologies.Mobile3DTemplate",
+            "processId": 21370,
             "exited": false
         }
     ],
