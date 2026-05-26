@@ -116,7 +116,7 @@ public class QRScanner : MonoBehaviour
                 {
                     var coinManager = FindAnyObjectByType<CoinManager>();
                     if (coinManager != null)
-                        coinManager.AddCoins(1);
+                        coinManager.AddCoins(80);
                 }
 
                 // Wait before clearing
