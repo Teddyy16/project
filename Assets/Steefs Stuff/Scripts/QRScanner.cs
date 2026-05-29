@@ -7,7 +7,6 @@ using TMPro;
 
 public class QRScanner : MonoBehaviour
 {
-    // Global webcam instance shared across scenes
     public static WebCamTexture webcamTexture;
 
     Texture2D snap;
@@ -15,48 +14,34 @@ public class QRScanner : MonoBehaviour
     Coroutine scanRoutine;
 
     [Header("UI Output")]
-    public TextMeshProUGUI scannedCodeText;   // Drag your TMP text here
+    public TextMeshProUGUI scannedCodeText;
 
     void Awake()
     {
-        // Create webcam ONCE globally
         if (webcamTexture == null)
         {
-            webcamTexture = new WebCamTexture(1920, 1080);
-            Debug.Log("Created global webcam texture");
+            string selectedCam = SelectCorrectCamera();
+            webcamTexture = new WebCamTexture(selectedCam, 1920, 1080);
+            Debug.Log("📸 Using camera: " + selectedCam);
         }
 
-        // Assign webcam feed to RawImage
         GetComponent<RawImage>().texture = webcamTexture;
     }
 
     void OnEnable()
     {
-        // Start camera if not already running
         if (!webcamTexture.isPlaying)
-        {
             webcamTexture.Play();
-            Debug.Log("Webcam started");
-        }
 
-        // Start scanning
+        // FIX: Wait for real frame before rotating
+        StartCoroutine(ApplyRotationWhenReady());
+
         scanRoutine = StartCoroutine(GetQRCode());
     }
 
-    void OnDisable()
-    {
-        StopScanner();
-    }
-
-    void OnDestroy()
-    {
-        StopScanner();
-    }
-
-    void OnApplicationQuit()
-    {
-        StopScanner(true);
-    }
+    void OnDisable() => StopScanner();
+    void OnDestroy() => StopScanner();
+    void OnApplicationQuit() => StopScanner(true);
 
     void StopScanner(bool quitting = false)
     {
@@ -67,28 +52,124 @@ public class QRScanner : MonoBehaviour
         }
 
         if (webcamTexture != null && webcamTexture.isPlaying)
-        {
             webcamTexture.Stop();
-            Debug.Log("Webcam stopped");
-        }
 
-        // Only destroy webcam on quit
         if (quitting)
-        {
             webcamTexture = null;
-            Debug.Log("Webcam destroyed on quit");
-        }
     }
 
+    // ---------------------------------------------------------
+    // CAMERA PRIORITY:
+    // 1. Phone back camera
+    // 2. Phone front camera
+    // 3. Laptop front camera
+    // 4. Everything else (OBS, virtual cams)
+    // ---------------------------------------------------------
+    string SelectCorrectCamera()
+    {
+        WebCamDevice[] devices = WebCamTexture.devices;
+
+        Debug.Log("=== Available Cameras ===");
+        foreach (var cam in devices)
+            Debug.Log(cam.name + " | Front: " + cam.isFrontFacing);
+
+        // PRIORITY 1 — Phone BACK camera
+        foreach (var cam in devices)
+        {
+            string n = cam.name.ToLower();
+            if (!cam.isFrontFacing &&
+                (n.Contains("back") || n.Contains("rear") || n.Contains("iphone") || n.Contains("android")))
+            {
+                return cam.name;
+            }
+        }
+
+        // PRIORITY 2 — Phone FRONT camera
+        foreach (var cam in devices)
+        {
+            string n = cam.name.ToLower();
+            if (cam.isFrontFacing &&
+                (n.Contains("iphone") || n.Contains("android") || n.Contains("front")))
+            {
+                return cam.name;
+            }
+        }
+
+        // PRIORITY 3 — Laptop front-facing webcam
+        foreach (var cam in devices)
+        {
+            string n = cam.name.ToLower();
+            if (cam.isFrontFacing ||
+                n.Contains("integrated") ||
+                n.Contains("built") ||
+                n.Contains("webcam") ||
+                n.Contains("hd camera") ||
+                n.Contains("face"))
+            {
+                return cam.name;
+            }
+        }
+
+        // PRIORITY 4 — OBS / virtual cams
+        foreach (var cam in devices)
+        {
+            string n = cam.name.ToLower();
+            if (n.Contains("obs") || n.Contains("virtual"))
+            {
+                return cam.name;
+            }
+        }
+
+        // FINAL FALLBACK
+        if (devices.Length > 0)
+            return devices[0].name;
+
+        return null;
+    }
+
+    // ---------------------------------------------------------
+    // ROTATION + MIRROR FIX (correct on first try)
+    // ---------------------------------------------------------
+    IEnumerator ApplyRotationWhenReady()
+    {
+        var raw = GetComponent<RawImage>();
+
+        // Wait until camera actually produces a frame
+        while (webcamTexture.width < 100)
+            yield return null;
+
+        yield return new WaitForEndOfFrame();
+
+        int angle = webcamTexture.videoRotationAngle;
+
+        // iPhone sometimes reports 90 when it means 270
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+            angle = (angle + 180) % 360;
+
+        raw.rectTransform.localEulerAngles = new Vector3(0, 0, -angle);
+
+        // FIX: Always mirror on phone (front/back both need it)
+        bool mirror = webcamTexture.videoVerticallyMirrored;
+
+        raw.rectTransform.localScale = new Vector3(
+            1f,
+            mirror ? -1f : 1f,
+            1f
+        );
+
+        Debug.Log($"📐 Rotation applied: {angle}, Mirrored: {mirror}");
+    }
+
+    // ---------------------------------------------------------
+    // SCANNING LOGIC (unchanged)
+    // ---------------------------------------------------------
     IEnumerator GetQRCode()
     {
         IBarcodeReader reader = new BarcodeReader();
 
-        // Wait for camera to initialize
         while (webcamTexture.width < 100)
             yield return null;
 
-        // Create snap texture AFTER webcam is ready
         snap = new Texture2D(webcamTexture.width, webcamTexture.height, TextureFormat.ARGB32, false);
 
         while (true)
@@ -107,19 +188,16 @@ public class QRScanner : MonoBehaviour
                 QrCode = result.Text;
                 Debug.Log("DECODED: " + QrCode);
 
-                // Show scanned code in UI
                 if (scannedCodeText != null)
                     scannedCodeText.text = QrCode;
 
-                // Add coins if numeric
                 if (IsNumeric(QrCode))
                 {
                     var coinManager = FindAnyObjectByType<CoinManager>();
                     if (coinManager != null)
-                        coinManager.AddCoins(1);
+                        coinManager.AddCoins(80);
                 }
 
-                // Wait before clearing
                 yield return new WaitForSeconds(2f);
 
                 QrCode = "";

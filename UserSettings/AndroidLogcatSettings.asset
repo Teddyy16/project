@@ -3,7 +3,11 @@
     "m_SelectedProcess": {
         "deviceId": "R83WB012EMX",
         "name": "com.UnityTechnologies.Mobile3DTemplate",
+<<<<<<< HEAD
         "processId": 18565,
+=======
+        "processId": 21370,
+>>>>>>> 917646b817fbb06e0bc02f694a5122cacaed36a1
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -30,6 +34,12 @@
             "deviceId": "R83WB012EMX",
             "name": "com.UnityTechnologies.Mobile3DTemplate",
             "processId": 18565,
+            "exited": false
+        },
+        {
+            "deviceId": "RZCW507CG6D",
+            "name": "com.UnityTechnologies.Mobile3DTemplate",
+            "processId": 21370,
             "exited": false
         }
     ],
