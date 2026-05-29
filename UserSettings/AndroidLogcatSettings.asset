@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "RZCW507CG6D",
+    "m_SelectedDeviceId": "R83WB012EMX",
     "m_SelectedProcess": {
-        "deviceId": "RZCW507CG6D",
+        "deviceId": "R83WB012EMX",
         "name": "com.UnityTechnologies.Mobile3DTemplate",
-        "processId": 14649,
+        "processId": 18565,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -12,6 +12,24 @@
             "deviceId": "RZCW507CG6D",
             "name": "com.UnityTechnologies.Mobile3DTemplate",
             "processId": 14649,
+            "exited": true
+        },
+        {
+            "deviceId": "RZCW507CG6D",
+            "name": "com.UnityTechnologies.Mobile3DTemplate",
+            "processId": 5748,
+            "exited": false
+        },
+        {
+            "deviceId": "R83WB012EMX",
+            "name": "com.UnityTechnologies.Mobile3DTemplate",
+            "processId": 17862,
+            "exited": false
+        },
+        {
+            "deviceId": "R83WB012EMX",
+            "name": "com.UnityTechnologies.Mobile3DTemplate",
+            "processId": 18565,
             "exited": false
         }
     ],
