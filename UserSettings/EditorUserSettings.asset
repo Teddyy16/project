@@ -5,72 +5,11 @@ EditorUserSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 4
   m_ConfigSettings:
-    GraphicsSettingsInspector_UserSettings:
-      value: 18134705175a055722080a3115371d4a0d55006876786860616b0471b8b07a68ffab74f9ee2a3a30300cea1a11320d0beb1a0c25f7060f494b4cc80018eb09361fc211cb1f862d19c51d19dcc413d6ade0d8ddfcddf9f4d9d29195fcfde6ebeae6f0a9c9afa6f8c5b89ff7a1aacececac4eba4d7c9d28bda
-      flags: 0
     RecentlyUsedSceneGuid-0:
-<<<<<<< HEAD
-      value: 5b55010355010c0d5c565e7613250b444516487a752d22312c794e63e6b4626f
+      value: 5500035706530d5e09085570157006444e154f7b792c7e6575714f65e4b33560
       flags: 0
     RecentlyUsedSceneGuid-1:
-      value: 5a08575f5207595a0f5d59741173094444164f7d7d2a23317c7a4465bbe1646d
-      flags: 0
-    RecentlyUsedSceneGuid-2:
-      value: 57540d0201575858555e592743755a44154e4b73292e2269792a1930b6e6313d
-      flags: 0
-    RecentlyUsedSceneGuid-3:
-      value: 5554525650515859595c097145775944124e482c757d756229714f64b0b86560
-      flags: 0
-    RecentlyUsedSceneGuid-4:
-      value: 5154020000560d0d085b08704377074447164179792e746629714d6ab1e56c6c
-      flags: 0
-    RecentlyUsedSceneGuid-5:
-      value: 01540653530d59020b5c0a7b4875074447164c7a2e7a7e68752b4c6ae3e6326d
-=======
-      value: 5a08575f5207595a0f5d59741173094444164f7d7d2a23317c7a4465bbe1646d
-      flags: 0
-    RecentlyUsedSceneGuid-1:
-      value: 57540d0201575858555e592743755a44154e4b73292e2269792a1930b6e6313d
-      flags: 0
-    RecentlyUsedSceneGuid-2:
-      value: 5554525650515859595c097145775944124e482c757d756229714f64b0b86560
-      flags: 0
-    RecentlyUsedSceneGuid-3:
-      value: 01540653530d59020b5c0a7b4875074447164c7a2e7a7e68752b4c6ae3e6326d
-      flags: 0
-    RecentlyUsedSceneGuid-4:
-      value: 5b09045f0403585a0e0a0e7540200d44104f4e7c7e7c7164757c4c61b4e3373c
-      flags: 0
-    RecentlyUsedSceneGuid-5:
-      value: 050457075d0c0c5f0b0d5b7544270a44454e492f2f2920677b2b4f62bbb0356b
-      flags: 0
-    RecentlyUsedSceneGuid-6:
-      value: 0550045206030b5f0b0c597a12260d44474f4d732a7d20322b7e4a37e6b96d60
-      flags: 0
-    RecentlyUsedSceneGuid-7:
-      value: 5154020000560d0d085b08704377074447164179792e746629714d6ab1e56c6c
-      flags: 0
-    RecentlyUsedSceneGuid-8:
-      value: 570005005c030b0e5a0c587143270c4441161a7d747874637d714b63b5b0643d
->>>>>>> 917646b817fbb06e0bc02f694a5122cacaed36a1
-      flags: 0
-    RecentlyUsedSceneGuid-6:
-      value: 5a020600500c0d5d0c5a0e2649725a44124e487a28297667292b1b67e7e53669
-      flags: 0
-    RecentlyUsedSceneGuid-7:
-      value: 0550045206030b5f0b0c597a12260d44474f4d732a7d20322b7e4a37e6b96d60
-      flags: 0
-    RecentlyUsedSceneGuid-8:
-      value: 570005005c030b0e5a0c587143270c4441161a7d747874637d714b63b5b0643d
-      flags: 0
-    RecentlyUsedSceneGuid-9:
-      value: 5a57005e5306510d590c09704422084414161c7d2a7b72317f2c4966e0b2303e
-      flags: 0
-    UnityRemoteDevice:
-      value: 5053575206030d0f0e0f5d2743700b42474340297b782567757b1f35e3b46d3db3b263eae26a3e68
-      flags: 0
-    lightmappingBakingProfile:
-      value: 51
+      value: 51010c055c5450595e5a097044225e44174f407c2d2b206129784a63b2e1363a
       flags: 0
     vcSharedLogLevel:
       value: 0d5e400f0650
@@ -80,7 +19,7 @@ EditorUserSettings:
   m_VCDebugCmd: 0
   m_VCDebugOut: 0
   m_SemanticMergeMode: 2
-  m_DesiredImportWorkerCount: 5
+  m_DesiredImportWorkerCount: 4
   m_StandbyImportWorkerCount: 2
   m_IdleImportWorkerShutdownDelay: 60000
   m_VCShowFailedCheckout: 1
