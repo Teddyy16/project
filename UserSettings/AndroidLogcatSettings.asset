@@ -1,45 +1,17 @@
 {
-    "m_SelectedDeviceId": "R83WB012EMX",
+    "m_SelectedDeviceId": "R3CY40J510B",
     "m_SelectedProcess": {
-        "deviceId": "R83WB012EMX",
+        "deviceId": "R3CY40J510B",
         "name": "com.UnityTechnologies.Mobile3DTemplate",
-<<<<<<< HEAD
-        "processId": 18565,
-=======
-        "processId": 21370,
->>>>>>> 917646b817fbb06e0bc02f694a5122cacaed36a1
+        "processId": 546,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownProcessesForSerialization": [
         {
-            "deviceId": "RZCW507CG6D",
+            "deviceId": "R3CY40J510B",
             "name": "com.UnityTechnologies.Mobile3DTemplate",
-            "processId": 14649,
-            "exited": true
-        },
-        {
-            "deviceId": "RZCW507CG6D",
-            "name": "com.UnityTechnologies.Mobile3DTemplate",
-            "processId": 5748,
-            "exited": false
-        },
-        {
-            "deviceId": "R83WB012EMX",
-            "name": "com.UnityTechnologies.Mobile3DTemplate",
-            "processId": 17862,
-            "exited": false
-        },
-        {
-            "deviceId": "R83WB012EMX",
-            "name": "com.UnityTechnologies.Mobile3DTemplate",
-            "processId": 18565,
-            "exited": false
-        },
-        {
-            "deviceId": "RZCW507CG6D",
-            "name": "com.UnityTechnologies.Mobile3DTemplate",
-            "processId": 21370,
+            "processId": 546,
             "exited": false
         }
     ],
@@ -116,8 +88,8 @@
     "m_ScreenCaptureSettings": {
         "Mode": 0,
         "m_LastSaveLocation": [
-            "D:\\uni\\Pet game\\My project (3)",
-            "D:\\uni\\Pet game\\My project (3)"
+            "C:\\Users\\Computer\\Desktop\\test\\project",
+            "C:\\Users\\Computer\\Desktop\\test\\project"
         ]
     },
     "m_QueryLayoutSettings": {
