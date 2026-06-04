@@ -1,10 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class Buying : MonoBehaviour
 {
-
     public int Coin;
     public int Apple;
     public int Avocado;
@@ -14,7 +12,6 @@ public class Buying : MonoBehaviour
     public int Meat;
     public int Bread;
     public int Soda;
-    
 
     public Text Coin_Text;
     public Text Avocado_Text;
@@ -26,21 +23,18 @@ public class Buying : MonoBehaviour
     public Text Apple_Text;
     public Text Soda_Text;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Coin = PlayerPrefs.GetInt("Coin", 0);
+        Apple = PlayerPrefs.GetInt("Apple", 0);
+        Avocado = PlayerPrefs.GetInt("Avocado", 0);
+        Cheese = PlayerPrefs.GetInt("Cheese", 0);
+        Milk = PlayerPrefs.GetInt("Milk", 0);
+        Carrot = PlayerPrefs.GetInt("Carrot", 0);
+        Bread = PlayerPrefs.GetInt("Bread", 0);
+        Meat = PlayerPrefs.GetInt("Meat", 0);
+        Soda = PlayerPrefs.GetInt("Soda", 0);
 
-        Coin = PlayerPrefs.GetInt("Coin");
-        Apple = PlayerPrefs.GetInt("Apple");
-        Avocado = PlayerPrefs.GetInt("Avocado");
-        Cheese = PlayerPrefs.GetInt("Cheese");
-        Milk = PlayerPrefs.GetInt("Milk");
-        Carrot = PlayerPrefs.GetInt("Carrot");
-        Bread = PlayerPrefs.GetInt("Bread");
-        Meat = PlayerPrefs.GetInt("Meat");
-        Soda = PlayerPrefs.GetInt("Soda");
-
-       
         Coin_Text.text = Coin.ToString();
         Apple_Text.text = Apple.ToString();
         Avocado_Text.text = Avocado.ToString();
@@ -50,8 +44,6 @@ public class Buying : MonoBehaviour
         Bread_Text.text = Bread.ToString();
         Meat_Text.text = Meat.ToString();
         Soda_Text.text = Soda.ToString();
-
-        Coin = 100;
     }
 
     public void BuyApple()
@@ -59,40 +51,31 @@ public class Buying : MonoBehaviour
         if (Coin >= 10)
         {
             Coin -= 10;
-            Coin_Text.text = Coin.ToString();
-
             Apple += 1;
+
+            Coin_Text.text = Coin.ToString();
             Apple_Text.text = Apple.ToString();
 
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Apple", Apple);
-        }
-
-        else
-        {
-            print("Not Enough Coins");
+            PlayerPrefs.Save();
         }
     }
 
-         public void BuyAvocado()
+    public void BuyAvocado()
     {
         if (Coin >= 10)
         {
             Coin -= 10;
-            Coin_Text.text = Coin.ToString();
-
             Avocado += 1;
+
+            Coin_Text.text = Coin.ToString();
             Avocado_Text.text = Avocado.ToString();
 
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Avocado", Avocado);
+            PlayerPrefs.Save();
         }
-
-        else
-        {
-            print("Not Enough Coins");
-        }
-
     }
 
     public void BuyCheese()
@@ -100,20 +83,15 @@ public class Buying : MonoBehaviour
         if (Coin >= 10)
         {
             Coin -= 10;
-            Coin_Text.text = Coin.ToString();
-
             Cheese += 1;
+
+            Coin_Text.text = Coin.ToString();
             Cheese_Text.text = Cheese.ToString();
 
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Cheese", Cheese);
+            PlayerPrefs.Save();
         }
-
-        else
-        {
-            print("Not Enough Coins");
-        }
-
     }
 
     public void BuyMilk()
@@ -121,20 +99,15 @@ public class Buying : MonoBehaviour
         if (Coin >= 10)
         {
             Coin -= 10;
-            Coin_Text.text = Coin.ToString();
-
             Milk += 1;
+
+            Coin_Text.text = Coin.ToString();
             Milk_Text.text = Milk.ToString();
 
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Milk", Milk);
+            PlayerPrefs.Save();
         }
-
-        else
-        {
-            print("Not Enough Coins");
-        }
-
     }
 
     public void BuyCarrot()
@@ -142,20 +115,15 @@ public class Buying : MonoBehaviour
         if (Coin >= 10)
         {
             Coin -= 10;
-            Coin_Text.text = Coin.ToString();
-
             Carrot += 1;
+
+            Coin_Text.text = Coin.ToString();
             Carrot_Text.text = Carrot.ToString();
 
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Carrot", Carrot);
+            PlayerPrefs.Save();
         }
-
-        else
-        {
-            print("Not Enough Coins");
-        }
-
     }
 
     public void BuyMeat()
@@ -163,20 +131,15 @@ public class Buying : MonoBehaviour
         if (Coin >= 10)
         {
             Coin -= 10;
-            Coin_Text.text = Coin.ToString();
-
             Meat += 1;
+
+            Coin_Text.text = Coin.ToString();
             Meat_Text.text = Meat.ToString();
 
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Meat", Meat);
+            PlayerPrefs.Save();
         }
-
-        else
-        {
-            print("Not Enough Coins");
-        }
-
     }
 
     public void BuyBread()
@@ -184,20 +147,15 @@ public class Buying : MonoBehaviour
         if (Coin >= 10)
         {
             Coin -= 10;
-            Coin_Text.text = Coin.ToString();
-
             Bread += 1;
+
+            Coin_Text.text = Coin.ToString();
             Bread_Text.text = Bread.ToString();
 
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Bread", Bread);
+            PlayerPrefs.Save();
         }
-
-        else
-        {
-            print("Not Enough Coins");
-        }
-
     }
 
     public void BuySoda()
@@ -205,21 +163,15 @@ public class Buying : MonoBehaviour
         if (Coin >= 10)
         {
             Coin -= 10;
-            Coin_Text.text = Coin.ToString();
-
             Soda += 1;
+
+            Coin_Text.text = Coin.ToString();
             Soda_Text.text = Soda.ToString();
 
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Soda", Soda);
+            PlayerPrefs.Save();
         }
-
-        else
-        {
-            print("Not Enough Coins");
-        }
-
     }
-
-
 }
+
