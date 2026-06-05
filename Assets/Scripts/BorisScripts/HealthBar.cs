@@ -1,29 +1,30 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    [Header("UI")]
     public Image fill;
     public Gradient gradient;
     public float changeSpeed = 10f;
 
+    [Header("Bar Settings")]
     public float maxValue = 100f;
     public float currentValue = 100f;
 
+    [Header("Save")]
     public string saveKey = "Stat_Value";
 
     void Start()
     {
-        // Load last saved value (or max if none)
         currentValue = PlayerPrefs.GetFloat(saveKey, maxValue);
-
-        float ratio = currentValue / maxValue;
-        fill.fillAmount = ratio;
-        fill.color = gradient.Evaluate(ratio);
+        UpdateBarInstant();
     }
 
     void Update()
     {
+        if (fill == null) return;
+
         float target = currentValue / maxValue;
 
         fill.fillAmount = Mathf.Lerp(fill.fillAmount, target, changeSpeed * Time.deltaTime);
@@ -34,12 +35,10 @@ public class HealthBar : MonoBehaviour
     {
         currentValue = Mathf.Clamp(value, 0f, maxValue);
 
-        // Save immediately
         PlayerPrefs.SetFloat(saveKey, currentValue);
+        PlayerPrefs.Save();
 
-        float ratio = currentValue / maxValue;
-        fill.fillAmount = ratio;
-        fill.color = gradient.Evaluate(ratio);
+        UpdateBarInstant();
     }
 
     public void ChangeValue(float amount)
@@ -47,9 +46,18 @@ public class HealthBar : MonoBehaviour
         SetValue(currentValue + amount);
     }
 
+    private void UpdateBarInstant()
+    {
+        if (fill == null) return;
+
+        float ratio = currentValue / maxValue;
+
+        fill.fillAmount = ratio;
+        fill.color = gradient.Evaluate(ratio);
+    }
+
     void OnDisable()
     {
-        // Extra safety: ensure latest value is flushed when object is disabled / scene changes / quit
         PlayerPrefs.SetFloat(saveKey, currentValue);
         PlayerPrefs.Save();
     }

@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class AxolotlMemoryGame : MonoBehaviour
 {
     [Header("Game")]
     public int columns = 4;
     public float flipBackDelay = 0.75f;
+
+    [Header("Scene Names")]
+    public string playroomSceneName = "Playroom";
 
     [Header("Optional UI")]
     public Text titleText;
@@ -200,6 +204,16 @@ public class AxolotlMemoryGame : MonoBehaviour
         resultRect.anchoredPosition = new Vector2(0, 150);
         resultRect.sizeDelta = new Vector2(900, 130);
 
+        Button backButton = CreateButton("BackButton", root.transform, "Back", 34);
+        backButton.onClick.AddListener(GoBackToPlayroom);
+
+        RectTransform backRect = backButton.GetComponent<RectTransform>();
+        backRect.anchorMin = new Vector2(0.5f, 0f);
+        backRect.anchorMax = new Vector2(0.5f, 0f);
+        backRect.pivot = new Vector2(0.5f, 0f);
+        backRect.anchoredPosition = new Vector2(-180, 50);
+        backRect.sizeDelta = new Vector2(300, 80);
+
         Button restartButton = CreateButton("RestartButton", root.transform, "Restart", 34);
         restartButton.onClick.AddListener(StartNewGame);
 
@@ -207,7 +221,7 @@ public class AxolotlMemoryGame : MonoBehaviour
         restartRect.anchorMin = new Vector2(0.5f, 0f);
         restartRect.anchorMax = new Vector2(0.5f, 0f);
         restartRect.pivot = new Vector2(0.5f, 0f);
-        restartRect.anchoredPosition = new Vector2(0, 50);
+        restartRect.anchoredPosition = new Vector2(180, 50);
         restartRect.sizeDelta = new Vector2(300, 80);
     }
 
@@ -255,6 +269,11 @@ public class AxolotlMemoryGame : MonoBehaviour
         {
             CreateCard(sprite);
         }
+    }
+
+    private void GoBackToPlayroom()
+    {
+        SceneManager.LoadScene(playroomSceneName);
     }
 
     private void CreateCard(Sprite front)
