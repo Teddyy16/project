@@ -597,27 +597,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6373c2c0ceb740ae879090634d79164, type: 3}
       propertyPath: m_LocalScale.x
-      value: 305.21234
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6373c2c0ceb740ae879090634d79164, type: 3}
       propertyPath: m_LocalScale.y
-      value: 305.21234
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6373c2c0ceb740ae879090634d79164, type: 3}
       propertyPath: m_LocalScale.z
-      value: 305.21234
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6373c2c0ceb740ae879090634d79164, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 523
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6373c2c0ceb740ae879090634d79164, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -323
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6373c2c0ceb740ae879090634d79164, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -331
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d6373c2c0ceb740ae879090634d79164, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1954,13 +1954,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757651322}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 583, y: -249, z: -524}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1058297646
 GameObject:
   m_ObjectHideFlags: 0
@@ -2191,9 +2191,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 1.89
-  far clip plane: 5000
-  field of view: 45
+  near clip plane: 0.3
+  far clip plane: 200
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -2220,7 +2220,7 @@ Transform:
   m_GameObject: {fileID: 1541851096}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 499, y: 752, z: -3377}
+  m_LocalPosition: {x: 0, y: 4.01, z: -13.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
