@@ -35,15 +35,7 @@ public class Buying : MonoBehaviour
         Meat = PlayerPrefs.GetInt("Meat", 0);
         Soda = PlayerPrefs.GetInt("Soda", 0);
 
-        Coin_Text.text = Coin.ToString();
-        Apple_Text.text = Apple.ToString();
-        Avocado_Text.text = Avocado.ToString();
-        Cheese_Text.text = Cheese.ToString();
-        Milk_Text.text = Milk.ToString();
-        Carrot_Text.text = Carrot.ToString();
-        Bread_Text.text = Bread.ToString();
-        Meat_Text.text = Meat.ToString();
-        Soda_Text.text = Soda.ToString();
+        UpdateTexts();
     }
 
     public void BuyApple()
@@ -53,12 +45,11 @@ public class Buying : MonoBehaviour
             Coin -= 10;
             Apple += 1;
 
-            Coin_Text.text = Coin.ToString();
-            Apple_Text.text = Apple.ToString();
-
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Apple", Apple);
             PlayerPrefs.Save();
+
+            UpdateTexts();
         }
     }
 
@@ -69,12 +60,11 @@ public class Buying : MonoBehaviour
             Coin -= 10;
             Avocado += 1;
 
-            Coin_Text.text = Coin.ToString();
-            Avocado_Text.text = Avocado.ToString();
-
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Avocado", Avocado);
             PlayerPrefs.Save();
+
+            UpdateTexts();
         }
     }
 
@@ -85,12 +75,11 @@ public class Buying : MonoBehaviour
             Coin -= 10;
             Cheese += 1;
 
-            Coin_Text.text = Coin.ToString();
-            Cheese_Text.text = Cheese.ToString();
-
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Cheese", Cheese);
             PlayerPrefs.Save();
+
+            UpdateTexts();
         }
     }
 
@@ -101,12 +90,11 @@ public class Buying : MonoBehaviour
             Coin -= 10;
             Milk += 1;
 
-            Coin_Text.text = Coin.ToString();
-            Milk_Text.text = Milk.ToString();
-
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Milk", Milk);
             PlayerPrefs.Save();
+
+            UpdateTexts();
         }
     }
 
@@ -117,12 +105,11 @@ public class Buying : MonoBehaviour
             Coin -= 10;
             Carrot += 1;
 
-            Coin_Text.text = Coin.ToString();
-            Carrot_Text.text = Carrot.ToString();
-
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Carrot", Carrot);
             PlayerPrefs.Save();
+
+            UpdateTexts();
         }
     }
 
@@ -133,12 +120,11 @@ public class Buying : MonoBehaviour
             Coin -= 10;
             Meat += 1;
 
-            Coin_Text.text = Coin.ToString();
-            Meat_Text.text = Meat.ToString();
-
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Meat", Meat);
             PlayerPrefs.Save();
+
+            UpdateTexts();
         }
     }
 
@@ -149,12 +135,11 @@ public class Buying : MonoBehaviour
             Coin -= 10;
             Bread += 1;
 
-            Coin_Text.text = Coin.ToString();
-            Bread_Text.text = Bread.ToString();
-
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Bread", Bread);
             PlayerPrefs.Save();
+
+            UpdateTexts();
         }
     }
 
@@ -165,13 +150,24 @@ public class Buying : MonoBehaviour
             Coin -= 10;
             Soda += 1;
 
-            Coin_Text.text = Coin.ToString();
-            Soda_Text.text = Soda.ToString();
-
             PlayerPrefs.SetInt("Coin", Coin);
             PlayerPrefs.SetInt("Soda", Soda);
             PlayerPrefs.Save();
+
+            UpdateTexts();
         }
     }
-}
 
+    private void UpdateTexts()
+    {
+        Coin_Text.text = Coin.ToString();
+        Apple_Text.text = Apple.ToString();
+        Avocado_Text.text = Avocado.ToString();
+        Cheese_Text.text = Cheese.ToString();
+        Milk_Text.text = Milk.ToString();
+        Carrot_Text.text = Carrot.ToString();
+        Bread_Text.text = Bread.ToString();
+        Meat_Text.text = Meat.ToString();
+        Soda_Text.text = Soda.ToString();
+    }
+}
