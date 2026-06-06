@@ -69,8 +69,8 @@ MonoBehaviour:
     y: 0
     width: 358
     height: 808
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 76}
+  m_MaxSize: {x: 4001, y: 4026}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_UseMipMap: 0
   m_SimulatorState:
     controlPanelVisible: 0
-    controlPanelWidth: 0
+    controlPanelWidth: NaN
     controlPanelFoldoutKeys:
     - UnityEditor.AdaptivePerformance.Editor.AdaptivePerformanceUIExtension
     - UnityEditor.AdaptivePerformance.Google.Android.Editor.AdaptivePerformanceGoogleUIExtension
@@ -347,7 +347,7 @@ MonoBehaviour:
     - '{"m_SerializationStates":{"androidSystemFoldout":false}}'
     - '{}'
     - '{}'
-    scale: 17
+    scale: 10
     fitToScreenEnabled: 1
     rotationDegree: 0
     highlightSafeAreaEnabled: 0
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 655
+    y: 577
     width: 1153
     height: 229
   m_SerializedDataModeController:
@@ -421,7 +421,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 146}
     m_SelectedIDs: 12af0000
     m_LastClickedID: 44818
-    m_ExpandedIDs: 0000000010af000012af000072b5000000ca9a3b
+    m_ExpandedIDs: 00000000dcab0000deab0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -450,7 +450,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000010af000012af0000
+    m_ExpandedIDs: 00000000dcab0000deab0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -529,8 +529,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1154
-    y: 102
+    x: 1155
+    y: 24
     width: 357
     height: 782
   m_SerializedDataModeController:
@@ -579,7 +579,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 102
+    y: 24
     width: 312
     height: 527
   m_SerializedDataModeController:
@@ -644,8 +644,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 313
-    y: 102
+    x: 314
+    y: 24
     width: 839
     height: 527
   m_SerializedDataModeController:
@@ -1252,7 +1252,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.013497791, y: -0.020998793, z: 0.00028364992, w: 0.9996894}
     speed: 2
-    m_Value: {x: 0.013497776, y: -0.02099877, z: 0.00028364963, w: 0.9996883}
+    m_Value: {x: -0.013497791, y: 0.020998793, z: -0.00028364995, w: -0.9996894}
   m_Size:
     m_Target: 4.0403433
     speed: 2
