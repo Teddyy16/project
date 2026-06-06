@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WeeklyQuest", menuName = "Scriptable Objects/WeeklyQuest")]
@@ -8,7 +9,7 @@ public class WeeklyQuest : ScriptableObject
     void OnEnable()
     {
         unlocked= new();
-        unlocked.Add(Random.Range(0,foodIcons.length));
+        unlocked.Add(Random.Range(0,foodIcons.Count));
 
     }
         
