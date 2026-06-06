@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public HealthBar hungerBar;
-    public HealthBar energyBar;
+    public EnergyBar hungerBar;
+    public EnergyBar energyBar;
 
     void Update()
     {
