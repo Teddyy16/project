@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Loading Scene.unity
     guid: 9f4863864be24a74bad7f34a2e45b2df
   - enabled: 1
-    path: Assets/Scenes/Dining room.unity
+    path: Assets/Scenes/Kitchen.unity
     guid: 411f96b57b433d347ab780230860700e
   - enabled: 1
     path: Assets/Scenes/Supermarket.unity
