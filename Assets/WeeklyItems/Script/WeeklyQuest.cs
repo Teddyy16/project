@@ -4,9 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WeeklyQuest", menuName = "Scriptable Objects/WeeklyQuest")]
 public class WeeklyQuest : ScriptableObject
 {
-    public List<Texture2D> foodIcons;
+    public List<Sprite> foodIcons;
 
-    [SerializeField] private List<int> unlocked = new List<int>();
+    public List<int> unlocked = new List<int>();
 
     private void OnEnable()
     {

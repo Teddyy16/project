@@ -369,6 +369,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2085326350}
+        m_TargetAssemblyTypeName: WeeklyMenuControleron, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &377350353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2531,6 +2543,7 @@ GameObject:
   - component: {fileID: 2085326348}
   - component: {fileID: 2085326347}
   - component: {fileID: 2085326349}
+  - component: {fileID: 2085326350}
   m_Layer: 5
   m_Name: WeekluyMenu
   m_TagString: Untagged
@@ -2610,6 +2623,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f453916fecd7e45b4f47c175a7ec1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2085326350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085326345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b534f995bf4926f45bcf01329167b3b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemicons:
+  - {fileID: 393715795}
+  - {fileID: 439779817}
+  - {fileID: 1166306966}
+  weeklyQuest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
