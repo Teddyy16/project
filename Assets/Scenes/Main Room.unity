@@ -225,6 +225,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 904368944}
+        m_TargetAssemblyTypeName: AlbumMenuControleron, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &166029832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +356,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 178542137}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: ee89ca49dc6ed7346bbff1b360802813, type: 2}
+        m_TargetAssemblyTypeName: AnimalData, Assembly-CSharp
+        m_MethodName: EquipAxelotlJelly
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 904368944}
+        m_TargetAssemblyTypeName: AlbumMenuControleron, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &178542137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1582,7 +1618,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 766054927}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: ee89ca49dc6ed7346bbff1b360802813, type: 2}
+        m_TargetAssemblyTypeName: AnimalData, Assembly-CSharp
+        m_MethodName: EquipRabbit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 904368944}
+        m_TargetAssemblyTypeName: AlbumMenuControleron, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &766054927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1844,6 +1904,7 @@ GameObject:
   - component: {fileID: 904368942}
   - component: {fileID: 904368941}
   - component: {fileID: 904368943}
+  - component: {fileID: 904368944}
   m_Layer: 5
   m_Name: AlbumMenu
   m_TagString: Untagged
@@ -1922,6 +1983,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40f453916fecd7e45b4f47c175a7ec1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &904368944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904368939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 030274470779cf14e8885d569b1fe682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RabbitButton: {fileID: 766054926}
+  AxelotlButton: {fileID: 178542136}
+  animalData: {fileID: 11400000, guid: ee89ca49dc6ed7346bbff1b360802813, type: 2}
 --- !u!1 &1058297646
 GameObject:
   m_ObjectHideFlags: 0
