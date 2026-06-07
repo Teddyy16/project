@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WeeklyQuest", menuName = "Scriptable Objects/WeeklyQuest")]
 public class WeeklyQuest : ScriptableObject
 {
+    public int maxIcons=3;
     public List<Sprite> foodIcons;
 
     public List<int> unlocked = new List<int>();
@@ -29,7 +30,7 @@ public class WeeklyQuest : ScriptableObject
             return;
         }
 
-        if (unlocked.Count >= foodIcons.Count)
+        if (unlocked.Count >= maxIcons)
         {
             return;
         }
