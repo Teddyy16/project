@@ -2033,8 +2033,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.980408, y: -1040.6378}
-  m_SizeDelta: {x: 70.1569, y: 68.8776}
+  m_AnchoredPosition: {x: 1, y: -1022.365}
+  m_SizeDelta: {x: 63.6, y: 55.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &473593291
 MonoBehaviour:
@@ -2605,8 +2605,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 430.87012, y: -1030.5864}
-  m_SizeDelta: {x: 72.7124, y: 66.4806}
+  m_AnchoredPosition: {x: 425, y: -1022.365}
+  m_SizeDelta: {x: 63.6, y: 55.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &625237134
 MonoBehaviour:
@@ -2737,8 +2737,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -201.53064, y: -1034.966}
-  m_SizeDelta: {x: 71.7921, y: 64.5012}
+  m_AnchoredPosition: {x: -209, y: -1022.365}
+  m_SizeDelta: {x: 63.6, y: 55.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &662417548
 MonoBehaviour:
@@ -3084,8 +3084,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 219.5329, y: -1037.5643}
-  m_SizeDelta: {x: 68.549, y: 70.2398}
+  m_AnchoredPosition: {x: 212, y: -1022.365}
+  m_SizeDelta: {x: 63.6, y: 55.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &720399106
 MonoBehaviour:
@@ -4499,7 +4499,7 @@ GameObject:
   - component: {fileID: 1058297649}
   - component: {fileID: 1058297648}
   m_Layer: 5
-  m_Name: Dining_Room
+  m_Name: Kitchen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4521,8 +4521,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -423.1941, y: -1038.3999}
-  m_SizeDelta: {x: 77.2691, y: 68.3769}
+  m_AnchoredPosition: {x: -416, y: -1022.365}
+  m_SizeDelta: {x: 63.6, y: 55.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1058297648
 MonoBehaviour:
