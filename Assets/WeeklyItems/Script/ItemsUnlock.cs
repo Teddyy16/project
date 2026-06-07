@@ -6,7 +6,7 @@ public class ItemsUnlock : MonoBehaviour
     public WeeklyQuest weeklyQuest;
 
     [Header("Products")]
-    public GameObject[] productObjects;
+    public  List<GameObject> productObjects= new();
 
     [Header("Animal")]
     public GameObject animalToUnlock;

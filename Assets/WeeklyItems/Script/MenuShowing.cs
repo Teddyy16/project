@@ -11,6 +11,12 @@ public class MenuShowing : MonoBehaviour
 
 
     }
+      public void Close()
+    {
+        menushowing = false;
+        gameObject.SetActive(menushowing);
+
+    }
 
     public void Toggle()
     {
