@@ -9,6 +9,7 @@ public class AlbumMenuControleron : MonoBehaviour
     public AnimalData animalData;
         public void UpdateUI()
     { animalData.Refresh();
+       RabbitButton.interactable = animalData.isRabbitUnlocked;
         if(animalData.isRabbitUnlocked)
             {
                 RabbitButton.image.sprite=animalData.RabbitIcon;
