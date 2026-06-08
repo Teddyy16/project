@@ -10,7 +10,7 @@ public class AnimalSpawner : MonoBehaviour
         if (current != null)
             Destroy(current);
         GameObject prefab =(PlayerPrefs.GetInt("isRabbitEqip", 0) == 0) ? axelotl : bunny;
-        Instantiate(prefab, transform.position, transform.rotation);
+       current=Instantiate(prefab, transform.position, transform.rotation);
     }
     void Start()
     {
