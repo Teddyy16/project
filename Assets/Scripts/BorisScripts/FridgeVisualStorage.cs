@@ -4,8 +4,15 @@ public class FridgeVisualStorage : MonoBehaviour
 {
     public static FridgeVisualStorage Instance;
 
-    [Header("Food Slots")]
-    public Transform[] foodSlots;
+    [Header("Slot Root")]
+    public Transform fridgeSlotsRoot;
+
+    [Header("Slot Layout")]
+    public float leftX = -0.25f;
+    public float rightX = 0.25f;
+    public float topY = 0.45f;
+    public float rowSpacing = 0.25f;
+    public float zPosition = 0f;
 
     [Header("Food Prefabs")]
     public GameObject applePrefab;
@@ -26,6 +33,9 @@ public class FridgeVisualStorage : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("FRIDGE STARTED");
+        Debug.Log("Saved Apple in fridge scene: " + PlayerPrefs.GetInt("Apple", 0));
+
         BuildFridgeFromSavedFood();
     }
 
@@ -55,17 +65,15 @@ public class FridgeVisualStorage : MonoBehaviour
 
     public void AddFoodVisual(string foodName)
     {
-        if (currentSlotIndex >= foodSlots.Length)
+        if (fridgeSlotsRoot == null)
         {
-            Debug.Log("No free space in fridge!");
+            Debug.LogError("FridgeSlotsRoot is missing.");
             return;
         }
 
-        Transform slot = foodSlots[currentSlotIndex];
-
-        if (slot == null)
+        if (currentSlotIndex >= 8)
         {
-            currentSlotIndex++;
+            Debug.Log("No free space in fridge!");
             return;
         }
 
@@ -77,24 +85,37 @@ public class FridgeVisualStorage : MonoBehaviour
             return;
         }
 
-        GameObject foodObject = Instantiate(prefab, slot.position, slot.rotation);
-        foodObject.transform.SetParent(slot);
-        foodObject.transform.localPosition = Vector3.zero;
+        Vector3 localPosition = GetSlotLocalPosition(currentSlotIndex);
+
+        GameObject foodObject = Instantiate(prefab, fridgeSlotsRoot);
+        foodObject.transform.localPosition = localPosition;
         foodObject.transform.localRotation = Quaternion.identity;
+        foodObject.transform.localScale = Vector3.one * 0.15f;
+
+        Debug.Log("Spawned food in fridge: " + foodName + " at slot " + currentSlotIndex);
 
         currentSlotIndex++;
     }
 
+    private Vector3 GetSlotLocalPosition(int index)
+    {
+        int row = index / 2;
+        bool isLeft = index % 2 == 0;
+
+        float x = isLeft ? leftX : rightX;
+        float y = topY - row * rowSpacing;
+        float z = zPosition;
+
+        return new Vector3(x, y, z);
+    }
+
     private void ClearFridge()
     {
-        foreach (Transform slot in foodSlots)
-        {
-            if (slot == null) continue;
+        if (fridgeSlotsRoot == null) return;
 
-            foreach (Transform child in slot)
-            {
-                Destroy(child.gameObject);
-            }
+        foreach (Transform child in fridgeSlotsRoot)
+        {
+            Destroy(child.gameObject);
         }
     }
 

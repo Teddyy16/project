@@ -392,9 +392,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneNames:
-  - Main Room
   - Dining room
   - Playroom
+  - Main room
   - Supermarket
   - Scanner
   minSwipeDistance: 80
@@ -1745,6 +1745,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scannedCodeText: {fileID: 167642452}
+  rewardCoins: 10
+  allowSameCodeOnlyOnce: 1
 --- !u!114 &1991844197
 MonoBehaviour:
   m_ObjectHideFlags: 0
