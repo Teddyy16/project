@@ -17,4 +17,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b19edd92feac34e4089ac253499da97d, type: 3}
   - {fileID: 21300000, guid: 24c4d4a2d5dc09b4f9476fee2d4cbb3b, type: 3}
   - {fileID: 21300000, guid: f0fd4f8c6041e13499d7d69c0db5c24e, type: 3}
-  unlocked: 0200000001000000
+  unlocked: 

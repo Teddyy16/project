@@ -1,26 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "WeeklyQuest", menuName = "Scriptable Objects/WeeklyQuest")]
 public class WeeklyQuest : ScriptableObject
 {
     public int maxIcons=3;
     public List<Sprite> foodIcons;
-
+private bool _initialized = false;
     public List<int> unlocked ;
 
-    private void OnEnable()
-    {
-        if (unlocked == null)
-        {
-            unlocked = new List<int>();
-        }
+   private void Awake()
+{
+    if (unlocked == null)
+        unlocked = new List<int>();
 
-        if (unlocked.Count == 0)
-        {
-            AddRandomIndex();
-        }
+    string saved = PlayerPrefs.GetString("unlocked", "");
+    if (saved != "")
+    {
+        // deserialize
+        unlocked = saved.Split(',')
+                        .Select(int.Parse)
+                        .ToList();
     }
+
+    if (unlocked.Count == 0)
+        AddRandomIndex();
+}
 
     public void AddRandomIndex()
     { Debug.Log("----------------------------1------------");
@@ -46,6 +52,9 @@ public class WeeklyQuest : ScriptableObject
         Debug.Log("---------------------4-------------------");
 
         unlocked.Add(randomIndex);
+
+        PlayerPrefs.SetString("unlocked", string.Join(",", unlocked));
+    PlayerPrefs.Save();
     }
 
     public bool HasUnlockedThree()
