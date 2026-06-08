@@ -285,9 +285,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneNames:
-  - Dining room
+  - Dining Room
   - Playroom
-  - Main room
+  - Main Room
   - Supermarket
   - Scanner
   minSwipeDistance: 80
