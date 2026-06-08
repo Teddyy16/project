@@ -241,7 +241,7 @@ public WeeklyQuest weeklyQuest;
                 {
                     if (weeklyQuest.unlocked.Count >= weeklyQuest.maxIcons)
                     {
-                        animalData.isRabbitUnlocked = true;
+                        animalData.UnlockRabbit();
                     }
                     var coinManager = FindAnyObjectByType<CoinManager>();
                     if (coinManager != null)
