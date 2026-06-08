@@ -1,160 +1,272 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AppleGameManager : MonoBehaviour
 {
     public static AppleGameManager Instance;
 
-    [Header("Game")]
+    [Header("Game Settings")]
     public float gameTime = 30f;
-    public GameObject spawnerObject;
-public WeeklyQuest weeklyquest;
-public int scoretounlock= 2;
+    public int applesNeededToUnlock = 20;
+
+    [Header("Unlock Save")]
+    public string unlockSaveKey = "Unlocked_Apple_Item";
+
+    [Header("UI")]
+    public Text timerText;
+    public Text appleCounterText;
+    public Text gameOverText;
+    public Text unlockText;
+
+    [Header("UI Settings")]
+    public int uiFontSize = 42;
+    public int messageFontSize = 60;
+
     private float currentTime;
-    private int applesCaught;
-    private bool gameRunning;
+    private int appleCount = 0;
+    private bool gameRunning = true;
 
-    private Text timerText;
-    private Text scoreText;
-    private Text endText;
+    private Font defaultFont;
 
-    void Awake()
+    private void Awake()
     {
         Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
+        defaultFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+
+        CreateUIIfMissing();
+
         currentTime = gameTime;
-        applesCaught = 0;
+        appleCount = 0;
         gameRunning = true;
 
-        CreateUI();
-        UpdateUI();
+        if (gameOverText != null)
+        {
+            gameOverText.gameObject.SetActive(false);
+        }
+
+        if (unlockText != null)
+        {
+            unlockText.gameObject.SetActive(false);
+        }
+
+        UpdateTimerUI();
+        UpdateAppleCounterUI();
     }
 
-    void Update()
+    private void Update()
     {
-        if (!gameRunning) return;
+        if (!gameRunning)
+        {
+            return;
+        }
 
         currentTime -= Time.deltaTime;
 
         if (currentTime <= 0f)
         {
             currentTime = 0f;
-            TimeIsUp();
+            EndGame();
         }
 
-        UpdateUI();
+        UpdateTimerUI();
     }
 
     public void AddApple()
     {
-        if (!gameRunning) return;
+        if (!gameRunning)
+        {
+            return;
+        }
 
-        applesCaught++;
-        UpdateUI();
+        appleCount++;
+        UpdateAppleCounterUI();
+
+        Debug.Log("Apple collected. Current apples: " + appleCount);
+    }
+
+    public void HitFork()
+    {
+        if (!gameRunning)
+        {
+            return;
+        }
+
+        gameRunning = false;
+
+        if (gameOverText != null)
+        {
+            gameOverText.gameObject.SetActive(true);
+            gameOverText.text = "Game Over!";
+        }
+
+        CheckUnlockReward();
+
+        Debug.Log("Player hit a fork. Game Over.");
     }
 
     public void GameOver()
-    { 
-        if (!gameRunning) return;
-
-        gameRunning = false;
-        if(applesCaught>= scoretounlock)
-        {
-            weeklyquest.AddRandomIndex();
-        }
-
-        if (spawnerObject != null)
-        {
-            spawnerObject.SetActive(false);
-        }
-
-        if (endText != null)
-        { 
-
-            endText.gameObject.SetActive(true);
-            endText.text = "GAME OVER!\nApples caught: " + applesCaught;
-
-        }
-
-        Debug.Log("Game over. Apples caught: " + applesCaught);
-    }
-
-    private void TimeIsUp()
     {
-        gameRunning = false;
-
-        if (spawnerObject != null)
-        {
-            spawnerObject.SetActive(false);
-        }
-
-        if (endText != null)
-        {
-            endText.gameObject.SetActive(true);
-            endText.text = "Time is up!\nApples caught: " + applesCaught;
-        }
-
-        Debug.Log("Time is up. Apples caught: " + applesCaught);
+        HitFork();
     }
 
-    private void UpdateUI()
+    private void EndGame()
+    {
+        if (!gameRunning)
+        {
+            return;
+        }
+
+        gameRunning = false;
+
+        if (gameOverText != null)
+        {
+            gameOverText.gameObject.SetActive(true);
+            gameOverText.text = "Time's up!";
+        }
+
+        CheckUnlockReward();
+
+        Debug.Log("Apple mini-game ended. Apples collected: " + appleCount);
+    }
+
+    private void CheckUnlockReward()
+    {
+        if (appleCount >= applesNeededToUnlock)
+        {
+            PlayerPrefs.SetInt(unlockSaveKey, 1);
+            PlayerPrefs.Save();
+
+            if (unlockText != null)
+            {
+                unlockText.gameObject.SetActive(true);
+                unlockText.text = "You unlocked item!";
+            }
+
+            Debug.Log("Unlocked item from Apple mini-game.");
+        }
+        else
+        {
+            if (unlockText != null)
+            {
+                unlockText.gameObject.SetActive(false);
+            }
+
+            Debug.Log("Not enough apples to unlock item. Needed: " + applesNeededToUnlock + ", collected: " + appleCount);
+        }
+    }
+
+    private void UpdateTimerUI()
     {
         if (timerText != null)
         {
-            timerText.text = "Time: " + Mathf.CeilToInt(currentTime);
+            timerText.text = "Time: " + Mathf.CeilToInt(currentTime).ToString();
         }
+    }
 
-        if (scoreText != null)
+    private void UpdateAppleCounterUI()
+    {
+        if (appleCounterText != null)
         {
-            scoreText.text = "Apples: " + applesCaught;
+            appleCounterText.text = "Apples: " + appleCount.ToString();
         }
     }
 
-    private void CreateUI()
+    private void CreateUIIfMissing()
     {
-        GameObject canvasObject = new GameObject("AppleGameUICanvas");
+        Canvas canvas = FindObjectOfType<Canvas>();
 
-        Canvas canvas = canvasObject.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 100;
+        if (canvas == null)
+        {
+            GameObject canvasObject = new GameObject("Canvas");
+            canvas = canvasObject.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-        CanvasScaler scaler = canvasObject.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1080, 1920);
-        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        scaler.matchWidthOrHeight = 0.5f;
+            CanvasScaler scaler = canvasObject.AddComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1080, 1920);
+            scaler.matchWidthOrHeight = 0.5f;
 
-        canvasObject.AddComponent<GraphicRaycaster>();
+            canvasObject.AddComponent<GraphicRaycaster>();
+        }
 
-        timerText = CreateText("TimerText", canvas.transform, "Time: 30", new Vector2(0, -90), 70);
-        scoreText = CreateText("ScoreText", canvas.transform, "Apples: 0", new Vector2(0, -180), 70);
+        if (timerText == null)
+        {
+            timerText = CreateText("TimerText", canvas.transform, "Time: 30", uiFontSize);
+            RectTransform rect = timerText.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.5f, 1f);
+            rect.anchorMax = new Vector2(0.5f, 1f);
+            rect.pivot = new Vector2(0.5f, 1f);
+            rect.anchoredPosition = new Vector2(0f, -40f);
+            rect.sizeDelta = new Vector2(500f, 80f);
+        }
 
-        endText = CreateText("EndText", canvas.transform, "", new Vector2(0, -520), 90);
-        endText.gameObject.SetActive(false);
+        if (appleCounterText == null)
+        {
+            appleCounterText = CreateText("AppleCounterText", canvas.transform, "Apples: 0", uiFontSize);
+            RectTransform rect = appleCounterText.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.5f, 1f);
+            rect.anchorMax = new Vector2(0.5f, 1f);
+            rect.pivot = new Vector2(0.5f, 1f);
+            rect.anchoredPosition = new Vector2(0f, -110f);
+            rect.sizeDelta = new Vector2(500f, 80f);
+        }
+
+        if (gameOverText == null)
+        {
+            gameOverText = CreateText("GameOverText", canvas.transform, "Game Over!", messageFontSize);
+            RectTransform rect = gameOverText.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = new Vector2(0f, 80f);
+            rect.sizeDelta = new Vector2(900f, 120f);
+        }
+
+        if (unlockText == null)
+        {
+            unlockText = CreateText("UnlockText", canvas.transform, "You unlocked item!", messageFontSize);
+            RectTransform rect = unlockText.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = new Vector2(0f, -20f);
+            rect.sizeDelta = new Vector2(900f, 120f);
+        }
     }
 
-    private Text CreateText(string objectName, Transform parent, string text, Vector2 position, int fontSize)
+    private Text CreateText(string objectName, Transform parent, string text, int fontSize)
     {
-        GameObject obj = new GameObject(objectName);
-        obj.transform.SetParent(parent, false);
+        GameObject textObject = new GameObject(objectName);
+        textObject.transform.SetParent(parent, false);
 
-        RectTransform rect = obj.AddComponent<RectTransform>();
-        rect.anchorMin = new Vector2(0.5f, 1f);
-        rect.anchorMax = new Vector2(0.5f, 1f);
-        rect.pivot = new Vector2(0.5f, 1f);
-        rect.anchoredPosition = position;
-        rect.sizeDelta = new Vector2(1000, 160);
+        RectTransform rect = textObject.AddComponent<RectTransform>();
 
-        Text uiText = obj.AddComponent<Text>();
+        Text uiText = textObject.AddComponent<Text>();
+        uiText.font = defaultFont;
         uiText.text = text;
         uiText.fontSize = fontSize;
         uiText.alignment = TextAnchor.MiddleCenter;
-        uiText.color = Color.black;
-        uiText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        uiText.color = Color.white;
+
+        Outline outline = textObject.AddComponent<Outline>();
+        outline.effectColor = Color.black;
+        outline.effectDistance = new Vector2(2f, -2f);
 
         return uiText;
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void GoBackToPlayroom()
+    {
+        SceneManager.LoadScene("Playroom");
     }
 }

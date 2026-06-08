@@ -10,7 +10,9 @@ public class AxolotlMemoryGame : MonoBehaviour
     [Header("Game")]
     public int columns = 4;
     public float flipBackDelay = 0.75f;
-public WeeklyQuest weeklyquest; 
+
+    public WeeklyQuest weeklyquest; 
+
     [Header("Scene Names")]
     public string playroomSceneName = "Playroom";
 
@@ -364,9 +366,15 @@ public WeeklyQuest weeklyquest;
     }
 
     private void WinGame()
-    { 
-        weeklyquest.AddRandomIndex();
-
+    {
+        if (weeklyquest != null)
+        {
+            weeklyquest.AddRandomIndex();
+        }
+        else
+        {
+            Debug.LogWarning("WeeklyQuest is not assigned.");
+        }
 
         timerRunning = false;
 
@@ -386,16 +394,17 @@ public WeeklyQuest weeklyquest;
 
         if (newBestScore)
         {
-            resultText.text = "You won!\nTime: " + finalTime + "\nNEW BEST SCORE!";
+            resultText.text = "You won!\nTime: " + finalTime + "\nNEW BEST SCORE!\nNew item unlocked!";
         }
         else
         {
-            resultText.text = "You won!\nTime: " + finalTime;
+            resultText.text = "You won!\nTime: " + finalTime + "\nNew item unlocked!";
         }
 
         UpdateBestTimeText();
 
         Debug.Log("Axolotl Memory completed. Time: " + finalTime);
+        Debug.Log("New item unlocked!");
     }
 
     private void FlipOpen(CardView card)
