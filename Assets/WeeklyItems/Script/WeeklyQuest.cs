@@ -10,7 +10,7 @@ public class WeeklyQuest : ScriptableObject
 private bool _initialized = false;
     public List<int> unlocked ;
 
-   private void Awake()
+   private void OnEnable()
 {
     if (unlocked == null)
         unlocked = new List<int>();
@@ -23,6 +23,11 @@ private bool _initialized = false;
                         .Select(int.Parse)
                         .ToList();
     }
+        else
+        {
+            unlocked = new List<int>(); 
+        }
+
 
     if (unlocked.Count == 0)
         AddRandomIndex();

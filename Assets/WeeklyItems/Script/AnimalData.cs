@@ -10,8 +10,12 @@ public class AnimalData : ScriptableObject
 
     private void OnEnable()
     {
-        isRabbitUnlocked = PlayerPrefs.GetInt("isRabbitUnlocked", 0) == 1;
+        Refresh();
+    }
+    public void Refresh() {
+         isRabbitUnlocked = PlayerPrefs.GetInt("isRabbitUnlocked", 0) == 1;
         isRabbitEqip = PlayerPrefs.GetInt("isRabbitEqip", 0) == 1;
+
     }
 
     public void EquipRabbit()
