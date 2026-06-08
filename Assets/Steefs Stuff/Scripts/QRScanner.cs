@@ -8,7 +8,8 @@ using TMPro;
 public class QRScanner : MonoBehaviour
 {
     public static WebCamTexture webcamTexture;
-
+public AnimalData animalData;
+public WeeklyQuest weeklyQuest;
     Texture2D snap;
     string QrCode = string.Empty;
     Coroutine scanRoutine;
@@ -193,6 +194,10 @@ public class QRScanner : MonoBehaviour
 
                 if (IsNumeric(QrCode))
                 {
+                    if (weeklyQuest.unlocked.Count >= weeklyQuest.maxIcons)
+                    {
+                        animalData.isRabbitUnlocked = true;
+                    }
                     var coinManager = FindAnyObjectByType<CoinManager>();
                     if (coinManager != null)
                         coinManager.AddCoins(80);
