@@ -1082,8 +1082,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d137544be00527a40a3f93c5b3cc497a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalData: {fileID: 0}
-  weeklyQuest: {fileID: 0}
+  animalData: {fileID: 11400000, guid: ee89ca49dc6ed7346bbff1b360802813, type: 2}
+  weeklyQuest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
   scannedCodeText: {fileID: 167642452}
   rewardCoins: 10
   allowSameCodeOnlyOnce: 1
