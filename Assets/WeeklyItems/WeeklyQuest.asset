@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3553d61ab9b901946915ea978e8873bb, type: 3}
   m_Name: WeeklyQuest
   m_EditorClassIdentifier: 
+  maxIcons: 3
   foodIcons:
   - {fileID: 21300000, guid: b19edd92feac34e4089ac253499da97d, type: 3}
   - {fileID: 21300000, guid: 24c4d4a2d5dc09b4f9476fee2d4cbb3b, type: 3}

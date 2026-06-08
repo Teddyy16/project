@@ -2196,6 +2196,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameTime: 30
   spawnerObject: {fileID: 582637815}
+  weeklyquest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
+  scoretounlock: 2
 --- !u!4 &1505331465
 Transform:
   m_ObjectHideFlags: 0
