@@ -4,10 +4,7 @@ public class DraggableFood : MonoBehaviour
 {
     [Header("Food")]
     public string foodName = "Apple";
-    public int energyAmount = 10;
-
-    [Header("References")]
-    public EnergyBar energyBar;
+    public int hungerAmount = 10;
 
     [Header("Feeding")]
     public float feedDistance = 5f;
@@ -31,12 +28,12 @@ public class DraggableFood : MonoBehaviour
 
         petMouth = FindObjectOfType<PetMouth>();
 
-        if (energyBar == null)
-        {
-            energyBar = FindObjectOfType<EnergyBar>();
-        }
-
         Debug.Log("DraggableFood started: " + gameObject.name + " / FoodName: " + foodName);
+
+        if (mainCamera == null)
+        {
+            Debug.LogError("No Main Camera found. Make sure your camera has the MainCamera tag.");
+        }
 
         if (petMouth == null)
         {
@@ -47,9 +44,9 @@ public class DraggableFood : MonoBehaviour
             Debug.Log("PetMouth found: " + petMouth.gameObject.name);
         }
 
-        if (energyBar == null)
+        if (PetNeedsManager.Instance == null)
         {
-            Debug.LogWarning("EnergyBar was not found. Food can be eaten, but energy may not increase.");
+            Debug.LogWarning("PetNeedsManager was not found. Hunger will not increase.");
         }
     }
 
@@ -57,7 +54,7 @@ public class DraggableFood : MonoBehaviour
     {
         if (mainCamera == null)
         {
-            Debug.LogError("No Main Camera found.");
+            Debug.LogError("Cannot drag because Main Camera is missing.");
             return;
         }
 
@@ -153,19 +150,14 @@ public class DraggableFood : MonoBehaviour
 
         Debug.Log(foodName + " amount after feeding: " + amount);
 
-        if (energyBar != null)
+        if (PetNeedsManager.Instance != null)
         {
-            energyBar.AddEnergy(energyAmount);
-            Debug.Log("Energy increased by " + energyAmount);
-        }
-        else if (EnergyBar.Instance != null)
-        {
-            EnergyBar.Instance.AddEnergy(energyAmount);
-            Debug.Log("Energy increased by " + energyAmount + " using EnergyBar.Instance");
+            PetNeedsManager.Instance.AddHunger(hungerAmount);
+            Debug.Log("Hunger increased by " + hungerAmount);
         }
         else
         {
-            Debug.LogWarning("EnergyBar missing, energy was not increased.");
+            Debug.LogWarning("PetNeedsManager was not found. Hunger was not increased.");
         }
 
         FridgeFoodVisibility fridgeFoodVisibility = FindObjectOfType<FridgeFoodVisibility>();
@@ -173,6 +165,11 @@ public class DraggableFood : MonoBehaviour
         if (fridgeFoodVisibility != null)
         {
             fridgeFoodVisibility.UpdateFridgeFood();
+            Debug.Log("FridgeFoodVisibility updated.");
+        }
+        else
+        {
+            Debug.LogWarning("FridgeFoodVisibility not found.");
         }
 
         FridgeInventoryUI fridgeInventoryUI = FindObjectOfType<FridgeInventoryUI>();
@@ -180,10 +177,16 @@ public class DraggableFood : MonoBehaviour
         if (fridgeInventoryUI != null)
         {
             fridgeInventoryUI.UpdateInventoryUI();
+            Debug.Log("FridgeInventoryUI updated.");
+        }
+        else
+        {
+            Debug.LogWarning("FridgeInventoryUI not found.");
         }
 
         if (amount <= 0)
         {
+            Debug.Log(foodName + " is now 0, hiding object.");
             gameObject.SetActive(false);
         }
         else
@@ -191,12 +194,14 @@ public class DraggableFood : MonoBehaviour
             ReturnToStartPosition();
         }
 
-        Debug.Log("Pet ate: " + foodName);
+        Debug.Log("Pet successfully ate: " + foodName);
     }
 
     private void ReturnToStartPosition()
     {
         transform.position = startPosition;
         transform.rotation = startRotation;
+
+        Debug.Log("Returned " + foodName + " to fridge position.");
     }
 }

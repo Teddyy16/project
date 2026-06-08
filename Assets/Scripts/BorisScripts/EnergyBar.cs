@@ -75,6 +75,21 @@ public class EnergyBar : MonoBehaviour
         return currentValue >= amount;
     }
 
+    public bool IsFull()
+    {
+        return currentValue >= maxValue;
+    }
+
+    public float GetPercent()
+    {
+        return currentValue / maxValue;
+    }
+
+    public void SetToFull()
+    {
+        SetValue(maxValue);
+    }
+
     private void UpdateBarInstant()
     {
         if (fill == null) return;
