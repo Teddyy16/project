@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/AxolotlMemoryGame/Scenes/AxolotlMemoryGame.unity
     guid: 802ca8465fd34436aa189982a5460f50
+  - enabled: 1
+    path: Assets/Mikuss stuff/Falling mini-game.unity
+    guid: 209e67f32681832439b6a5876f2787bb
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 7af4d6db02b1e134da8feaa85769e751, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: f09960d0f023a184bb73f398ca683cb3, type: 2}

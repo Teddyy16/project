@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class Buying : MonoBehaviour
 {
@@ -13,161 +13,195 @@ public class Buying : MonoBehaviour
     public int Bread;
     public int Soda;
 
-    public Text Coin_Text;
-    public Text Avocado_Text;
-    public Text Cheese_Text;
-    public Text Milk_Text;
-    public Text Carrot_Text;
-    public Text Meat_Text;
-    public Text Bread_Text;
-    public Text Apple_Text;
-    public Text Soda_Text;
+    public TMP_Text Coin_Text;
+    public TMP_Text Avocado_Text;
+    public TMP_Text Cheese_Text;
+    public TMP_Text Milk_Text;
+    public TMP_Text Carrot_Text;
+    public TMP_Text Meat_Text;
+    public TMP_Text Bread_Text;
+    public TMP_Text Apple_Text;
+    public TMP_Text Soda_Text;
 
     void Start()
     {
+        LoadValues();
+        UpdateTexts();
+    }
+
+    private void LoadValues()
+    {
         Coin = PlayerPrefs.GetInt("Coin", 0);
+
         Apple = PlayerPrefs.GetInt("Apple", 0);
         Avocado = PlayerPrefs.GetInt("Avocado", 0);
         Cheese = PlayerPrefs.GetInt("Cheese", 0);
         Milk = PlayerPrefs.GetInt("Milk", 0);
         Carrot = PlayerPrefs.GetInt("Carrot", 0);
-        Bread = PlayerPrefs.GetInt("Bread", 0);
         Meat = PlayerPrefs.GetInt("Meat", 0);
+        Bread = PlayerPrefs.GetInt("Bread", 0);
         Soda = PlayerPrefs.GetInt("Soda", 0);
-
-        UpdateTexts();
     }
 
     public void BuyApple()
     {
-        if (Coin >= 10)
-        {
-            Coin -= 10;
-            Apple += 1;
-
-            PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("Apple", Apple);
-            PlayerPrefs.Save();
-
-            UpdateTexts();
-        }
+        BuyFood("Apple");
     }
 
     public void BuyAvocado()
     {
-        if (Coin >= 10)
-        {
-            Coin -= 10;
-            Avocado += 1;
-
-            PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("Avocado", Avocado);
-            PlayerPrefs.Save();
-
-            UpdateTexts();
-        }
+        BuyFood("Avocado");
     }
 
     public void BuyCheese()
     {
-        if (Coin >= 10)
-        {
-            Coin -= 10;
-            Cheese += 1;
-
-            PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("Cheese", Cheese);
-            PlayerPrefs.Save();
-
-            UpdateTexts();
-        }
+        BuyFood("Cheese");
     }
 
     public void BuyMilk()
     {
-        if (Coin >= 10)
-        {
-            Coin -= 10;
-            Milk += 1;
-
-            PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("Milk", Milk);
-            PlayerPrefs.Save();
-
-            UpdateTexts();
-        }
+        BuyFood("Milk");
     }
 
     public void BuyCarrot()
     {
-        if (Coin >= 10)
-        {
-            Coin -= 10;
-            Carrot += 1;
-
-            PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("Carrot", Carrot);
-            PlayerPrefs.Save();
-
-            UpdateTexts();
-        }
+        BuyFood("Carrot");
     }
 
     public void BuyMeat()
     {
-        if (Coin >= 10)
-        {
-            Coin -= 10;
-            Meat += 1;
-
-            PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("Meat", Meat);
-            PlayerPrefs.Save();
-
-            UpdateTexts();
-        }
+        BuyFood("Meat");
     }
 
     public void BuyBread()
     {
-        if (Coin >= 10)
-        {
-            Coin -= 10;
-            Bread += 1;
-
-            PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("Bread", Bread);
-            PlayerPrefs.Save();
-
-            UpdateTexts();
-        }
+        BuyFood("Bread");
     }
 
     public void BuySoda()
     {
-        if (Coin >= 10)
+        BuyFood("Soda");
+    }
+
+    private void BuyFood(string foodName)
+    {
+        LoadValues();
+
+        Debug.Log("BUY " + foodName + " BUTTON PRESSED");
+        Debug.Log("Coins before buying: " + Coin);
+
+        if (Coin < 10)
         {
-            Coin -= 10;
-            Soda += 1;
-
-            PlayerPrefs.SetInt("Coin", Coin);
-            PlayerPrefs.SetInt("Soda", Soda);
-            PlayerPrefs.Save();
-
-            UpdateTexts();
+            Debug.Log("Not enough coins.");
+            return;
         }
+
+        Coin -= 10;
+
+        if (foodName == "Apple")
+        {
+            Apple += 1;
+        }
+        else if (foodName == "Avocado")
+        {
+            Avocado += 1;
+        }
+        else if (foodName == "Cheese")
+        {
+            Cheese += 1;
+        }
+        else if (foodName == "Milk")
+        {
+            Milk += 1;
+        }
+        else if (foodName == "Carrot")
+        {
+            Carrot += 1;
+        }
+        else if (foodName == "Meat")
+        {
+            Meat += 1;
+        }
+        else if (foodName == "Bread")
+        {
+            Bread += 1;
+        }
+        else if (foodName == "Soda")
+        {
+            Soda += 1;
+        }
+
+        SaveValues();
+
+        Debug.Log(foodName + " bought.");
+        Debug.Log("Saved " + foodName + " count: " + PlayerPrefs.GetInt(foodName, 0));
+        Debug.Log("Coins after buying: " + Coin);
+
+        UpdateTexts();
+    }
+
+    private void SaveValues()
+    {
+        PlayerPrefs.SetInt("Coin", Coin);
+
+        PlayerPrefs.SetInt("Apple", Apple);
+        PlayerPrefs.SetInt("Avocado", Avocado);
+        PlayerPrefs.SetInt("Cheese", Cheese);
+        PlayerPrefs.SetInt("Milk", Milk);
+        PlayerPrefs.SetInt("Carrot", Carrot);
+        PlayerPrefs.SetInt("Meat", Meat);
+        PlayerPrefs.SetInt("Bread", Bread);
+        PlayerPrefs.SetInt("Soda", Soda);
+
+        PlayerPrefs.Save();
+    }
+
+    public void DebugAddCoins()
+    {
+        LoadValues();
+
+        Coin += 100;
+
+        PlayerPrefs.SetInt("Coin", Coin);
+        PlayerPrefs.Save();
+
+        Debug.Log("Added coins. Current coins: " + Coin);
+
+        UpdateTexts();
+    }
+
+    public void DebugClearSave()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
+        Coin = 0;
+
+        Apple = 0;
+        Avocado = 0;
+        Cheese = 0;
+        Milk = 0;
+        Carrot = 0;
+        Meat = 0;
+        Bread = 0;
+        Soda = 0;
+
+        Debug.Log("Save cleared.");
+
+        UpdateTexts();
     }
 
     private void UpdateTexts()
     {
-        Coin_Text.text = Coin.ToString();
-        Apple_Text.text = Apple.ToString();
-        Avocado_Text.text = Avocado.ToString();
-        Cheese_Text.text = Cheese.ToString();
-        Milk_Text.text = Milk.ToString();
-        Carrot_Text.text = Carrot.ToString();
-        Bread_Text.text = Bread.ToString();
-        Meat_Text.text = Meat.ToString();
-        Soda_Text.text = Soda.ToString();
+        if (Coin_Text != null) Coin_Text.text = Coin.ToString();
+
+        if (Apple_Text != null) Apple_Text.text = Apple.ToString();
+        if (Avocado_Text != null) Avocado_Text.text = Avocado.ToString();
+        if (Cheese_Text != null) Cheese_Text.text = Cheese.ToString();
+        if (Milk_Text != null) Milk_Text.text = Milk.ToString();
+        if (Carrot_Text != null) Carrot_Text.text = Carrot.ToString();
+        if (Meat_Text != null) Meat_Text.text = Meat.ToString();
+        if (Bread_Text != null) Bread_Text.text = Bread.ToString();
+        if (Soda_Text != null) Soda_Text.text = Soda.ToString();
     }
 }
