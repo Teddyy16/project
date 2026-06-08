@@ -6690,6 +6690,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bars v2 (Steef)
       objectReference: {fileID: 0}
+    - target: {fileID: 2386030930025815189, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: currentValue
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7690297570883446976, guid: 43f78810c18086c45930e7d528134166, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6775,6 +6779,81 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43f78810c18086c45930e7d528134166, type: 3}
+--- !u!114 &1187519852 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2386030930025815189, guid: 43f78810c18086c45930e7d528134166, type: 3}
+  m_PrefabInstance: {fileID: 1187519851}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb205b884c3313e4abfca52a0420983e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1187519853 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3219243486815197028, guid: 43f78810c18086c45930e7d528134166, type: 3}
+  m_PrefabInstance: {fileID: 1187519851}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1307078760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1307078761}
+  - component: {fileID: 1307078762}
+  m_Layer: 0
+  m_Name: PetNeedsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1307078761
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307078760}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.03355649, y: 2.5381248, z: 33.993656}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1307078762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307078760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a7acffed5ad4632bc5e4f0dcff482c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hungerFill: {fileID: 1187519853}
+  energyBar: {fileID: 1187519852}
+  maxHunger: 100
+  currentHunger: 0
+  hungerDecreasePerSecond: 1
+  energyRechargeTime: 20
+  rechargeEnergyWhenHungerIsFull: 1
+  hungerSaveKey: Hunger_Value
+  resetSavedValueOnStart: 0
 --- !u!1 &1320862370
 GameObject:
   m_ObjectHideFlags: 0
@@ -7791,3 +7870,4 @@ SceneRoots:
   - {fileID: 362409150}
   - {fileID: 807487176}
   - {fileID: 1048240989}
+  - {fileID: 1307078761}

@@ -347,17 +347,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 100262365}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be3c4b72db45d41e0b7a86154ef9311b, type: 3}
+  m_Script: {fileID: 11500000, guid: 50a7acffed5ad4632bc5e4f0dcff482c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hungerFill: {fileID: 1194146264}
-  energyFill: {fileID: 1283338613}
+  energyBar: {fileID: 1089613232}
   maxHunger: 100
   currentHunger: 0
-  maxEnergy: 100
-  currentEnergy: 0
-  energyRechargeTime: 30
-  rechargeEnergyOnlyWhenHungerIsFull: 1
+  hungerDecreasePerSecond: 1
+  energyRechargeTime: 20
+  rechargeEnergyWhenHungerIsFull: 1
+  hungerSaveKey: Hunger_Value
+  resetSavedValueOnStart: 0
 --- !u!4 &100262367
 Transform:
   m_ObjectHideFlags: 0
@@ -1212,7 +1213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodName: Avocado
-  hungerAmount: 10
+  hungerAmount: 20
   feedDistance: 10
 --- !u!1001 &489226873
 PrefabInstance:
@@ -7273,7 +7274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodName: Cheese
-  hungerAmount: 10
+  hungerAmount: 20
   feedDistance: 10
 --- !u!1 &737686938
 GameObject:
@@ -7769,7 +7770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodName: Meat
-  hungerAmount: 10
+  hungerAmount: 20
   feedDistance: 10
 --- !u!1 &1075442617
 GameObject:
@@ -7812,6 +7813,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2304586441790866255, guid: a15ed0205d6d349a79c360785b65a167, type: 3}
   m_PrefabInstance: {fileID: 1228283055}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1089613232 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2386030930025815189, guid: 43f78810c18086c45930e7d528134166, type: 3}
+  m_PrefabInstance: {fileID: 330659964}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb205b884c3313e4abfca52a0420983e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1107987349
 GameObject:
   m_ObjectHideFlags: 0
@@ -8120,7 +8132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodName: Apple
-  hungerAmount: 10
+  hungerAmount: 20
   feedDistance: 10
 --- !u!1 &1243276765
 GameObject:
@@ -8223,17 +8235,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1283338613 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7006183494149525016, guid: 43f78810c18086c45930e7d528134166, type: 3}
-  m_PrefabInstance: {fileID: 330659964}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1306018921
 GameObject:
   m_ObjectHideFlags: 0
@@ -9077,7 +9078,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodName: Soda
-  hungerAmount: 10
+  hungerAmount: 20
   feedDistance: 10
 --- !u!1 &1541851096
 GameObject:
@@ -9423,7 +9424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodName: Bread
-  hungerAmount: 10
+  hungerAmount: 20
   feedDistance: 10
 --- !u!1 &1636179246
 GameObject:
@@ -9726,7 +9727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodName: Carrot
-  hungerAmount: 10
+  hungerAmount: 20
   feedDistance: 10
 --- !u!1 &1802951703
 GameObject:
@@ -10745,7 +10746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodName: Milk
-  hungerAmount: 10
+  hungerAmount: 20
   feedDistance: 5
 --- !u!1 &2143306229
 GameObject:
