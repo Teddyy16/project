@@ -17,8 +17,10 @@ public class WeeklyMenuControleron : MonoBehaviour
     {
         int i =0;
         foreach(int index in weeklyQuest.unlocked)
-        {
+        
+        { 
             itemicons[i].sprite=weeklyQuest.foodIcons[index] ;
+            i++;
 
         }
     }

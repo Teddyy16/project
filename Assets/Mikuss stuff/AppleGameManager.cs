@@ -8,7 +8,8 @@ public class AppleGameManager : MonoBehaviour
     [Header("Game")]
     public float gameTime = 30f;
     public GameObject spawnerObject;
-
+public WeeklyQuest weeklyquest;
+public int scoretounlock= 2;
     private float currentTime;
     private int applesCaught;
     private bool gameRunning;
@@ -56,10 +57,14 @@ public class AppleGameManager : MonoBehaviour
     }
 
     public void GameOver()
-    {
+    { 
         if (!gameRunning) return;
 
         gameRunning = false;
+        if(applesCaught>= scoretounlock)
+        {
+            weeklyquest.AddRandomIndex();
+        }
 
         if (spawnerObject != null)
         {
@@ -67,9 +72,11 @@ public class AppleGameManager : MonoBehaviour
         }
 
         if (endText != null)
-        {
+        { 
+
             endText.gameObject.SetActive(true);
             endText.text = "GAME OVER!\nApples caught: " + applesCaught;
+
         }
 
         Debug.Log("Game over. Apples caught: " + applesCaught);

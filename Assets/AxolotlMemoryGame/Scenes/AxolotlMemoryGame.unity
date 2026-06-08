@@ -150,10 +150,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columns: 4
   flipBackDelay: 0.75
-  rewardCoins: 50
+  weeklyquest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
+  playroomSceneName: Playroom
   titleText: {fileID: 0}
   resultText: {fileID: 0}
   movesText: {fileID: 0}
+  timerText: {fileID: 0}
+  bestTimeText: {fileID: 0}
 --- !u!4 &1765714658
 Transform:
   m_ObjectHideFlags: 0

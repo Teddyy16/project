@@ -10,7 +10,7 @@ public class AxolotlMemoryGame : MonoBehaviour
     [Header("Game")]
     public int columns = 4;
     public float flipBackDelay = 0.75f;
-
+public WeeklyQuest weeklyquest; 
     [Header("Scene Names")]
     public string playroomSceneName = "Playroom";
 
@@ -364,7 +364,10 @@ public class AxolotlMemoryGame : MonoBehaviour
     }
 
     private void WinGame()
-    {
+    { 
+        weeklyquest.AddRandomIndex();
+
+
         timerRunning = false;
 
         bool newBestScore = false;
