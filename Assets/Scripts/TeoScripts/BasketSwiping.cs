@@ -3,12 +3,12 @@
 public class BasketSwiper : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float basketSpacing = -1f;       // The exact distance between each basket along the X-axis
+    public float basketSpacing = -2f;       // The exact distance between each basket along the X-axis
     public float swipeThreshold = 50f;     // How many pixels the finger must move to count as a swipe
     public float smoothSpeed = 10f;        // How fast the carousel slides into position
 
     private int currentBasketIndex = 0;    // Index of the basket currently in front of the camera
-    private int totalBaskets = 2;          // Change this to match how many baskets you have
+    public int totalBaskets = 2;          // Change this to match how many baskets you have
     
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;

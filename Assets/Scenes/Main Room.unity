@@ -893,8 +893,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1, y: -1019}
-  m_SizeDelta: {x: 63.6, y: 55.5}
+  m_AnchoredPosition: {x: 13.46, y: -1019}
+  m_SizeDelta: {x: 73, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &473593291
 MonoBehaviour:
@@ -1062,8 +1062,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 425, y: -1019}
-  m_SizeDelta: {x: 63.6, y: 55.5}
+  m_AnchoredPosition: {x: 430.3375, y: -1019}
+  m_SizeDelta: {x: 73, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &625237134
 MonoBehaviour:
@@ -1194,8 +1194,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -209, y: -1019}
-  m_SizeDelta: {x: 63.6, y: 55.5}
+  m_AnchoredPosition: {x: -201, y: -1019}
+  m_SizeDelta: {x: 73, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &662417548
 MonoBehaviour:
@@ -1464,8 +1464,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 212, y: -1019}
-  m_SizeDelta: {x: 63.6, y: 55.5}
+  m_AnchoredPosition: {x: 226.7258, y: -1019}
+  m_SizeDelta: {x: 73, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &720399106
 MonoBehaviour:
@@ -2069,8 +2069,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -416, y: -1019}
-  m_SizeDelta: {x: 63.6, y: 55.5}
+  m_AnchoredPosition: {x: -424.6667, y: -1019}
+  m_SizeDelta: {x: 73, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1058297648
 MonoBehaviour:
@@ -7941,7 +7941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4497818927356499174, guid: a13a558042d4a79448d8616a07e3153c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.55
+      value: -1.46
       objectReference: {fileID: 0}
     - target: {fileID: 4497818927356499174, guid: a13a558042d4a79448d8616a07e3153c, type: 3}
       propertyPath: m_LocalPosition.z
