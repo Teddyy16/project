@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "13041FDD40005M",
         "name": "com.UnityTechnologies.Mobile3DTemplate",
-        "processId": 28827,
+        "processId": 18757,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -36,6 +36,18 @@
             "deviceId": "13041FDD40005M",
             "name": "com.UnityTechnologies.Mobile3DTemplate",
             "processId": 28827,
+            "exited": false
+        },
+        {
+            "deviceId": "13041FDD40005M",
+            "name": "com.UnityTechnologies.Mobile3DTemplate",
+            "processId": 18361,
+            "exited": false
+        },
+        {
+            "deviceId": "13041FDD40005M",
+            "name": "com.UnityTechnologies.Mobile3DTemplate",
+            "processId": 18757,
             "exited": false
         }
     ],

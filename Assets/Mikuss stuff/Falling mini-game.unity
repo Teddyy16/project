@@ -196,7 +196,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -2195,9 +2195,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameTime: 30
-  spawnerObject: {fileID: 582637815}
-  weeklyquest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
-  scoretounlock: 2
+  applesNeededToUnlock: 20
+  playroomSceneName: Playroom
+  unlockSaveKey: Unlocked_Apple_Item
+  timerText: {fileID: 0}
+  appleCounterText: {fileID: 0}
+  gameOverText: {fileID: 0}
+  unlockText: {fileID: 0}
+  backButton: {fileID: 0}
+  uiFontSize: 42
+  messageFontSize: 60
 --- !u!4 &1505331465
 Transform:
   m_ObjectHideFlags: 0

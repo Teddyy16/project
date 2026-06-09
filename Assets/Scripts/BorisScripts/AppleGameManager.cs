@@ -10,6 +10,9 @@ public class AppleGameManager : MonoBehaviour
     public float gameTime = 30f;
     public int applesNeededToUnlock = 20;
 
+    [Header("Scene")]
+    public string playroomSceneName = "Playroom";
+
     [Header("Unlock Save")]
     public string unlockSaveKey = "Unlocked_Apple_Item";
 
@@ -18,6 +21,7 @@ public class AppleGameManager : MonoBehaviour
     public Text appleCounterText;
     public Text gameOverText;
     public Text unlockText;
+    public Button backButton;
 
     [Header("UI Settings")]
     public int uiFontSize = 42;
@@ -52,6 +56,12 @@ public class AppleGameManager : MonoBehaviour
         if (unlockText != null)
         {
             unlockText.gameObject.SetActive(false);
+        }
+
+        if (backButton != null)
+        {
+            backButton.onClick.RemoveAllListeners();
+            backButton.onClick.AddListener(GoBackToPlayroom);
         }
 
         UpdateTimerUI();
@@ -197,6 +207,7 @@ public class AppleGameManager : MonoBehaviour
         if (timerText == null)
         {
             timerText = CreateText("TimerText", canvas.transform, "Time: 30", uiFontSize);
+
             RectTransform rect = timerText.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0.5f, 1f);
             rect.anchorMax = new Vector2(0.5f, 1f);
@@ -208,6 +219,7 @@ public class AppleGameManager : MonoBehaviour
         if (appleCounterText == null)
         {
             appleCounterText = CreateText("AppleCounterText", canvas.transform, "Apples: 0", uiFontSize);
+
             RectTransform rect = appleCounterText.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0.5f, 1f);
             rect.anchorMax = new Vector2(0.5f, 1f);
@@ -219,6 +231,7 @@ public class AppleGameManager : MonoBehaviour
         if (gameOverText == null)
         {
             gameOverText = CreateText("GameOverText", canvas.transform, "Game Over!", messageFontSize);
+
             RectTransform rect = gameOverText.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0.5f, 0.5f);
             rect.anchorMax = new Vector2(0.5f, 0.5f);
@@ -230,12 +243,25 @@ public class AppleGameManager : MonoBehaviour
         if (unlockText == null)
         {
             unlockText = CreateText("UnlockText", canvas.transform, "You unlocked item!", messageFontSize);
+
             RectTransform rect = unlockText.GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0.5f, 0.5f);
             rect.anchorMax = new Vector2(0.5f, 0.5f);
             rect.pivot = new Vector2(0.5f, 0.5f);
             rect.anchoredPosition = new Vector2(0f, -20f);
             rect.sizeDelta = new Vector2(900f, 120f);
+        }
+
+        if (backButton == null)
+        {
+            backButton = CreateButton("BackButton", canvas.transform, "Back", 34);
+
+            RectTransform rect = backButton.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(1f, 1f);
+            rect.anchorMax = new Vector2(1f, 1f);
+            rect.pivot = new Vector2(1f, 1f);
+            rect.anchoredPosition = new Vector2(-40f, -40f);
+            rect.sizeDelta = new Vector2(220f, 80f);
         }
     }
 
@@ -260,6 +286,32 @@ public class AppleGameManager : MonoBehaviour
         return uiText;
     }
 
+    private Button CreateButton(string objectName, Transform parent, string text, int textSize)
+    {
+        GameObject buttonObject = new GameObject(objectName);
+        buttonObject.transform.SetParent(parent, false);
+
+        RectTransform rect = buttonObject.AddComponent<RectTransform>();
+
+        Image image = buttonObject.AddComponent<Image>();
+        image.color = new Color(0.95f, 0.35f, 0.65f, 1f);
+
+        Button button = buttonObject.AddComponent<Button>();
+
+        Text buttonText = CreateText("Text", buttonObject.transform, text, textSize);
+
+        RectTransform textRect = buttonText.GetComponent<RectTransform>();
+        textRect.anchorMin = Vector2.zero;
+        textRect.anchorMax = Vector2.one;
+        textRect.offsetMin = Vector2.zero;
+        textRect.offsetMax = Vector2.zero;
+
+        buttonText.alignment = TextAnchor.MiddleCenter;
+        buttonText.color = Color.white;
+
+        return button;
+    }
+
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -267,6 +319,6 @@ public class AppleGameManager : MonoBehaviour
 
     public void GoBackToPlayroom()
     {
-        SceneManager.LoadScene("Playroom");
+        SceneManager.LoadScene(playroomSceneName);
     }
 }
