@@ -20,15 +20,35 @@ public class SwipeSceneChanger : MonoBehaviour
     private int currentSceneIndex = 0;
     private bool isLoadingScene = false;
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     void Start()
     {
         FindCurrentSceneIndex();
+        isLoadingScene = false;
     }
 
     void Update()
     {
         DetectTouchSwipe();
         DetectMouseSwipeForUnityEditor();
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        isLoadingScene = false;
+        FindCurrentSceneIndex();
+
+        Debug.Log("Scene loaded: " + scene.name);
+        Debug.Log("Current scene index: " + currentSceneIndex);
     }
 
     void FindCurrentSceneIndex()
@@ -40,6 +60,7 @@ public class SwipeSceneChanger : MonoBehaviour
             if (sceneNames[i] == currentSceneName)
             {
                 currentSceneIndex = i;
+                Debug.Log("Current scene found in array: " + currentSceneName + " at index " + currentSceneIndex);
                 return;
             }
         }
@@ -90,6 +111,8 @@ public class SwipeSceneChanger : MonoBehaviour
         float horizontalSwipe = endPosition.x - startPosition.x;
         float verticalSwipe = Mathf.Abs(endPosition.y - startPosition.y);
 
+        Debug.Log("Swipe checked. Horizontal: " + horizontalSwipe + " Vertical: " + verticalSwipe);
+
         if (Mathf.Abs(horizontalSwipe) < minSwipeDistance)
             return;
 
@@ -116,6 +139,10 @@ public class SwipeSceneChanger : MonoBehaviour
             currentSceneIndex++;
             LoadSceneByIndex();
         }
+        else
+        {
+            Debug.Log("Already at last scene.");
+        }
     }
 
     public void GoToPreviousScene()
@@ -127,6 +154,10 @@ public class SwipeSceneChanger : MonoBehaviour
         {
             currentSceneIndex--;
             LoadSceneByIndex();
+        }
+        else
+        {
+            Debug.Log("Already at first scene.");
         }
     }
 
@@ -142,6 +173,8 @@ public class SwipeSceneChanger : MonoBehaviour
             Debug.LogWarning("Scene name is empty at index: " + currentSceneIndex);
             return;
         }
+
+        Debug.Log("Loading scene: " + sceneToLoad);
 
         isLoadingScene = true;
         SceneManager.LoadScene(sceneToLoad);

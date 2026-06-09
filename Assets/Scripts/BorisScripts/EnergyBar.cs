@@ -12,30 +12,48 @@ public class EnergyBar : MonoBehaviour
 
     [Header("Energy Settings")]
     public float maxValue = 100f;
-    public float currentValue = 100f;
+    public float currentValue = 0f;
 
     [Header("Save")]
     public string saveKey = "Energy_Value";
 
-    void Awake()
+    [Header("Testing")]
+    public bool resetSavedValueOnStart = false;
+
+    private void Awake()
     {
         Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
-        currentValue = PlayerPrefs.GetFloat(saveKey, maxValue);
+        if (resetSavedValueOnStart)
+        {
+            PlayerPrefs.DeleteKey(saveKey);
+            PlayerPrefs.Save();
+        }
+
+        currentValue = PlayerPrefs.GetFloat(saveKey, 0f);
         UpdateBarInstant();
+
+        Debug.Log("EnergyBar started. Current energy: " + currentValue);
     }
 
-    void Update()
+    private void Update()
     {
-        if (fill == null) return;
+        if (fill == null)
+        {
+            return;
+        }
 
         float target = currentValue / maxValue;
 
         fill.fillAmount = Mathf.Lerp(fill.fillAmount, target, changeSpeed * Time.deltaTime);
-        fill.color = gradient.Evaluate(target);
+
+        if (gradient != null)
+        {
+            fill.color = gradient.Evaluate(target);
+        }
     }
 
     public void SetValue(float value)
@@ -75,17 +93,47 @@ public class EnergyBar : MonoBehaviour
         return currentValue >= amount;
     }
 
+    public bool IsFull()
+    {
+        return currentValue >= maxValue;
+    }
+
+    public float GetPercent()
+    {
+        return currentValue / maxValue;
+    }
+
+    public void SetToFull()
+    {
+        SetValue(maxValue);
+    }
+
+    public void ClearEnergy()
+    {
+        SetValue(0f);
+    }
+
     private void UpdateBarInstant()
     {
-        if (fill == null) return;
+        if (fill == null)
+        {
+            return;
+        }
 
         float ratio = currentValue / maxValue;
 
+        fill.type = Image.Type.Filled;
+        fill.fillMethod = Image.FillMethod.Horizontal;
+        fill.fillOrigin = 0;
         fill.fillAmount = ratio;
-        fill.color = gradient.Evaluate(ratio);
+
+        if (gradient != null)
+        {
+            fill.color = gradient.Evaluate(ratio);
+        }
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         PlayerPrefs.SetFloat(saveKey, currentValue);
         PlayerPrefs.Save();
