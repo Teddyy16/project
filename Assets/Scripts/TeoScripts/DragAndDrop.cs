@@ -8,36 +8,35 @@ public class DragAndDrop : MonoBehaviour
 
     void Start()
     {
-       
         rb = GetComponent<Rigidbody>();
         mainCamera = Camera.main;
     }
 
     void OnMouseDown()
     {
-        // Calculate how far away the object is from the camera when clicked
+        // Calculate how far away the object is from the camera on click to lock its track
         zDepth = mainCamera.WorldToScreenPoint(transform.position).z;
 
-        // Temporarily disable gravity and freeze rotations so it doesn't spin wildly
+        // Turn off gravity so it doesn't fall while you hold it
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     void OnMouseDrag()
     {
-        // Get the mouse position in world space using our locked z-depth
+        // 1. Get the current mouse position in pixels
         Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDepth);
+        
+        // 2. Convert it into the 3D world coordinates
         Vector3 targetWorldPos = mainCamera.ScreenToWorldPoint(mouseScreenPos);
 
-        // Calculate the direction to the mouse and move via velocity
-        // The '15f' is a speed multiplier, can increase it to make it faster
-        Vector3 moveDirection = targetWorldPos - transform.position;
-        rb.linearVelocity = moveDirection * 12f; 
+        // 3. Move the object directly to the mouse position
+        transform.position = targetWorldPos;
     }
 
     void OnMouseUp()
     {
-        // Drops and returns gravity back on
+        // Let go and turn gravity back on so it falls naturally
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.None;
     }
