@@ -5137,9 +5137,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1970605300}
+      - m_Target: {fileID: 1970605307}
         m_TargetAssemblyTypeName: UIPanelManager, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: ToggleButton
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1695677856}
