@@ -1,217 +1,127 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using ZXing;
 using TMPro;
+using ZXing;
+
+#if UNITY_ANDROID
+using UnityEngine.Android;
+#endif
 
 public class QRScanner : MonoBehaviour
 {
     public static WebCamTexture webcamTexture;
-public AnimalData animalData;
-public WeeklyQuest weeklyQuest;
-  
 
-    private Texture2D snap;
-    private string qrCode = string.Empty;
-    private Coroutine scanRoutine;
+    [Header("Optional Game References")]
+    public AnimalData animalData;
+    public WeeklyQuest weeklyQuest;
 
-    [Header("UI Output")]
+    [Header("UI")]
+    public RawImage cameraPreview;
     public TextMeshProUGUI scannedCodeText;
 
     [Header("Reward")]
     public int rewardCoins = 10;
     public bool allowSameCodeOnlyOnce = true;
 
-    void Awake()
+    [Header("Scanner Settings")]
+    [Tooltip("How often the camera is checked for a QR code.")]
+    public float scanInterval = 0.25f;
+
+    [Tooltip("Use the back camera when available.")]
+    public bool preferBackCamera = true;
+
+    private Texture2D snap;
+    private Coroutine scannerRoutine;
+    private Coroutine setupRoutine;
+
+    private bool scannerReady;
+    private bool showingMessage;
+
+    private void Awake()
     {
-        if (webcamTexture == null)
+        if (cameraPreview == null)
         {
-            string selectedCam = SelectCorrectCamera();
-
-            if (string.IsNullOrEmpty(selectedCam))
-            {
-                Debug.LogError("No camera found.");
-                return;
-            }
-
-            webcamTexture = new WebCamTexture(selectedCam, 1920, 1080);
-            Debug.Log("Using camera: " + selectedCam);
+            cameraPreview = GetComponent<RawImage>();
         }
 
-        RawImage rawImage = GetComponent<RawImage>();
-
-        if (rawImage != null)
+        if (cameraPreview == null)
         {
-            rawImage.texture = webcamTexture;
-        }
-        else
-        {
-            Debug.LogError("QRScanner must be attached to an object with RawImage.");
+            Debug.LogError("QRScanner needs a RawImage.");
         }
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        if (webcamTexture == null)
-        {
-            Debug.LogError("WebCamTexture is missing.");
-            return;
-        }
-
-        if (!webcamTexture.isPlaying)
-        {
-            webcamTexture.Play();
-        }
-
-        StartCoroutine(ApplyRotationWhenReady());
-
-        scanRoutine = StartCoroutine(GetQRCode());
+        setupRoutine = StartCoroutine(StartScanner());
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         StopScanner();
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         StopScanner();
     }
 
-    void OnApplicationQuit()
+    private IEnumerator StartScanner()
     {
-        StopScanner(true);
-    }
+        scannerReady = false;
+        ShowMessage("Starting camera...");
 
-    void StopScanner(bool quitting = false)
-    {
-        if (scanRoutine != null)
+        yield return StartCoroutine(RequestCameraPermission());
+
+        if (!HasCameraPermission())
         {
-            StopCoroutine(scanRoutine);
-            scanRoutine = null;
-        }
-
-        if (webcamTexture != null && webcamTexture.isPlaying)
-        {
-            webcamTexture.Stop();
-        }
-
-        if (quitting)
-        {
-            webcamTexture = null;
-        }
-    }
-
-    string SelectCorrectCamera()
-    {
-        WebCamDevice[] devices = WebCamTexture.devices;
-
-        Debug.Log("=== Available Cameras ===");
-
-        foreach (WebCamDevice cam in devices)
-        {
-            Debug.Log(cam.name + " | Front: " + cam.isFrontFacing);
-        }
-
-        foreach (WebCamDevice cam in devices)
-        {
-            string n = cam.name.ToLower();
-
-            if (!cam.isFrontFacing &&
-                (n.Contains("back") || n.Contains("rear") || n.Contains("iphone") || n.Contains("android")))
-            {
-                return cam.name;
-            }
-        }
-
-        foreach (WebCamDevice cam in devices)
-        {
-            string n = cam.name.ToLower();
-
-            if (cam.isFrontFacing &&
-                (n.Contains("iphone") || n.Contains("android") || n.Contains("front")))
-            {
-                return cam.name;
-            }
-        }
-
-        foreach (WebCamDevice cam in devices)
-        {
-            string n = cam.name.ToLower();
-
-            if (cam.isFrontFacing ||
-                n.Contains("integrated") ||
-                n.Contains("built") ||
-                n.Contains("webcam") ||
-                n.Contains("hd camera") ||
-                n.Contains("face"))
-            {
-                return cam.name;
-            }
-        }
-
-        foreach (WebCamDevice cam in devices)
-        {
-            string n = cam.name.ToLower();
-
-            if (n.Contains("obs") || n.Contains("virtual"))
-            {
-                return cam.name;
-            }
-        }
-
-        if (devices.Length > 0)
-        {
-            return devices[0].name;
-        }
-
-        return null;
-    }
-
-    IEnumerator ApplyRotationWhenReady()
-    {
-        RawImage raw = GetComponent<RawImage>();
-
-        if (raw == null)
-        {
+            ShowMessage("Camera permission is required.");
+            Debug.LogError("Camera permission was denied.");
             yield break;
         }
 
-        while (webcamTexture != null && webcamTexture.width < 100)
+        string selectedCamera = SelectCorrectCamera();
+
+        if (string.IsNullOrEmpty(selectedCamera))
         {
+            ShowMessage("No camera found.");
+            Debug.LogError("No camera device was found.");
+            yield break;
+        }
+
+        if (webcamTexture == null || webcamTexture.deviceName != selectedCamera)
+        {
+            if (webcamTexture != null && webcamTexture.isPlaying)
+            {
+                webcamTexture.Stop();
+            }
+
+            webcamTexture = new WebCamTexture(selectedCamera, 1280, 720, 30);
+        }
+
+        if (cameraPreview != null)
+        {
+            cameraPreview.texture = webcamTexture;
+        }
+
+        webcamTexture.Play();
+
+        float waitTime = 0f;
+
+        while (webcamTexture != null && webcamTexture.width < 100 && waitTime < 10f)
+        {
+            waitTime += Time.deltaTime;
             yield return null;
         }
 
-        yield return new WaitForEndOfFrame();
-
-        int angle = webcamTexture.videoRotationAngle;
-
-        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        if (webcamTexture == null || webcamTexture.width < 100)
         {
-            angle = (angle + 180) % 360;
+            ShowMessage("Camera could not start.");
+            Debug.LogError("Camera did not initialise.");
+            yield break;
         }
 
-        raw.rectTransform.localEulerAngles = new Vector3(0, 0, -angle);
-
-        bool mirror = webcamTexture.videoVerticallyMirrored;
-
-        raw.rectTransform.localScale = new Vector3(
-            1f,
-            mirror ? -1f : 1f,
-            1f
-        );
-
-        Debug.Log("Rotation applied: " + angle + ", Mirrored: " + mirror);
-    }
-
-    IEnumerator GetQRCode()
-    {
-        IBarcodeReader reader = new BarcodeReader();
-
-        while (webcamTexture != null && webcamTexture.width < 100)
-        {
-            yield return null;
-        }
+        ApplyCameraRotation();
 
         snap = new Texture2D(
             webcamTexture.width,
@@ -220,81 +130,150 @@ public WeeklyQuest weeklyQuest;
             false
         );
 
-        while (true)
-        {
-            snap.SetPixels32(webcamTexture.GetPixels32());
+        scannerReady = true;
+        ShowMessage("Scan a QR code");
 
-            Result result = reader.Decode(
-                snap.GetRawTextureData(),
-                webcamTexture.width,
-                webcamTexture.height,
-                RGBLuminanceSource.BitmapFormat.ARGB32
-            );
-
-            if (result != null)
-            {
-                qrCode = result.Text;
-
-                Debug.Log("DECODED: " + qrCode);
-
-                if (scannedCodeText != null)
-                {
-                    if (weeklyQuest.unlocked.Count >= weeklyQuest.maxIcons)
-                    {
-                        animalData.UnlockRabbit();
-                    }
-                    var coinManager = FindAnyObjectByType<CoinManager>();
-                    if (coinManager != null)
-                        coinManager.AddCoins(80);
-                    scannedCodeText.text = qrCode;
-                }
-
-                TryRewardPlayer(qrCode);
-
-                yield return new WaitForSeconds(2f);
-
-                qrCode = "";
-
-                if (scannedCodeText != null)
-                {
-                    scannedCodeText.text = "";
-                }
-            }
-
-            yield return null;
-        }
+        scannerRoutine = StartCoroutine(ScanQRCode());
     }
 
-    private void TryRewardPlayer(string scannedCode)
+    private IEnumerator RequestCameraPermission()
     {
-        if (string.IsNullOrEmpty(scannedCode))
+#if UNITY_ANDROID
+        if (!Permission.HasUserAuthorizedPermission(Permission.Camera))
+        {
+            Permission.RequestUserPermission(Permission.Camera);
+
+            float waitTime = 0f;
+
+            while (!Permission.HasUserAuthorizedPermission(Permission.Camera) && waitTime < 10f)
+            {
+                waitTime += Time.deltaTime;
+                yield return null;
+            }
+        }
+#elif UNITY_IOS
+        if (!Application.HasUserAuthorization(UserAuthorization.WebCam))
+        {
+            yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
+        }
+#else
+        yield return null;
+#endif
+    }
+
+    private bool HasCameraPermission()
+    {
+#if UNITY_ANDROID
+        return Permission.HasUserAuthorizedPermission(Permission.Camera);
+#elif UNITY_IOS
+        return Application.HasUserAuthorization(UserAuthorization.WebCam);
+#else
+        return true;
+#endif
+    }
+
+    private void ApplyCameraRotation()
+    {
+        if (cameraPreview == null || webcamTexture == null)
         {
             return;
         }
 
-        if (!IsNumeric(scannedCode))
+        int angle = webcamTexture.videoRotationAngle;
+
+        cameraPreview.rectTransform.localEulerAngles =
+            new Vector3(0f, 0f, -angle);
+
+        float verticalScale = webcamTexture.videoVerticallyMirrored ? -1f : 1f;
+
+        cameraPreview.rectTransform.localScale =
+            new Vector3(1f, verticalScale, 1f);
+    }
+
+    private IEnumerator ScanQRCode()
+    {
+        IBarcodeReader reader = new BarcodeReader();
+
+        while (scannerReady && webcamTexture != null && webcamTexture.isPlaying)
         {
-            Debug.Log("Scanned code is not numeric. No coins added: " + scannedCode);
+            if (!showingMessage && webcamTexture.didUpdateThisFrame)
+            {
+                try
+                {
+                    snap.SetPixels32(webcamTexture.GetPixels32());
+
+                    Result result = reader.Decode(
+                        snap.GetRawTextureData(),
+                        webcamTexture.width,
+                        webcamTexture.height,
+                        RGBLuminanceSource.BitmapFormat.ARGB32
+                    );
+
+                    if (result != null)
+                    {
+                        HandleScannedResult(result);
+                    }
+                }
+                catch (System.Exception exception)
+                {
+                    Debug.LogWarning("Scanner error: " + exception.Message);
+                }
+            }
+
+            yield return new WaitForSeconds(scanInterval);
+        }
+    }
+
+    private void HandleScannedResult(Result result)
+    {
+        if (result == null || string.IsNullOrEmpty(result.Text))
+        {
+            return;
+        }
+
+        Debug.Log(
+            "Detected: " + result.Text +
+            " | Format: " + result.BarcodeFormat
+        );
+
+        showingMessage = true;
+
+        if (result.BarcodeFormat != BarcodeFormat.QR_CODE)
+        {
+            StartCoroutine(ShowTemporaryMessage(
+                "Wrong code type.\nPlease scan a QR code.",
+                2f
+            ));
+
+            return;
+        }
+
+        TryRewardPlayer(result.Text);
+    }
+
+    private void TryRewardPlayer(string qrText)
+    {
+        if (string.IsNullOrEmpty(qrText))
+        {
+            StartCoroutine(ShowTemporaryMessage("Invalid QR code.", 2f));
             return;
         }
 
         if (allowSameCodeOnlyOnce)
         {
-            string saveKey = "ScannedReceipt_" + scannedCode;
+            string scanKey = "ScannedQR_" + qrText;
 
-            if (PlayerPrefs.GetInt(saveKey, 0) == 1)
+            if (PlayerPrefs.GetInt(scanKey, 0) == 1)
             {
-                Debug.Log("This receipt/barcode was already scanned: " + scannedCode);
-
-                if (scannedCodeText != null)
-                {
-                    scannedCodeText.text = "Already scanned";
-                }
+                StartCoroutine(ShowTemporaryMessage(
+                    "This QR code was already scanned.",
+                    2f
+                ));
 
                 return;
             }
 
-            PlayerPrefs.SetInt(saveKey, 1);
+            PlayerPrefs.SetInt(scanKey, 1);
         }
 
         int currentCoins = PlayerPrefs.GetInt("Coin", 0);
@@ -303,24 +282,105 @@ public WeeklyQuest weeklyQuest;
         PlayerPrefs.SetInt("Coin", currentCoins);
         PlayerPrefs.Save();
 
-        Debug.Log("Added " + rewardCoins + " coins. Current coins: " + currentCoins);
+        Debug.Log(
+            "Added " + rewardCoins +
+            " coins. Total: " + currentCoins
+        );
 
-        if (scannedCodeText != null)
+        CheckAnimalUnlock();
+
+        StartCoroutine(ShowTemporaryMessage(
+            "QR scanned!\n+" + rewardCoins + " coins",
+            2f
+        ));
+    }
+
+    private void CheckAnimalUnlock()
+    {
+        if (weeklyQuest == null || animalData == null)
         {
-            scannedCodeText.text = "Scanned!\n+" + rewardCoins + " coins";
+            return;
+        }
+
+        if (weeklyQuest.unlocked.Count >= weeklyQuest.maxIcons)
+        {
+            animalData.UnlockRabbit();
         }
     }
 
-    bool IsNumeric(string text)
+    private IEnumerator ShowTemporaryMessage(string message, float seconds)
     {
-        foreach (char c in text)
+        ShowMessage(message);
+
+        yield return new WaitForSeconds(seconds);
+
+        if (scannerReady)
         {
-            if (!char.IsDigit(c))
+            ShowMessage("Scan a QR code");
+        }
+
+        showingMessage = false;
+    }
+
+    private void ShowMessage(string message)
+    {
+        if (scannedCodeText != null)
+        {
+            scannedCodeText.text = message;
+        }
+    }
+
+    private string SelectCorrectCamera()
+    {
+        WebCamDevice[] devices = WebCamTexture.devices;
+
+        if (devices == null || devices.Length == 0)
+        {
+            return null;
+        }
+
+        foreach (WebCamDevice device in devices)
+        {
+            Debug.Log(
+                "Camera: " + device.name +
+                " | Front-facing: " + device.isFrontFacing
+            );
+        }
+
+        if (preferBackCamera)
+        {
+            foreach (WebCamDevice device in devices)
             {
-                return false;
+                if (!device.isFrontFacing)
+                {
+                    return device.name;
+                }
             }
         }
 
-        return true;
+        return devices[0].name;
+    }
+
+    private void StopScanner()
+    {
+        scannerReady = false;
+        showingMessage = false;
+
+        if (setupRoutine != null)
+        {
+            StopCoroutine(setupRoutine);
+            setupRoutine = null;
+        }
+
+        if (scannerRoutine != null)
+        {
+            StopCoroutine(scannerRoutine);
+            scannerRoutine = null;
+        }
+
+        if (webcamTexture != null && webcamTexture.isPlaying)
+        {
+            webcamTexture.Stop();
+        }
     }
 }
