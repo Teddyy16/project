@@ -1226,9 +1226,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalData: {fileID: 11400000, guid: ee89ca49dc6ed7346bbff1b360802813, type: 2}
   weeklyQuest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
+  cameraPreview: {fileID: 1991844197}
   scannedCodeText: {fileID: 167642452}
   rewardCoins: 10
   allowSameCodeOnlyOnce: 1
+  scanInterval: 0.25
+  preferBackCamera: 1
 --- !u!114 &1991844197
 MonoBehaviour:
   m_ObjectHideFlags: 0

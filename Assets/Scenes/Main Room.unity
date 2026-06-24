@@ -1075,6 +1075,17 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &470262356 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2386030930025815189, guid: 43f78810c18086c45930e7d528134166, type: 3}
+  m_PrefabInstance: {fileID: 171171461}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb205b884c3313e4abfca52a0420983e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &473593289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,6 +1555,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 662417546}
   m_CullTransparentMesh: 1
+--- !u!1 &663145099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 663145101}
+  - component: {fileID: 663145100}
+  m_Layer: 0
+  m_Name: PetNeedsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &663145100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663145099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50a7acffed5ad4632bc5e4f0dcff482c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hungerFill: {fileID: 1497002409}
+  energyBar: {fileID: 470262356}
+  maxHunger: 100
+  currentHunger: 0
+  hungerDecreasePerSecond: 1
+  energyRechargeTime: 30
+  rechargeEnergyWhenHungerIsFull: 1
+  hungerSaveKey: Hunger_Value
+  resetSavedValueOnStart: 0
+--- !u!4 &663145101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663145099}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.050001144, y: 3.9984038, z: 1.7737179}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &682639208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7773,6 +7837,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464310840}
   m_CullTransparentMesh: 1
+--- !u!114 &1497002409 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3219243486815197028, guid: 43f78810c18086c45930e7d528134166, type: 3}
+  m_PrefabInstance: {fileID: 171171461}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1541851096
 GameObject:
   m_ObjectHideFlags: 0
@@ -8910,3 +8985,4 @@ SceneRoots:
   - {fileID: 1840325444}
   - {fileID: 1646996799}
   - {fileID: 1154550786}
+  - {fileID: 663145101}
