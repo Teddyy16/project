@@ -7661,6 +7661,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8408126234328924121, guid: a13a558042d4a79448d8616a07e3153c, type: 3}
+      propertyPath: bunny
+      value: 
+      objectReference: {fileID: 5329243384522580847, guid: c60027505a21d8147a596b76e6cee5ae, type: 3}
+    - target: {fileID: 8408126234328924121, guid: a13a558042d4a79448d8616a07e3153c, type: 3}
+      propertyPath: axelotl
+      value: 
+      objectReference: {fileID: 7197868834556828282, guid: a3478455d18b20a46ae51c2558d33f72, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
