@@ -7603,6 +7603,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadScene
       objectReference: {fileID: 0}
+    - target: {fileID: 6147764662878524206, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6147764662878524206, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
+      propertyPath: m_Color.b
+      value: 0.96482736
+      objectReference: {fileID: 0}
+    - target: {fileID: 6147764662878524206, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
+      propertyPath: m_Color.g
+      value: 0.58431375
+      objectReference: {fileID: 0}
+    - target: {fileID: 6147764662878524206, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
+      propertyPath: m_Color.r
+      value: 0.98490566
+      objectReference: {fileID: 0}
     - target: {fileID: 7936875277537738331, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
