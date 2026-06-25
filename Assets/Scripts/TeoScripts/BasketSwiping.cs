@@ -4,7 +4,7 @@ public class BasketSwiper : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float basketSpacing = -2f;       // The exact distance between each basket along the X-axis
-    public float swipeThreshold = 50f;     // How many pixels the finger must move to count as a swipe
+    public float swipeThreshold = 100f;     // How many pixels the finger must move to count as a swipe
     public float smoothSpeed = 10f;        // How fast the carousel slides into position
 
     private int currentBasketIndex = 0;    // Index of the basket currently in front of the camera
@@ -22,6 +22,14 @@ public class BasketSwiper : MonoBehaviour
 
     void Update()
     {
+        float mouseTouchY = Input.mousePosition.y;
+
+    // Screen.height * 0.25f means the bottom 25% of the player's screen
+    // If the touch is higher up where the food is dragged, ignore it!
+    if (mouseTouchY > Screen.height * 0.25f)
+    {
+        return; 
+    }
         HandleMouseOrTouchInput();
         
         // Smoothly slide the carousel towards the target position every frame
