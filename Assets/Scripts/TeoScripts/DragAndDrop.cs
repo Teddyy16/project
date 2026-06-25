@@ -5,6 +5,7 @@ public class DragAndDrop : MonoBehaviour
     private Rigidbody rb;
     private Camera mainCamera;
     private float zDepth;
+    public bool hasBeenCounted = false;
 
     void Start()
     {
@@ -20,6 +21,8 @@ public class DragAndDrop : MonoBehaviour
         // Turn off gravity so it doesn't fall while you hold it
         rb.useGravity = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+
+        hasBeenCounted = false;
     }
 
     void OnMouseDrag()

@@ -1,20 +1,26 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; // NEW: Required for reloading the level!
 
 public class LevelManager : MonoBehaviour
 {
-    public int totalFoodNeeded = 20; // Total food objects in the level
-    public float timeLimit = 60f;   // Time limit in seconds
+    public int totalFoodNeeded = 5; 
+    public float timeLimit = 60f;   
     
-    public Text timerText;      // Drag your Timer Text here
-    public GameObject winScreen;    // Drag your WinScreen Panel here
+    public Text timerText;      
+    public GameObject winScreen;    
+    public GameObject loseScreen;   // NEW: Slot for your Lose Screen panel
 
     private int currentFoodCount = 0;
     private bool isGameOver = false;
 
     void Start()
     {
-        winScreen.SetActive(false); // Make sure win screen is hidden
+        // Make sure both screens are hidden when the game starts
+        if (winScreen != null) winScreen.SetActive(false); 
+        if (loseScreen != null) loseScreen.SetActive(false); 
+        
+        Time.timeScale = 1f; // Reset time speed back to normal
         UpdateTimerUI();
     }
 
@@ -22,7 +28,6 @@ public class LevelManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-        // 1. Countdown the timer
         if (timeLimit > 0)
         {
             timeLimit -= Time.deltaTime;
@@ -34,13 +39,11 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    // 2. This is called by containers whenever a food item snaps inside
     public void AddFood()
     {
         if (isGameOver) return;
 
         currentFoodCount++;
-        Debug.Log("Food Added! Count: " + currentFoodCount + "/" + totalFoodNeeded);
 
         if (currentFoodCount >= totalFoodNeeded)
         {
@@ -50,7 +53,8 @@ public class LevelManager : MonoBehaviour
 
     void UpdateTimerUI()
     {
-        // Format time cleanly into Minutes:Seconds
+        if (timerText == null) return;
+
         int minutes = Mathf.FloorToInt(timeLimit / 60);
         int seconds = Mathf.FloorToInt(timeLimit % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
@@ -59,15 +63,39 @@ public class LevelManager : MonoBehaviour
     void WinGame()
     {
         isGameOver = true;
-        winScreen.SetActive(true); // Show the "You Win!" screen
-        Time.timeScale = 0f;       // Optional: Freeze the game physics
+        if (winScreen != null) winScreen.SetActive(true); 
+        Time.timeScale = 0f; // Freeze gameplay       
     }
 
     void TimeUp()
     {
         isGameOver = true;
-        timerText.text = "00:00";
-        Debug.Log("Game Over! You ran out of time.");
-        // Optional: Show a Lose Screen panel here
+        if (timerText != null) timerText.text = "00:00";
+        
+        // NEW: Show the Lose Screen instead of just printing a log
+        if (loseScreen != null) 
+        {
+            loseScreen.SetActive(true);
+        }
+        
+        Time.timeScale = 0f; // Freeze gameplay so they can't keep dragging food
+    }
+
+    // NEW: Call this function when the Try Again button is pressed
+    public void RestartLevel()
+    {
+        // Reloads whatever level is currently active
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    
+    public void GoToPlayroom()
+    {
+        // Make sure time isn't frozen when returning to the playroom
+        Time.timeScale = 1f; 
+        
+        // Load your main menu/playroom scene
+        // REPLACE "PlayroomScene" with the EXACT name of your playroom scene file!
+        SceneManager.LoadScene("Playroom");
     }
 }

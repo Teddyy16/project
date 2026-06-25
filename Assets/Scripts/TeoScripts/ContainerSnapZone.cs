@@ -48,7 +48,15 @@ public class ContainerSnapZone : MonoBehaviour
    private void OnTriggerEnter(Collider other)
     {
         if (isPulledForward && other.CompareTag("Food"))
+    {
+        // Get the drag script attached to the food piece
+        DragAndDrop foodScript = other.GetComponent<DragAndDrop>();
+
+        // ONLY count it if it hasn't been counted yet!
+        if (foodScript != null && !foodScript.hasBeenCounted)
         {
+            foodScript.hasBeenCounted = true; // Mark it as counted immediately!
+
             other.transform.position = transform.position;
 
             Rigidbody foodRb = other.GetComponent<Rigidbody>();
@@ -60,15 +68,15 @@ public class ContainerSnapZone : MonoBehaviour
 
             other.transform.SetParent(this.transform);
             
-            // Alert the Level Manager 
+            // Alert the Level Manager
             LevelManager manager = FindFirstObjectByType<LevelManager>();
             if (manager != null)
             {
                 manager.AddFood();
             }
-            // -----------------------------------------
 
-            Debug.Log(other.gameObject.name + " snapped inside the container!");
+            Debug.Log(other.gameObject.name + " snapped and successfully counted once.");
         }
     }
+}
 }
