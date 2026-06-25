@@ -931,7 +931,7 @@ Transform:
   m_GameObject: {fileID: 440055560}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0.24, y: 3, z: 0.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1142,7 +1142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7936875277537738331, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -9
+      value: -33
       objectReference: {fileID: 0}
     - target: {fileID: 7936875277537738331, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7054,7 +7054,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 200
-  field of view: 45
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
