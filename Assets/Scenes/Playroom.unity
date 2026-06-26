@@ -6817,7 +6817,7 @@ MonoBehaviour:
   messageText: {fileID: 0}
   memoryGameSceneName: AxolotlMemoryGame
   miniGame2SceneName: Falling mini-game
-  miniGame3SceneName: MiniGame3
+  miniGame3SceneName: FridgeStackingGame
 --- !u!4 &1320862372
 Transform:
   m_ObjectHideFlags: 0
@@ -7753,7 +7753,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2021221357}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1320862371}
+        m_TargetAssemblyTypeName: MiniGameMenuManager, Assembly-CSharp
+        m_MethodName: OpenMiniGame3
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2021221357
 MonoBehaviour:
   m_ObjectHideFlags: 0
