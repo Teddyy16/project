@@ -17,7 +17,7 @@ public class MiniGameMenuManager : MonoBehaviour
     [Header("Scene Names")]
     public string memoryGameSceneName = "AxolotlMemoryGame";
     public string miniGame2SceneName = "MiniGame2";
-    public string miniGame3SceneName = "MiniGame3";
+    public string miniGame3SceneName = "FridgeStackingGame";
 
     private void Start()
     {
