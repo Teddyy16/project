@@ -4557,7 +4557,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 200
-  field of view: 40.9
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -4680,15 +4680,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1991350417205656071, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_Color.b
-      value: 0.8901961
+      value: 0.96862745
       objectReference: {fileID: 0}
     - target: {fileID: 1991350417205656071, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_Color.g
-      value: 0.93333334
+      value: 0.58431375
       objectReference: {fileID: 0}
     - target: {fileID: 1991350417205656071, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_Color.r
-      value: 0.64705884
+      value: 0.9882353
       objectReference: {fileID: 0}
     - target: {fileID: 3575452550325330644, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4776,7 +4776,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7936875277537738331, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -9
+      value: -33
       objectReference: {fileID: 0}
     - target: {fileID: 7936875277537738331, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
