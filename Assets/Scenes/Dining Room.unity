@@ -10040,8 +10040,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glowColor: {r: 0.41852084, g: 0.82890147, b: 0.9339623, a: 1}
-  minGlow: 0.2
-  maxGlow: 0.5
+  minGlow: 0
+  maxGlow: 0.2
   pulseSpeed: 2
   createPointLight: 1
   minLightIntensity: 0.3

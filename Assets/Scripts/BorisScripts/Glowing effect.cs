@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GlowingEffect : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class GlowingEffect : MonoBehaviour
     public float maxLightIntensity = 2f;
     public float lightRange = 2f;
     public Vector3 lightOffset = new Vector3(0f, 0.5f, 0f);
+
+    [Header("UI Glow")]
+    public bool useUIGlow = false;
+    public Image uiGlowImage;
+    public float minUIAlpha = 0.15f;
+    public float maxUIAlpha = 0.75f;
 
     private Renderer[] objectRenderers;
     private Material[][] objectMaterials;
@@ -37,7 +44,9 @@ public class GlowingEffect : MonoBehaviour
             }
         }
 
-        if (createPointLight)
+        // Point Light e samo za 3D obekti.
+        // Pri UI butoni v Canvas ne ni trqbva.
+        if (createPointLight && !useUIGlow)
         {
             CreateGlowLight();
         }
@@ -51,6 +60,7 @@ public class GlowingEffect : MonoBehaviour
         float lightAmount = Mathf.Lerp(minLightIntensity, maxLightIntensity, pulse);
 
         UpdateGlow(glowAmount);
+        UpdateUIGlow(pulse);
 
         if (glowLight != null)
         {
@@ -87,6 +97,17 @@ public class GlowingEffect : MonoBehaviour
         }
     }
 
+    private void UpdateUIGlow(float pulse)
+    {
+        if (!useUIGlow || uiGlowImage == null)
+            return;
+
+        Color color = glowColor;
+        color.a = Mathf.Lerp(minUIAlpha, maxUIAlpha, pulse);
+
+        uiGlowImage.color = color;
+    }
+
     public void StopGlow()
     {
         enabled = false;
@@ -94,6 +115,13 @@ public class GlowingEffect : MonoBehaviour
         if (glowLight != null)
         {
             glowLight.enabled = false;
+        }
+
+        if (uiGlowImage != null)
+        {
+            Color color = uiGlowImage.color;
+            color.a = 0f;
+            uiGlowImage.color = color;
         }
 
         UpdateGlow(0f);
