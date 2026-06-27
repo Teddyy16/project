@@ -30,7 +30,9 @@ public class CoinManager : MonoBehaviour
     void UpdateUI()
     {
         if (coinText != null)
-            coinText.text = "coins:" + coins;
+        {
+            coinText.text = coins.ToString();
+        }
     }
 
     void SaveCoins()
