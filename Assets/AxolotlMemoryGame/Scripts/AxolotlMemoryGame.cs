@@ -11,7 +11,7 @@ public class AxolotlMemoryGame : MonoBehaviour
     public int columns = 4;
     public float flipBackDelay = 0.75f;
 
-    public WeeklyQuest weeklyquest; 
+    public WeeklyQuest weeklyquest;
 
     [Header("Scene Names")]
     public string playroomSceneName = "Playroom";
@@ -22,6 +22,11 @@ public class AxolotlMemoryGame : MonoBehaviour
     public Text movesText;
     public Text timerText;
     public Text bestTimeText;
+
+    [Header("3D Text Settings")]
+    public Color normalTextColor = Color.white;
+    public Color shadowColor = new Color(0f, 0f, 0f, 0.55f);
+    public Vector2 shadowOffset = new Vector2(5f, -6f);
 
     private readonly string bestTimeKey = "AxolotlMemoryBestTime";
 
@@ -67,7 +72,17 @@ public class AxolotlMemoryGame : MonoBehaviour
 
     private void Start()
     {
-        font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        font = Resources.Load<Font>("Fonts/Franklin Gothic Heavy Regular");
+
+        if (font == null)
+        {
+            Debug.LogError(
+                "Franklin Gothic Heavy Regular was not found. " +
+                "Put the font in Assets/Resources/Fonts/Franklin Gothic Heavy Regular.ttf"
+            );
+
+            font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        }
 
         LoadSprites();
         BuildInterface();
@@ -98,13 +113,17 @@ public class AxolotlMemoryGame : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Missing sprite in Resources/AxolotlCards: " + spriteName);
+                Debug.LogWarning(
+                    "Missing sprite in Resources/AxolotlCards: " + spriteName
+                );
             }
         }
 
         if (backSprite == null)
         {
-            Debug.LogError("Missing card_back sprite. Check Assets/AxolotlMemoryGame/Resources/AxolotlCards/card_back.png");
+            Debug.LogError(
+                "Missing card_back sprite. Check Assets/AxolotlMemoryGame/Resources/AxolotlCards/card_back.png"
+            );
         }
     }
 
@@ -116,7 +135,13 @@ public class AxolotlMemoryGame : MonoBehaviour
 
         if (canvas == null)
         {
-            GameObject canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            GameObject canvasObject = new GameObject(
+                "Canvas",
+                typeof(Canvas),
+                typeof(CanvasScaler),
+                typeof(GraphicRaycaster)
+            );
+
             canvas = canvasObject.GetComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         }
@@ -149,37 +174,65 @@ public class AxolotlMemoryGame : MonoBehaviour
         Image background = root.AddComponent<Image>();
         background.color = new Color(0.90f, 0.96f, 1f, 1f);
 
-        titleText = CreateText("Title", root.transform, "Axolotl Memory", 54, TextAnchor.MiddleCenter);
+        titleText = CreateText(
+            "Title",
+            root.transform,
+            "Axolotl Memory",
+            70,
+            TextAnchor.MiddleCenter
+        );
+
         RectTransform titleRect = titleText.GetComponent<RectTransform>();
         titleRect.anchorMin = new Vector2(0.5f, 1f);
         titleRect.anchorMax = new Vector2(0.5f, 1f);
         titleRect.pivot = new Vector2(0.5f, 1f);
         titleRect.anchoredPosition = new Vector2(0, -35);
-        titleRect.sizeDelta = new Vector2(900, 70);
+        titleRect.sizeDelta = new Vector2(950, 85);
 
-        movesText = CreateText("Moves", root.transform, "Moves: 0", 32, TextAnchor.MiddleCenter);
+        movesText = CreateText(
+            "Moves",
+            root.transform,
+            "Moves: 0",
+            44,
+            TextAnchor.MiddleCenter
+        );
+
         RectTransform movesRect = movesText.GetComponent<RectTransform>();
         movesRect.anchorMin = new Vector2(0.5f, 1f);
         movesRect.anchorMax = new Vector2(0.5f, 1f);
         movesRect.pivot = new Vector2(0.5f, 1f);
-        movesRect.anchoredPosition = new Vector2(0, -100);
-        movesRect.sizeDelta = new Vector2(900, 45);
+        movesRect.anchoredPosition = new Vector2(0, -115);
+        movesRect.sizeDelta = new Vector2(900, 55);
 
-        timerText = CreateText("Timer", root.transform, "Time: 00:00", 32, TextAnchor.MiddleCenter);
+        timerText = CreateText(
+            "Timer",
+            root.transform,
+            "Time: 00:00",
+            44,
+            TextAnchor.MiddleCenter
+        );
+
         RectTransform timerRect = timerText.GetComponent<RectTransform>();
         timerRect.anchorMin = new Vector2(0.5f, 1f);
         timerRect.anchorMax = new Vector2(0.5f, 1f);
         timerRect.pivot = new Vector2(0.5f, 1f);
-        timerRect.anchoredPosition = new Vector2(0, -145);
-        timerRect.sizeDelta = new Vector2(900, 45);
+        timerRect.anchoredPosition = new Vector2(0, -170);
+        timerRect.sizeDelta = new Vector2(900, 55);
 
-        bestTimeText = CreateText("BestTime", root.transform, "Best: --:--", 30, TextAnchor.MiddleCenter);
+        bestTimeText = CreateText(
+            "BestTime",
+            root.transform,
+            "Best: --:--",
+            38,
+            TextAnchor.MiddleCenter
+        );
+
         RectTransform bestRect = bestTimeText.GetComponent<RectTransform>();
         bestRect.anchorMin = new Vector2(0.5f, 1f);
         bestRect.anchorMax = new Vector2(0.5f, 1f);
         bestRect.pivot = new Vector2(0.5f, 1f);
-        bestRect.anchoredPosition = new Vector2(0, -190);
-        bestRect.sizeDelta = new Vector2(900, 45);
+        bestRect.anchoredPosition = new Vector2(0, -220);
+        bestRect.sizeDelta = new Vector2(900, 50);
 
         GameObject grid = CreateUIObject("CardGrid", root.transform);
         gridTransform = grid.transform;
@@ -188,7 +241,7 @@ public class AxolotlMemoryGame : MonoBehaviour
         gridRect.anchorMin = new Vector2(0.5f, 0.5f);
         gridRect.anchorMax = new Vector2(0.5f, 0.5f);
         gridRect.pivot = new Vector2(0.5f, 0.5f);
-        gridRect.anchoredPosition = new Vector2(0, -230);
+        gridRect.anchoredPosition = new Vector2(0, -250);
         gridRect.sizeDelta = new Vector2(900, 900);
 
         GridLayoutGroup gridLayout = grid.AddComponent<GridLayoutGroup>();
@@ -198,15 +251,28 @@ public class AxolotlMemoryGame : MonoBehaviour
         gridLayout.constraintCount = columns;
         gridLayout.childAlignment = TextAnchor.MiddleCenter;
 
-        resultText = CreateText("Result", root.transform, "", 38, TextAnchor.MiddleCenter);
+        resultText = CreateText(
+            "Result",
+            root.transform,
+            "",
+            56,
+            TextAnchor.MiddleCenter
+        );
+
         RectTransform resultRect = resultText.GetComponent<RectTransform>();
         resultRect.anchorMin = new Vector2(0.5f, 0f);
         resultRect.anchorMax = new Vector2(0.5f, 0f);
         resultRect.pivot = new Vector2(0.5f, 0f);
         resultRect.anchoredPosition = new Vector2(0, 150);
-        resultRect.sizeDelta = new Vector2(900, 130);
+        resultRect.sizeDelta = new Vector2(1000, 190);
 
-        Button backButton = CreateButton("BackButton", root.transform, "Back", 34);
+        Button backButton = CreateButton(
+            "BackButton",
+            root.transform,
+            "Back",
+            42
+        );
+
         backButton.onClick.AddListener(GoBackToPlayroom);
 
         RectTransform backRect = backButton.GetComponent<RectTransform>();
@@ -216,7 +282,13 @@ public class AxolotlMemoryGame : MonoBehaviour
         backRect.anchoredPosition = new Vector2(-180, 50);
         backRect.sizeDelta = new Vector2(300, 80);
 
-        Button restartButton = CreateButton("RestartButton", root.transform, "Restart", 34);
+        Button restartButton = CreateButton(
+            "RestartButton",
+            root.transform,
+            "Restart",
+            42
+        );
+
         restartButton.onClick.AddListener(StartNewGame);
 
         RectTransform restartRect = restartButton.GetComponent<RectTransform>();
@@ -280,7 +352,13 @@ public class AxolotlMemoryGame : MonoBehaviour
 
     private void CreateCard(Sprite front)
     {
-        GameObject cardObject = new GameObject("Card", typeof(RectTransform), typeof(Image), typeof(Button));
+        GameObject cardObject = new GameObject(
+            "Card",
+            typeof(RectTransform),
+            typeof(Image),
+            typeof(Button)
+        );
+
         cardObject.transform.SetParent(gridTransform, false);
 
         Image image = cardObject.GetComponent<Image>();
@@ -394,11 +472,18 @@ public class AxolotlMemoryGame : MonoBehaviour
 
         if (newBestScore)
         {
-            resultText.text = "You won!\nTime: " + finalTime + "\nNEW BEST SCORE!\nNew item unlocked!";
+            resultText.text =
+                "You won!\n" +
+                "Time: " + finalTime + "\n" +
+                "NEW BEST SCORE!\n" +
+                "New item unlocked!";
         }
         else
         {
-            resultText.text = "You won!\nTime: " + finalTime + "\nNew item unlocked!";
+            resultText.text =
+                "You won!\n" +
+                "Time: " + finalTime + "\n" +
+                "New item unlocked!";
         }
 
         UpdateBestTimeText();
@@ -467,24 +552,46 @@ public class AxolotlMemoryGame : MonoBehaviour
     {
         GameObject obj = new GameObject(objectName, typeof(RectTransform));
         obj.transform.SetParent(parent, false);
+
         return obj;
     }
 
-    private Text CreateText(string objectName, Transform parent, string text, int size, TextAnchor anchor)
+    private Text CreateText(
+        string objectName,
+        Transform parent,
+        string text,
+        int size,
+        TextAnchor anchor
+    )
     {
         GameObject obj = CreateUIObject(objectName, parent);
 
         Text uiText = obj.AddComponent<Text>();
+
         uiText.font = font;
         uiText.text = text;
         uiText.fontSize = size;
         uiText.alignment = anchor;
-        uiText.color = new Color(0.18f, 0.15f, 0.22f, 1f);
+        uiText.color = normalTextColor;
+        uiText.fontStyle = FontStyle.Bold;
+
+        uiText.horizontalOverflow = HorizontalWrapMode.Overflow;
+        uiText.verticalOverflow = VerticalWrapMode.Overflow;
+
+        Shadow shadow = obj.AddComponent<Shadow>();
+        shadow.effectColor = shadowColor;
+        shadow.effectDistance = shadowOffset;
+        shadow.useGraphicAlpha = true;
 
         return uiText;
     }
 
-    private Button CreateButton(string objectName, Transform parent, string text, int textSize)
+    private Button CreateButton(
+        string objectName,
+        Transform parent,
+        string text,
+        int textSize
+    )
     {
         GameObject obj = CreateUIObject(objectName, parent);
 
@@ -493,7 +600,13 @@ public class AxolotlMemoryGame : MonoBehaviour
 
         Button button = obj.AddComponent<Button>();
 
-        Text buttonText = CreateText("Text", obj.transform, text, textSize, TextAnchor.MiddleCenter);
+        Text buttonText = CreateText(
+            "Text",
+            obj.transform,
+            text,
+            textSize,
+            TextAnchor.MiddleCenter
+        );
 
         RectTransform textRect = buttonText.GetComponent<RectTransform>();
         textRect.anchorMin = Vector2.zero;
@@ -510,7 +623,12 @@ public class AxolotlMemoryGame : MonoBehaviour
     {
         if (FindObjectOfType<EventSystem>() == null)
         {
-            GameObject eventSystem = new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
+            GameObject eventSystem = new GameObject(
+                "EventSystem",
+                typeof(EventSystem),
+                typeof(StandaloneInputModule)
+            );
+
             DontDestroyOnLoad(eventSystem);
         }
     }
