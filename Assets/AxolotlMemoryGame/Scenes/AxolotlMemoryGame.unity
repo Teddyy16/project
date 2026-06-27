@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &1765714656
+--- !u!1 &556907094
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,8 +127,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1765714658}
-  - component: {fileID: 1765714657}
+  - component: {fileID: 556907096}
+  - component: {fileID: 556907095}
   m_Layer: 0
   m_Name: AxolotlMemoryGame
   m_TagString: Untagged
@@ -136,13 +136,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1765714657
+--- !u!114 &556907095
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1765714656}
+  m_GameObject: {fileID: 556907094}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abd70a13efb0b482c8459c2325d37348, type: 3}
@@ -150,20 +150,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   columns: 4
   flipBackDelay: 0.75
-  weeklyquest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
+  weeklyquest: {fileID: 0}
   playroomSceneName: Playroom
   titleText: {fileID: 0}
   resultText: {fileID: 0}
   movesText: {fileID: 0}
   timerText: {fileID: 0}
   bestTimeText: {fileID: 0}
---- !u!4 &1765714658
+  normalTextColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0, g: 0, b: 0, a: 0.55}
+  shadowOffset: {x: 5, y: -6}
+--- !u!4 &556907096
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1765714656}
+  m_GameObject: {fileID: 556907094}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -176,4 +179,4 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1765714658}
+  - {fileID: 556907096}

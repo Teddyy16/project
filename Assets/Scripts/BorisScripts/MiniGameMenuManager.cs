@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,8 +20,12 @@ public class MiniGameMenuManager : MonoBehaviour
     public string miniGame2SceneName = "MiniGame2";
     public string miniGame3SceneName = "FridgeStackingGame";
 
+    private bool isLoading;
+
     private void Start()
     {
+        SetupButtonClickAreas();
+
         if (miniGameMenuPanel != null)
         {
             miniGameMenuPanel.SetActive(false);
@@ -32,8 +37,48 @@ public class MiniGameMenuManager : MonoBehaviour
         }
     }
 
+    private void SetupButtonClickAreas()
+    {
+        if (miniGameMenuPanel == null)
+        {
+            return;
+        }
+
+        SetTransparentPartsNotClickable("MemoryCardGameButton");
+        SetTransparentPartsNotClickable("Game2Button");
+        SetTransparentPartsNotClickable("Game3Button");
+        SetTransparentPartsNotClickable("CloseButton");
+    }
+
+    private void SetTransparentPartsNotClickable(string buttonObjectName)
+    {
+        Transform buttonTransform = miniGameMenuPanel.transform.Find(buttonObjectName);
+
+        if (buttonTransform == null)
+        {
+            Debug.LogWarning("Could not find menu button: " + buttonObjectName);
+            return;
+        }
+
+        Image buttonImage = buttonTransform.GetComponent<Image>();
+
+        if (buttonImage == null)
+        {
+            Debug.LogWarning("No Image component on: " + buttonObjectName);
+            return;
+        }
+
+        buttonImage.raycastTarget = true;
+        buttonImage.alphaHitTestMinimumThreshold = 0.1f;
+    }
+
     public void OpenMenu()
     {
+        if (isLoading)
+        {
+            return;
+        }
+
         if (miniGameMenuPanel == null)
         {
             Debug.LogError("MiniGameMenuPanel is NOT assigned in Inspector!");
@@ -56,6 +101,11 @@ public class MiniGameMenuManager : MonoBehaviour
 
     public void CloseMenu()
     {
+        if (isLoading)
+        {
+            return;
+        }
+
         if (miniGameMenuPanel != null)
         {
             miniGameMenuPanel.SetActive(false);
@@ -84,6 +134,11 @@ public class MiniGameMenuManager : MonoBehaviour
 
     private void TryOpenMiniGame(string sceneName)
     {
+        if (isLoading)
+        {
+            return;
+        }
+
         if (EnergyBar.Instance == null)
         {
             Debug.LogError("EnergyBar is missing from the scene.");
@@ -92,7 +147,7 @@ public class MiniGameMenuManager : MonoBehaviour
 
         if (EnergyBar.Instance.TryUseEnergy(energyCost))
         {
-            SceneManager.LoadScene(sceneName);
+            StartCoroutine(LoadMiniGameAsync(sceneName));
         }
         else
         {
@@ -102,6 +157,23 @@ public class MiniGameMenuManager : MonoBehaviour
             {
                 messageText.text = "Not enough energy!";
             }
+        }
+    }
+
+    private IEnumerator LoadMiniGameAsync(string sceneName)
+    {
+        isLoading = true;
+
+        if (messageText != null)
+        {
+            messageText.text = "Loading...";
+        }
+
+        AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(sceneName);
+
+        while (!loadingOperation.isDone)
+        {
+            yield return null;
         }
     }
 }
