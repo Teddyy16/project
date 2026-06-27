@@ -2214,7 +2214,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 719283230}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3104,7 +3104,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1412985578}
+  m_Father: {fileID: 719283229}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4136,11 +4136,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327694860}
   m_CullTransparentMesh: 1
---- !u!224 &1356170192 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 947910004561840366, guid: 43f78810c18086c45930e7d528134166, type: 3}
-  m_PrefabInstance: {fileID: 719283225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1358820540
 GameObject:
   m_ObjectHideFlags: 0
@@ -4421,11 +4416,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!224 &1412985578 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4178211966378938619, guid: 43f78810c18086c45930e7d528134166, type: 3}
-  m_PrefabInstance: {fileID: 719283225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1496488152
 GameObject:
   m_ObjectHideFlags: 0
@@ -4958,15 +4948,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1991350417205656071, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_Color.b
-      value: 0.96862745
+      value: 0.7529412
       objectReference: {fileID: 0}
     - target: {fileID: 1991350417205656071, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_Color.g
-      value: 0.58431375
+      value: 0.92941177
       objectReference: {fileID: 0}
     - target: {fileID: 1991350417205656071, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_Color.r
-      value: 0.9882353
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3575452550325330644, guid: 2dd427f85a402c2419922d4d592852f1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5116,7 +5106,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1356170192}
+  m_Father: {fileID: 719283230}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9706,3 +9696,4 @@ SceneRoots:
   - {fileID: 628317885}
   - {fileID: 416667252}
   - {fileID: 1509478359}
+  - {fileID: 506031624}
