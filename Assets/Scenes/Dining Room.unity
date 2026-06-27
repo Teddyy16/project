@@ -9641,6 +9641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fridgeDoorController: {fileID: 0}
+  glowingEffect: {fileID: 0}
 --- !u!1 &1792255559 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6600043419264906521, guid: 59d9c8339adc946c2898a573ad01c0a2, type: 3}
@@ -9747,6 +9748,7 @@ GameObject:
   - component: {fileID: 1827361283}
   - component: {fileID: 1827361282}
   - component: {fileID: 1827361281}
+  - component: {fileID: 1827361285}
   m_Layer: 0
   m_Name: Fridge door
   m_TagString: Untagged
@@ -9783,6 +9785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fridgeDoorController: {fileID: 791996831}
+  glowingEffect: {fileID: 0}
 --- !u!65 &1827361282
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9858,6 +9861,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827361279}
   m_Mesh: {fileID: -5495902117074765545, guid: d6373c2c0ceb740ae879090634d79164, type: 3}
+--- !u!114 &1827361285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827361279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85edaccd3fc21422e8013223656b4e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  glowColor: {r: 0.41852084, g: 0.82890147, b: 0.9339623, a: 1}
+  minGlow: 0.2
+  maxGlow: 0.5
+  pulseSpeed: 2
+  createPointLight: 1
+  minLightIntensity: 0.3
+  maxLightIntensity: 2
+  lightRange: 2
+  lightOffset: {x: 0, y: 0.5, z: 0}
 --- !u!1 &1855802040
 GameObject:
   m_ObjectHideFlags: 0
