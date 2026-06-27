@@ -475,9 +475,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1970605304}
     m_Modifications:
+    - target: {fileID: 1126988227874145415, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 96.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1126988227874145415, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 70.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1126988227874145415, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -9.2
+      objectReference: {fileID: 0}
     - target: {fileID: 1591692110917717225, guid: 43f78810c18086c45930e7d528134166, type: 3}
       propertyPath: m_Name
       value: Bars v2 (Steef)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219243486815197028, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_Color.b
+      value: 0.42331788
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219243486815197028, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9547169
+      objectReference: {fileID: 0}
+    - target: {fileID: 3219243486815197028, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_Color.r
+      value: 0.45228183
       objectReference: {fileID: 0}
     - target: {fileID: 3219243486815197028, guid: 43f78810c18086c45930e7d528134166, type: 3}
       propertyPath: m_Material
@@ -486,6 +510,22 @@ PrefabInstance:
     - target: {fileID: 3219243486815197028, guid: 43f78810c18086c45930e7d528134166, type: 3}
       propertyPath: m_FillAmount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178211966378938619, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 81.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 7033233864301792906, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 96.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7033233864301792906, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 70.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7033233864301792906, guid: 43f78810c18086c45930e7d528134166, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7.7
       objectReference: {fileID: 0}
     - target: {fileID: 7690297570883446976, guid: 43f78810c18086c45930e7d528134166, type: 3}
       propertyPath: m_Pivot.x
@@ -650,7 +690,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 814e4ae966b3c6545a4801f9d76246ab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b505ae8922aa0f4baee6099280d747b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7995,7 +8035,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 330659966}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8891,7 +8931,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 330659967}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9475,7 +9515,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 814e4ae966b3c6545a4801f9d76246ab, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b505ae8922aa0f4baee6099280d747b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10990,3 +11030,5 @@ SceneRoots:
   - {fileID: 503301994}
   - {fileID: 768920826}
   - {fileID: 100262367}
+  - {fileID: 1049894128}
+  - {fileID: 1492172855}
