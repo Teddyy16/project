@@ -152,7 +152,9 @@ MonoBehaviour:
   flipBackDelay: 0.75
   weeklyquest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
   playroomSceneName: Playroom
-  titleText: {fileID: 0}
+  backButtonSprite: {fileID: 21300000, guid: 37f474ae1badad647a2452463a3428ea, type: 3}
+  restartButtonSprite: {fileID: 21300000, guid: 20659d4cd40804446bcf2f821798f973, type: 3}
+  buttonSpritesContainText: 1
   resultText: {fileID: 0}
   movesText: {fileID: 0}
   timerText: {fileID: 0}
