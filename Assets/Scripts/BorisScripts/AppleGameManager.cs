@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class AppleGameManager : MonoBehaviour
 {
@@ -16,22 +17,45 @@ public class AppleGameManager : MonoBehaviour
     [Header("Unlock Save")]
     public string unlockSaveKey = "Unlocked_Apple_Item";
 
+    [Header("Font")]
+    public TMP_FontAsset gameFont;
+
     [Header("UI")]
-    public Text timerText;
-    public Text appleCounterText;
-    public Text gameOverText;
-    public Text unlockText;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI appleCounterText;
+    public TextMeshProUGUI gameOverText;
+    public TextMeshProUGUI unlockText;
     public Button backButton;
 
-    [Header("UI Settings")]
-    public int uiFontSize = 42;
-    public int messageFontSize = 60;
+    [Header("Text Sizes")]
+    public float uiFontSize = 260f;
+    public float uiTextScale = 1.45f;
+
+    public float messageFontSize = 170f;
+    public float unlockFontSize = 88f;
+    public float buttonFontSize = 60f;
+
+    [Header("3D Text Effect")]
+    public Color textFaceColor = Color.white;
+
+    public Color textDepthColor =
+        new Color(0.22f, 0.42f, 0.9f, 1f);
+
+    public Color textRimColor =
+        new Color(0.8f, 0.92f, 1f, 1f);
+
+    [Range(0f, 0.5f)]
+    public float textDepthSize = 0.16f;
+
+    [Range(-1f, 1f)]
+    public float textDepthOffsetX = 0.015f;
+
+    [Range(-1f, 1f)]
+    public float textDepthOffsetY = -0.18f;
 
     private float currentTime;
-    private int appleCount = 0;
+    private int appleCount;
     private bool gameRunning = true;
-
-    private Font defaultFont;
 
     private void Awake()
     {
@@ -40,13 +64,14 @@ public class AppleGameManager : MonoBehaviour
 
     private void Start()
     {
-        defaultFont = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
         CreateUIIfMissing();
 
         currentTime = gameTime;
         appleCount = 0;
         gameRunning = true;
+
+        ApplyStyleToAllTexts();
+        SetAllTextPositions();
 
         if (gameOverText != null)
         {
@@ -115,8 +140,6 @@ public class AppleGameManager : MonoBehaviour
         }
 
         CheckUnlockReward();
-
-        Debug.Log("Player hit a fork. Game Over.");
     }
 
     public void GameOver()
@@ -140,8 +163,6 @@ public class AppleGameManager : MonoBehaviour
         }
 
         CheckUnlockReward();
-
-        Debug.Log("Apple mini-game ended. Apples collected: " + appleCount);
     }
 
     private void CheckUnlockReward()
@@ -156,8 +177,6 @@ public class AppleGameManager : MonoBehaviour
                 unlockText.gameObject.SetActive(true);
                 unlockText.text = "You unlocked item!";
             }
-
-            Debug.Log("Unlocked item from Apple mini-game.");
         }
         else
         {
@@ -165,8 +184,6 @@ public class AppleGameManager : MonoBehaviour
             {
                 unlockText.gameObject.SetActive(false);
             }
-
-            Debug.Log("Not enough apples to unlock item. Needed: " + applesNeededToUnlock + ", collected: " + appleCount);
         }
     }
 
@@ -174,7 +191,7 @@ public class AppleGameManager : MonoBehaviour
     {
         if (timerText != null)
         {
-            timerText.text = "Time: " + Mathf.CeilToInt(currentTime).ToString();
+            timerText.text = "Time: " + Mathf.CeilToInt(currentTime);
         }
     }
 
@@ -182,7 +199,189 @@ public class AppleGameManager : MonoBehaviour
     {
         if (appleCounterText != null)
         {
-            appleCounterText.text = "Apples: " + appleCount.ToString();
+            appleCounterText.text = "Apples: " + appleCount;
+        }
+    }
+
+    private void ApplyStyleToAllTexts()
+    {
+        ApplyAxolotl3DStyle(
+            timerText,
+            uiFontSize,
+            uiTextScale
+        );
+
+        ApplyAxolotl3DStyle(
+            appleCounterText,
+            uiFontSize,
+            uiTextScale
+        );
+
+        ApplyAxolotl3DStyle(
+            gameOverText,
+            messageFontSize,
+            1f
+        );
+
+        ApplyAxolotl3DStyle(
+            unlockText,
+            unlockFontSize,
+            1f
+        );
+
+        if (backButton != null)
+        {
+            TextMeshProUGUI buttonText =
+                backButton.GetComponentInChildren<TextMeshProUGUI>();
+
+            ApplyAxolotl3DStyle(
+                buttonText,
+                buttonFontSize,
+                1f
+            );
+        }
+    }
+
+    private void ApplyAxolotl3DStyle(
+        TextMeshProUGUI text,
+        float fontSize,
+        float textScale
+    )
+    {
+        if (text == null)
+        {
+            return;
+        }
+
+        if (gameFont != null)
+        {
+            text.font = gameFont;
+        }
+
+        text.enableAutoSizing = false;
+        text.fontSize = fontSize;
+        text.fontSizeMin = fontSize;
+        text.fontSizeMax = fontSize;
+
+        text.color = textFaceColor;
+        text.alignment = TextAlignmentOptions.Center;
+        text.enableWordWrapping = false;
+        text.overflowMode = TextOverflowModes.Overflow;
+        text.raycastTarget = false;
+
+        text.rectTransform.localScale =
+            Vector3.one * textScale;
+
+        Material styleMaterial =
+            new Material(text.fontSharedMaterial);
+
+        styleMaterial.EnableKeyword("UNDERLAY_ON");
+
+        styleMaterial.SetColor(
+            ShaderUtilities.ID_FaceColor,
+            textFaceColor
+        );
+
+        styleMaterial.SetFloat(
+            ShaderUtilities.ID_OutlineWidth,
+            0.035f
+        );
+
+        styleMaterial.SetColor(
+            ShaderUtilities.ID_OutlineColor,
+            textRimColor
+        );
+
+        styleMaterial.SetColor(
+            ShaderUtilities.ID_UnderlayColor,
+            textDepthColor
+        );
+
+        styleMaterial.SetFloat(
+            ShaderUtilities.ID_UnderlayOffsetX,
+            textDepthOffsetX
+        );
+
+        styleMaterial.SetFloat(
+            ShaderUtilities.ID_UnderlayOffsetY,
+            textDepthOffsetY
+        );
+
+        styleMaterial.SetFloat(
+            ShaderUtilities.ID_UnderlayDilate,
+            textDepthSize
+        );
+
+        styleMaterial.SetFloat(
+            ShaderUtilities.ID_UnderlaySoftness,
+            0f
+        );
+
+        text.fontMaterial = styleMaterial;
+        text.UpdateMeshPadding();
+    }
+
+    private void SetAllTextPositions()
+    {
+        if (timerText != null)
+        {
+            RectTransform rect = timerText.rectTransform;
+
+            rect.anchorMin = new Vector2(0.5f, 1f);
+            rect.anchorMax = new Vector2(0.5f, 1f);
+            rect.pivot = new Vector2(0.5f, 1f);
+
+            rect.anchoredPosition = new Vector2(0f, -35f);
+            rect.sizeDelta = new Vector2(1400f, 340f);
+        }
+
+        if (appleCounterText != null)
+        {
+            RectTransform rect = appleCounterText.rectTransform;
+
+            rect.anchorMin = new Vector2(0.5f, 1f);
+            rect.anchorMax = new Vector2(0.5f, 1f);
+            rect.pivot = new Vector2(0.5f, 1f);
+
+            rect.anchoredPosition = new Vector2(0f, -285f);
+            rect.sizeDelta = new Vector2(1400f, 340f);
+        }
+
+        if (gameOverText != null)
+        {
+            RectTransform rect = gameOverText.rectTransform;
+
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+
+            rect.anchoredPosition = new Vector2(0f, 130f);
+            rect.sizeDelta = new Vector2(1080f, 260f);
+        }
+
+        if (unlockText != null)
+        {
+            RectTransform rect = unlockText.rectTransform;
+
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+
+            rect.anchoredPosition = new Vector2(0f, -30f);
+            rect.sizeDelta = new Vector2(1050f, 190f);
+        }
+
+        if (backButton != null)
+        {
+            RectTransform rect =
+                backButton.GetComponent<RectTransform>();
+
+            rect.anchorMin = new Vector2(1f, 1f);
+            rect.anchorMax = new Vector2(1f, 1f);
+            rect.pivot = new Vector2(1f, 1f);
+
+            rect.anchoredPosition = new Vector2(-45f, -45f);
+            rect.sizeDelta = new Vector2(300f, 115f);
         }
     }
 
@@ -192,13 +391,21 @@ public class AppleGameManager : MonoBehaviour
 
         if (canvas == null)
         {
-            GameObject canvasObject = new GameObject("Canvas");
+            GameObject canvasObject =
+                new GameObject("Canvas", typeof(RectTransform));
+
             canvas = canvasObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-            CanvasScaler scaler = canvasObject.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1080, 1920);
+            CanvasScaler scaler =
+                canvasObject.AddComponent<CanvasScaler>();
+
+            scaler.uiScaleMode =
+                CanvasScaler.ScaleMode.ScaleWithScreenSize;
+
+            scaler.referenceResolution =
+                new Vector2(1080, 1920);
+
             scaler.matchWidthOrHeight = 0.5f;
 
             canvasObject.AddComponent<GraphicRaycaster>();
@@ -206,115 +413,127 @@ public class AppleGameManager : MonoBehaviour
 
         if (timerText == null)
         {
-            timerText = CreateText("TimerText", canvas.transform, "Time: 30", uiFontSize);
-
-            RectTransform rect = timerText.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0.5f, 1f);
-            rect.anchorMax = new Vector2(0.5f, 1f);
-            rect.pivot = new Vector2(0.5f, 1f);
-            rect.anchoredPosition = new Vector2(0f, -40f);
-            rect.sizeDelta = new Vector2(500f, 80f);
+            timerText = CreateText(
+                "TimerText",
+                canvas.transform,
+                "Time: 30",
+                uiFontSize,
+                uiTextScale
+            );
         }
 
         if (appleCounterText == null)
         {
-            appleCounterText = CreateText("AppleCounterText", canvas.transform, "Apples: 0", uiFontSize);
-
-            RectTransform rect = appleCounterText.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0.5f, 1f);
-            rect.anchorMax = new Vector2(0.5f, 1f);
-            rect.pivot = new Vector2(0.5f, 1f);
-            rect.anchoredPosition = new Vector2(0f, -110f);
-            rect.sizeDelta = new Vector2(500f, 80f);
+            appleCounterText = CreateText(
+                "AppleCounterText",
+                canvas.transform,
+                "Apples: 0",
+                uiFontSize,
+                uiTextScale
+            );
         }
 
         if (gameOverText == null)
         {
-            gameOverText = CreateText("GameOverText", canvas.transform, "Game Over!", messageFontSize);
-
-            RectTransform rect = gameOverText.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0.5f, 0.5f);
-            rect.anchorMax = new Vector2(0.5f, 0.5f);
-            rect.pivot = new Vector2(0.5f, 0.5f);
-            rect.anchoredPosition = new Vector2(0f, 80f);
-            rect.sizeDelta = new Vector2(900f, 120f);
+            gameOverText = CreateText(
+                "GameOverText",
+                canvas.transform,
+                "Game Over!",
+                messageFontSize,
+                1f
+            );
         }
 
         if (unlockText == null)
         {
-            unlockText = CreateText("UnlockText", canvas.transform, "You unlocked item!", messageFontSize);
-
-            RectTransform rect = unlockText.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0.5f, 0.5f);
-            rect.anchorMax = new Vector2(0.5f, 0.5f);
-            rect.pivot = new Vector2(0.5f, 0.5f);
-            rect.anchoredPosition = new Vector2(0f, -20f);
-            rect.sizeDelta = new Vector2(900f, 120f);
+            unlockText = CreateText(
+                "UnlockText",
+                canvas.transform,
+                "You unlocked item!",
+                unlockFontSize,
+                1f
+            );
         }
 
         if (backButton == null)
         {
-            backButton = CreateButton("BackButton", canvas.transform, "Back", 34);
-
-            RectTransform rect = backButton.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(1f, 1f);
-            rect.anchorMax = new Vector2(1f, 1f);
-            rect.pivot = new Vector2(1f, 1f);
-            rect.anchoredPosition = new Vector2(-40f, -40f);
-            rect.sizeDelta = new Vector2(220f, 80f);
+            backButton = CreateButton(
+                "BackButton",
+                canvas.transform,
+                "Back",
+                buttonFontSize
+            );
         }
     }
 
-    private Text CreateText(string objectName, Transform parent, string text, int fontSize)
+    private TextMeshProUGUI CreateText(
+        string objectName,
+        Transform parent,
+        string textValue,
+        float fontSize,
+        float textScale
+    )
     {
-        GameObject textObject = new GameObject(objectName);
+        GameObject textObject =
+            new GameObject(objectName, typeof(RectTransform));
+
         textObject.transform.SetParent(parent, false);
 
-        RectTransform rect = textObject.AddComponent<RectTransform>();
+        TextMeshProUGUI uiText =
+            textObject.AddComponent<TextMeshProUGUI>();
 
-        Text uiText = textObject.AddComponent<Text>();
-        uiText.font = defaultFont;
-        uiText.text = text;
-        uiText.fontSize = fontSize;
-        uiText.alignment = TextAnchor.MiddleCenter;
-        uiText.color = Color.white;
+        uiText.text = textValue;
+        uiText.alignment = TextAlignmentOptions.Center;
 
-        Outline outline = textObject.AddComponent<Outline>();
-        outline.effectColor = Color.black;
-        outline.effectDistance = new Vector2(2f, -2f);
+        ApplyAxolotl3DStyle(
+            uiText,
+            fontSize,
+            textScale
+        );
 
         return uiText;
     }
 
-    private Button CreateButton(string objectName, Transform parent, string text, int textSize)
+    private Button CreateButton(
+        string objectName,
+        Transform parent,
+        string buttonTextValue,
+        float textSize
+    )
     {
-        GameObject buttonObject = new GameObject(objectName);
-        buttonObject.transform.SetParent(parent, false);
+        GameObject buttonObject =
+            new GameObject(objectName, typeof(RectTransform));
 
-        RectTransform rect = buttonObject.AddComponent<RectTransform>();
+        buttonObject.transform.SetParent(parent, false);
 
         Image image = buttonObject.AddComponent<Image>();
         image.color = new Color(0.95f, 0.35f, 0.65f, 1f);
 
         Button button = buttonObject.AddComponent<Button>();
 
-        Text buttonText = CreateText("Text", buttonObject.transform, text, textSize);
+        TextMeshProUGUI buttonText = CreateText(
+            "Text",
+            buttonObject.transform,
+            buttonTextValue,
+            textSize,
+            1f
+        );
 
-        RectTransform textRect = buttonText.GetComponent<RectTransform>();
+        RectTransform textRect = buttonText.rectTransform;
+
         textRect.anchorMin = Vector2.zero;
         textRect.anchorMax = Vector2.one;
         textRect.offsetMin = Vector2.zero;
         textRect.offsetMax = Vector2.zero;
-
-        buttonText.alignment = TextAnchor.MiddleCenter;
-        buttonText.color = Color.white;
 
         return button;
     }
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().name
+        );
     }
 
     public void GoBackToPlayroom()
