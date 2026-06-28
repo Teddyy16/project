@@ -14,8 +14,12 @@ public class AppleGameManager : MonoBehaviour
     [Header("Scene")]
     public string playroomSceneName = "Playroom";
 
-    [Header("Unlock Save")]
-    public string unlockSaveKey = "Unlocked_Apple_Item";
+    [Header("Weekly Quest Reward")]
+    public WeeklyQuest weeklyQuest;
+    public ItemsUnlock itemsUnlock;
+
+    [Tooltip("Prevents the Apple mini game from giving more than one reward.")]
+    public string appleRewardGivenKey = "AppleGameRewardGiven";
 
     [Header("Font")]
     public TMP_FontAsset gameFont;
@@ -121,6 +125,8 @@ public class AppleGameManager : MonoBehaviour
         appleCount++;
         UpdateAppleCounterUI();
 
+        CheckUnlockReward();
+
         Debug.Log("Apple collected. Current apples: " + appleCount);
     }
 
@@ -138,8 +144,6 @@ public class AppleGameManager : MonoBehaviour
             gameOverText.gameObject.SetActive(true);
             gameOverText.text = "Game Over!";
         }
-
-        CheckUnlockReward();
     }
 
     public void GameOver()
@@ -161,30 +165,56 @@ public class AppleGameManager : MonoBehaviour
             gameOverText.gameObject.SetActive(true);
             gameOverText.text = "Time's up!";
         }
-
-        CheckUnlockReward();
     }
 
     private void CheckUnlockReward()
     {
-        if (appleCount >= applesNeededToUnlock)
-        {
-            PlayerPrefs.SetInt(unlockSaveKey, 1);
-            PlayerPrefs.Save();
+        bool rewardAlreadyGiven =
+            PlayerPrefs.GetInt(appleRewardGivenKey, 0) == 1;
 
-            if (unlockText != null)
-            {
-                unlockText.gameObject.SetActive(true);
-                unlockText.text = "You unlocked item!";
-            }
-        }
-        else
+        if (rewardAlreadyGiven)
         {
-            if (unlockText != null)
-            {
-                unlockText.gameObject.SetActive(false);
-            }
+            return;
         }
+
+        if (appleCount < applesNeededToUnlock)
+        {
+            return;
+        }
+
+        if (weeklyQuest == null)
+        {
+            Debug.LogWarning(
+                "WeeklyQuest is missing in AppleGameManager."
+            );
+
+            return;
+        }
+
+        weeklyQuest.AddRandomIndex();
+
+        if (itemsUnlock != null)
+        {
+            itemsUnlock.SendMessage(
+                "UpdateUnlockedProducts",
+                SendMessageOptions.DontRequireReceiver
+            );
+
+            itemsUnlock.TryGiveAnimal();
+        }
+
+        PlayerPrefs.SetInt(appleRewardGivenKey, 1);
+        PlayerPrefs.Save();
+
+        if (unlockText != null)
+        {
+            unlockText.gameObject.SetActive(true);
+            unlockText.text = "New item unlocked!";
+        }
+
+        Debug.Log(
+            "20 apples collected. Weekly Quest unlocked one random item."
+        );
     }
 
     private void UpdateTimerUI()
