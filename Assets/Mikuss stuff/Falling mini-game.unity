@@ -2175,6 +2175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1505331465}
   - component: {fileID: 1505331464}
+  - component: {fileID: 1505331466}
   m_Layer: 0
   m_Name: AppleGameManager
   m_TagString: Untagged
@@ -2198,13 +2199,23 @@ MonoBehaviour:
   applesNeededToUnlock: 20
   playroomSceneName: Playroom
   unlockSaveKey: Unlocked_Apple_Item
+  gameFont: {fileID: 0}
   timerText: {fileID: 0}
   appleCounterText: {fileID: 0}
   gameOverText: {fileID: 0}
   unlockText: {fileID: 0}
   backButton: {fileID: 0}
   uiFontSize: 42
+  uiTextScale: 1.45
   messageFontSize: 60
+  unlockFontSize: 88
+  buttonFontSize: 60
+  textFaceColor: {r: 1, g: 1, b: 1, a: 1}
+  textDepthColor: {r: 0.22, g: 0.42, b: 0.9, a: 1}
+  textRimColor: {r: 0.8, g: 0.92, b: 1, a: 1}
+  textDepthSize: 0.16
+  textDepthOffsetX: 0.015
+  textDepthOffsetY: -0.18
 --- !u!4 &1505331465
 Transform:
   m_ObjectHideFlags: 0
@@ -2220,6 +2231,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1505331466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505331463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cacfc53761e5645d7a453c2211b15d45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1505331464}
+  canvas: {fileID: 44398569}
+  gameFont: {fileID: 11400000, guid: f2c0fd20d54294542b6e425294e4abd9, type: 2}
+  instructionText: Move left and right!
+  startText: Tap anywhere to start
 --- !u!1 &2016100051
 GameObject:
   m_ObjectHideFlags: 0
