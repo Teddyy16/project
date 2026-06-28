@@ -2198,9 +2198,9 @@ MonoBehaviour:
   gameTime: 30
   applesNeededToUnlock: 20
   playroomSceneName: Playroom
-  weeklyquest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
-  unlockSaveKey: Unlocked_Apple_Item
-  totalApplesSaveKey: Apple_Quest_Total
+  weeklyQuest: {fileID: 11400000, guid: c9dff76306b929943b3cff7e19c74add, type: 2}
+  itemsUnlock: {fileID: 0}
+  appleRewardGivenKey: AppleGameRewardGiven
   gameFont: {fileID: 11400000, guid: f2c0fd20d54294542b6e425294e4abd9, type: 2}
   timerText: {fileID: 0}
   appleCounterText: {fileID: 0}
