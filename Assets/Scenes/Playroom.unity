@@ -421,6 +421,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4178211966378938619, guid: 43f78810c18086c45930e7d528134166, type: 3}
   m_PrefabInstance: {fileID: 199651680}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &199651684 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3219243486815197028, guid: 43f78810c18086c45930e7d528134166, type: 3}
+  m_PrefabInstance: {fileID: 199651680}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &253534439
 GameObject:
   m_ObjectHideFlags: 0
@@ -6864,7 +6875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50a7acffed5ad4632bc5e4f0dcff482c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hungerFill: {fileID: 0}
+  hungerFill: {fileID: 199651684}
   energyBar: {fileID: 0}
   maxHunger: 100
   currentHunger: 0
@@ -7192,7 +7203,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 1, g: 0.88399005, b: 0.5943395, a: 1}
+  m_Color: {r: 0.99371064, g: 0.91270655, b: 0.71559656, a: 1}
   m_Intensity: 15
   m_Range: 13.71
   m_SpotAngle: 30

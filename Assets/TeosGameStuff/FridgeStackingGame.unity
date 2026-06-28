@@ -597,7 +597,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 11fa3b02393bcac43a4478c47acb1398, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9e5f5ea5be4e1d24995856ad2192c151, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2870,7 +2870,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5150a0887f3792d4faaa7903a50a01f3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8adaf0732149b4c468a7abd164b9f4ac, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6581,6 +6581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fridgeDoorController: {fileID: 1702665750}
+  glowingEffect: {fileID: 0}
 --- !u!114 &4735410855399200968
 MonoBehaviour:
   m_ObjectHideFlags: 0
