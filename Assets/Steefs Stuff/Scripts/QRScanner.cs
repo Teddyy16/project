@@ -20,8 +20,15 @@ public class QRScanner : MonoBehaviour
     public RawImage cameraPreview;
     public TextMeshProUGUI scannedCodeText;
 
+    [Header("Fixed Text Position")]
+    public Vector2 messagePosition = new Vector2(0f, 620f);
+
+    [Header("Text Sizes")]
+    public float idleMessageFontSize = 110f;
+    public float temporaryMessageFontSize = 78f;
+
     [Header("Reward")]
-    public int rewardCoins = 10;
+    public int rewardCoins = 100;
     public bool allowSameCodeOnlyOnce = true;
 
     [Header("Scanner Settings")]
@@ -49,6 +56,8 @@ public class QRScanner : MonoBehaviour
         {
             Debug.LogError("QRScanner needs a RawImage.");
         }
+
+        ConfigureScannerMessageBase();
     }
 
     private void OnEnable()
@@ -96,7 +105,12 @@ public class QRScanner : MonoBehaviour
                 webcamTexture.Stop();
             }
 
-            webcamTexture = new WebCamTexture(selectedCamera, 1280, 720, 30);
+            webcamTexture = new WebCamTexture(
+                selectedCamera,
+                1280,
+                720,
+                30
+            );
         }
 
         if (cameraPreview != null)
@@ -108,7 +122,11 @@ public class QRScanner : MonoBehaviour
 
         float waitTime = 0f;
 
-        while (webcamTexture != null && webcamTexture.width < 100 && waitTime < 10f)
+        while (
+            webcamTexture != null &&
+            webcamTexture.width < 100 &&
+            waitTime < 10f
+        )
         {
             waitTime += Time.deltaTime;
             yield return null;
@@ -122,6 +140,10 @@ public class QRScanner : MonoBehaviour
         }
 
         ApplyCameraRotation();
+
+        yield return null;
+
+        ConfigureScannerMessageBase();
 
         snap = new Texture2D(
             webcamTexture.width,
@@ -145,7 +167,10 @@ public class QRScanner : MonoBehaviour
 
             float waitTime = 0f;
 
-            while (!Permission.HasUserAuthorizedPermission(Permission.Camera) && waitTime < 10f)
+            while (
+                !Permission.HasUserAuthorizedPermission(Permission.Camera) &&
+                waitTime < 10f
+            )
             {
                 waitTime += Time.deltaTime;
                 yield return null;
@@ -154,7 +179,9 @@ public class QRScanner : MonoBehaviour
 #elif UNITY_IOS
         if (!Application.HasUserAuthorization(UserAuthorization.WebCam))
         {
-            yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
+            yield return Application.RequestUserAuthorization(
+                UserAuthorization.WebCam
+            );
         }
 #else
         yield return null;
@@ -184,7 +211,8 @@ public class QRScanner : MonoBehaviour
         cameraPreview.rectTransform.localEulerAngles =
             new Vector3(0f, 0f, -angle);
 
-        float verticalScale = webcamTexture.videoVerticallyMirrored ? -1f : 1f;
+        float verticalScale =
+            webcamTexture.videoVerticallyMirrored ? -1f : 1f;
 
         cameraPreview.rectTransform.localScale =
             new Vector3(1f, verticalScale, 1f);
@@ -194,7 +222,11 @@ public class QRScanner : MonoBehaviour
     {
         IBarcodeReader reader = new BarcodeReader();
 
-        while (scannerReady && webcamTexture != null && webcamTexture.isPlaying)
+        while (
+            scannerReady &&
+            webcamTexture != null &&
+            webcamTexture.isPlaying
+        )
         {
             if (!showingMessage && webcamTexture.didUpdateThisFrame)
             {
@@ -216,7 +248,9 @@ public class QRScanner : MonoBehaviour
                 }
                 catch (System.Exception exception)
                 {
-                    Debug.LogWarning("Scanner error: " + exception.Message);
+                    Debug.LogWarning(
+                        "Scanner error: " + exception.Message
+                    );
                 }
             }
 
@@ -240,10 +274,12 @@ public class QRScanner : MonoBehaviour
 
         if (result.BarcodeFormat != BarcodeFormat.QR_CODE)
         {
-            StartCoroutine(ShowTemporaryMessage(
-                "Wrong code type.\nPlease scan a QR code.",
-                2f
-            ));
+            StartCoroutine(
+                ShowTemporaryMessage(
+                    "Wrong code type.\nPlease scan a QR code.",
+                    2f
+                )
+            );
 
             return;
         }
@@ -255,7 +291,10 @@ public class QRScanner : MonoBehaviour
     {
         if (string.IsNullOrEmpty(qrText))
         {
-            StartCoroutine(ShowTemporaryMessage("Invalid QR code.", 2f));
+            StartCoroutine(
+                ShowTemporaryMessage("Invalid QR code.", 2f)
+            );
+
             return;
         }
 
@@ -265,10 +304,12 @@ public class QRScanner : MonoBehaviour
 
             if (PlayerPrefs.GetInt(scanKey, 0) == 1)
             {
-                StartCoroutine(ShowTemporaryMessage(
-                    "This QR code was already scanned.",
-                    2f
-                ));
+                StartCoroutine(
+                    ShowTemporaryMessage(
+                        "This QR code was already scanned.",
+                        2f
+                    )
+                );
 
                 return;
             }
@@ -289,10 +330,12 @@ public class QRScanner : MonoBehaviour
 
         CheckAnimalUnlock();
 
-        StartCoroutine(ShowTemporaryMessage(
-            "QR scanned!\n+" + rewardCoins + " coins",
-            2f
-        ));
+        StartCoroutine(
+            ShowTemporaryMessage(
+                "QR scanned!\n+" + rewardCoins + " coins",
+                2f
+            )
+        );
     }
 
     private void CheckAnimalUnlock()
@@ -308,7 +351,10 @@ public class QRScanner : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowTemporaryMessage(string message, float seconds)
+    private IEnumerator ShowTemporaryMessage(
+        string message,
+        float seconds
+    )
     {
         ShowMessage(message);
 
@@ -324,10 +370,75 @@ public class QRScanner : MonoBehaviour
 
     private void ShowMessage(string message)
     {
-        if (scannedCodeText != null)
+        if (scannedCodeText == null)
         {
-            scannedCodeText.text = message;
+            return;
         }
+
+        bool isIdleMessage =
+            message == "Scan a QR code" ||
+            message == "Starting camera...";
+
+        ApplyMessageStyle(isIdleMessage);
+
+        scannedCodeText.text = message;
+    }
+
+    private void ApplyMessageStyle(bool isIdleMessage)
+    {
+        if (scannedCodeText == null)
+        {
+            return;
+        }
+
+        scannedCodeText.enableAutoSizing = false;
+        scannedCodeText.rectTransform.localScale = Vector3.one;
+
+        if (isIdleMessage)
+        {
+            scannedCodeText.fontSize = 110f;
+            scannedCodeText.enableWordWrapping = false;
+
+            scannedCodeText.rectTransform.sizeDelta =
+                new Vector2(1080f, 190f);
+        }
+        else
+        {
+            scannedCodeText.fontSize = 78f;
+            scannedCodeText.enableWordWrapping = true;
+
+            scannedCodeText.rectTransform.sizeDelta =
+                new Vector2(1080f, 260f);
+        }
+
+        scannedCodeText.overflowMode = TextOverflowModes.Overflow;
+        scannedCodeText.margin = Vector4.zero;
+        scannedCodeText.alignment = TextAlignmentOptions.Center;
+    }
+
+    private void ConfigureScannerMessageBase()
+    {
+        if (scannedCodeText == null)
+        {
+            return;
+        }
+
+        RectTransform messageRect = scannedCodeText.rectTransform;
+
+        messageRect.anchorMin = new Vector2(0.5f, 0.5f);
+        messageRect.anchorMax = new Vector2(0.5f, 0.5f);
+        messageRect.pivot = new Vector2(0.5f, 0.5f);
+
+        // Position stays exactly the same.
+        messageRect.anchoredPosition = messagePosition;
+        messageRect.sizeDelta = new Vector2(1080f, 190f);
+
+        scannedCodeText.enableAutoSizing = false;
+        scannedCodeText.alignment = TextAlignmentOptions.Center;
+        scannedCodeText.margin = Vector4.zero;
+        scannedCodeText.color = Color.white;
+
+        ApplyMessageStyle(true);
     }
 
     private string SelectCorrectCamera()
