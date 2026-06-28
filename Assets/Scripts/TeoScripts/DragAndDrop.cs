@@ -13,8 +13,15 @@ public class DragAndDrop : MonoBehaviour
         mainCamera = Camera.main;
     }
 
+   
+
     void OnMouseDown()
     {
+        if (LevelManager.instance != null && LevelManager.instance.isGameOver)
+        {
+            return;
+        }
+
         // Calculate how far away the object is from the camera on click to lock its track
         zDepth = mainCamera.WorldToScreenPoint(transform.position).z;
 
@@ -27,6 +34,11 @@ public class DragAndDrop : MonoBehaviour
 
     void OnMouseDrag()
     {
+         if (LevelManager.instance != null && LevelManager.instance.isGameOver)
+        {
+            return;
+        }
+
         // 1. Get the current mouse position in pixels
         Vector3 mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, zDepth);
         
@@ -39,6 +51,11 @@ public class DragAndDrop : MonoBehaviour
 
     void OnMouseUp()
     {
+         if (LevelManager.instance != null && LevelManager.instance.isGameOver)
+        {
+            return;
+        }
+
         // Let go and turn gravity back on so it falls naturally
         rb.useGravity = true;
         rb.constraints = RigidbodyConstraints.None;
