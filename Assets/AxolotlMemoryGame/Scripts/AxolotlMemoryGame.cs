@@ -176,7 +176,8 @@ public class AxolotlMemoryGame : MonoBehaviour
         scaler.uiScaleMode =
             CanvasScaler.ScaleMode.ScaleWithScreenSize;
 
-        scaler.referenceResolution = new Vector2(1080f, 1920f);
+        scaler.referenceResolution =
+            new Vector2(1080f, 1920f);
 
         scaler.screenMatchMode =
             CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
@@ -331,7 +332,10 @@ public class AxolotlMemoryGame : MonoBehaviour
         resultRect.anchorMin = new Vector2(0.5f, 0f);
         resultRect.anchorMax = new Vector2(0.5f, 0f);
         resultRect.pivot = new Vector2(0.5f, 0f);
-        resultRect.anchoredPosition = new Vector2(0f, 400f);
+
+        // Win tekstut e pod kartite.
+        resultRect.anchoredPosition = new Vector2(0f, 70f);
+
         resultRect.sizeDelta = new Vector2(1000f, 210f);
     }
 
@@ -409,10 +413,13 @@ public class AxolotlMemoryGame : MonoBehaviour
         Button button = cardObject.GetComponent<Button>();
 
         ColorBlock colors = button.colors;
+
         colors.highlightedColor =
             new Color(0.95f, 0.95f, 1f, 1f);
+
         colors.pressedColor =
             new Color(0.85f, 0.90f, 1f, 1f);
+
         button.colors = colors;
 
         CardView card = new CardView
@@ -636,6 +643,8 @@ public class AxolotlMemoryGame : MonoBehaviour
         uiText.verticalOverflow =
             VerticalWrapMode.Overflow;
 
+        uiText.raycastTarget = false;
+
         Shadow shadow = obj.AddComponent<Shadow>();
         shadow.effectColor = shadowColor;
         shadow.effectDistance = shadowOffset;
@@ -672,11 +681,15 @@ public class AxolotlMemoryGame : MonoBehaviour
 
         ColorBlock buttonColors = button.colors;
         buttonColors.normalColor = Color.white;
+
         buttonColors.highlightedColor =
             new Color(0.95f, 0.95f, 1f, 1f);
+
         buttonColors.pressedColor =
             new Color(0.80f, 0.85f, 1f, 1f);
+
         buttonColors.selectedColor = Color.white;
+
         buttonColors.disabledColor =
             new Color(0.6f, 0.6f, 0.6f, 0.7f);
 
@@ -728,7 +741,10 @@ public class AxolotlMemoryGame : MonoBehaviour
         {
             T temp = list[i];
 
-            int randomIndex = Random.Range(i, list.Count);
+            int randomIndex = Random.Range(
+                i,
+                list.Count
+            );
 
             list[i] = list[randomIndex];
             list[randomIndex] = temp;

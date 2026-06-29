@@ -19,7 +19,7 @@ public class DraggableFood : MonoBehaviour
 
     private PetMouth petMouth;
 
-    void Start()
+    private void Start()
     {
         mainCamera = Camera.main;
 
@@ -28,11 +28,18 @@ public class DraggableFood : MonoBehaviour
 
         petMouth = FindObjectOfType<PetMouth>();
 
-        Debug.Log("DraggableFood started: " + gameObject.name + " / FoodName: " + foodName);
+        Debug.Log(
+            "DraggableFood started: " +
+            gameObject.name +
+            " / FoodName: " +
+            foodName
+        );
 
         if (mainCamera == null)
         {
-            Debug.LogError("No Main Camera found. Make sure your camera has the MainCamera tag.");
+            Debug.LogError(
+                "No Main Camera found. Make sure your camera has the MainCamera tag."
+            );
         }
 
         if (petMouth == null)
@@ -46,22 +53,33 @@ public class DraggableFood : MonoBehaviour
 
         if (PetNeedsManager.Instance == null)
         {
-            Debug.LogWarning("PetNeedsManager was not found. Hunger will not increase.");
+            Debug.LogWarning(
+                "PetNeedsManager was not found. Hunger will not increase."
+            );
         }
     }
 
-    void OnMouseDown()
+    private void OnMouseDown()
     {
         if (mainCamera == null)
         {
-            Debug.LogError("Cannot drag because Main Camera is missing.");
+            Debug.LogError(
+                "Cannot drag because Main Camera is missing."
+            );
+
             return;
         }
+
+        // Vednaga blokira swipe za staq.
+        SwipeSceneChanger.BlockSwipeForFood(2f);
 
         startPosition = transform.position;
         startRotation = transform.rotation;
 
-        dragPlane = new Plane(-mainCamera.transform.forward, transform.position);
+        dragPlane = new Plane(
+            -mainCamera.transform.forward,
+            transform.position
+        );
 
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -76,12 +94,15 @@ public class DraggableFood : MonoBehaviour
         Debug.Log("Clicked food: " + foodName);
     }
 
-    void OnMouseDrag()
+    private void OnMouseDrag()
     {
         if (!isDragging || mainCamera == null)
         {
             return;
         }
+
+        // Dokato vlachish, produljava da blokira swipe.
+        SwipeSceneChanger.BlockSwipeForFood(2f);
 
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -92,20 +113,30 @@ public class DraggableFood : MonoBehaviour
         }
     }
 
-    void OnMouseUp()
+    private void OnMouseUp()
     {
+        // Ostava blokiran malko sled puskaneto,
+        // za da ne se izpulni swipe v sushtiq frame.
+        SwipeSceneChanger.BlockSwipeForFood(0.5f);
+
         isDragging = false;
 
         Debug.Log("Released food: " + foodName);
 
         if (IsCloseToMouth())
         {
-            Debug.Log("Food is close enough to PetMouth. Feeding...");
+            Debug.Log(
+                "Food is close enough to PetMouth. Feeding..."
+            );
+
             FeedPet();
         }
         else
         {
-            Debug.Log("Food is NOT close enough to PetMouth. Returning.");
+            Debug.Log(
+                "Food is NOT close enough to PetMouth. Returning."
+            );
+
             ReturnToStartPosition();
         }
     }
@@ -119,11 +150,17 @@ public class DraggableFood : MonoBehaviour
 
         if (petMouth == null)
         {
-            Debug.LogWarning("Cannot feed because PetMouth is missing.");
+            Debug.LogWarning(
+                "Cannot feed because PetMouth is missing."
+            );
+
             return false;
         }
 
-        float distance = Vector3.Distance(transform.position, petMouth.transform.position);
+        float distance = Vector3.Distance(
+            transform.position,
+            petMouth.transform.position
+        );
 
         Debug.Log("Distance to PetMouth: " + distance);
 
@@ -134,11 +171,16 @@ public class DraggableFood : MonoBehaviour
     {
         int amount = PlayerPrefs.GetInt(foodName, 0);
 
-        Debug.Log(foodName + " amount before feeding: " + amount);
+        Debug.Log(
+            foodName +
+            " amount before feeding: " +
+            amount
+        );
 
         if (amount <= 0)
         {
             Debug.LogWarning("No " + foodName + " left.");
+
             ReturnToStartPosition();
             return;
         }
@@ -148,45 +190,67 @@ public class DraggableFood : MonoBehaviour
         PlayerPrefs.SetInt(foodName, amount);
         PlayerPrefs.Save();
 
-        Debug.Log(foodName + " amount after feeding: " + amount);
+        Debug.Log(
+            foodName +
+            " amount after feeding: " +
+            amount
+        );
 
         if (PetNeedsManager.Instance != null)
         {
             PetNeedsManager.Instance.AddHunger(hungerAmount);
-            Debug.Log("Hunger increased by " + hungerAmount);
+
+            Debug.Log(
+                "Hunger increased by " +
+                hungerAmount
+            );
         }
         else
         {
-            Debug.LogWarning("PetNeedsManager was not found. Hunger was not increased.");
+            Debug.LogWarning(
+                "PetNeedsManager was not found. Hunger was not increased."
+            );
         }
 
-        FridgeFoodVisibility fridgeFoodVisibility = FindObjectOfType<FridgeFoodVisibility>();
+        FridgeFoodVisibility fridgeFoodVisibility =
+            FindObjectOfType<FridgeFoodVisibility>();
 
         if (fridgeFoodVisibility != null)
         {
             fridgeFoodVisibility.UpdateFridgeFood();
+
             Debug.Log("FridgeFoodVisibility updated.");
         }
         else
         {
-            Debug.LogWarning("FridgeFoodVisibility not found.");
+            Debug.LogWarning(
+                "FridgeFoodVisibility not found."
+            );
         }
 
-        FridgeInventoryUI fridgeInventoryUI = FindObjectOfType<FridgeInventoryUI>();
+        FridgeInventoryUI fridgeInventoryUI =
+            FindObjectOfType<FridgeInventoryUI>();
 
         if (fridgeInventoryUI != null)
         {
             fridgeInventoryUI.UpdateInventoryUI();
+
             Debug.Log("FridgeInventoryUI updated.");
         }
         else
         {
-            Debug.LogWarning("FridgeInventoryUI not found.");
+            Debug.LogWarning(
+                "FridgeInventoryUI not found."
+            );
         }
 
         if (amount <= 0)
         {
-            Debug.Log(foodName + " is now 0, hiding object.");
+            Debug.Log(
+                foodName +
+                " is now 0, hiding object."
+            );
+
             gameObject.SetActive(false);
         }
         else
@@ -202,6 +266,10 @@ public class DraggableFood : MonoBehaviour
         transform.position = startPosition;
         transform.rotation = startRotation;
 
-        Debug.Log("Returned " + foodName + " to fridge position.");
+        Debug.Log(
+            "Returned " +
+            foodName +
+            " to fridge position."
+        );
     }
 }
