@@ -20,6 +20,25 @@ public class SwipeSceneChanger : MonoBehaviour
     private int currentSceneIndex = 0;
     private bool isLoadingScene = false;
 
+    // Hrana blokira swipe-a za malko vreme.
+    // Tova raboti dori ako Unity proveri swipe-a predi OnMouseUp.
+    private static float blockSwipeUntilTime;
+
+    public static void BlockSwipeForFood(float seconds = 0.6f)
+    {
+        float newBlockTime = Time.unscaledTime + seconds;
+
+        if (newBlockTime > blockSwipeUntilTime)
+        {
+            blockSwipeUntilTime = newBlockTime;
+        }
+    }
+
+    private static bool IsSwipeBlocked()
+    {
+        return Time.unscaledTime < blockSwipeUntilTime;
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -30,13 +49,13 @@ public class SwipeSceneChanger : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    void Start()
+    private void Start()
     {
         FindCurrentSceneIndex();
         isLoadingScene = false;
     }
 
-    void Update()
+    private void Update()
     {
         DetectTouchSwipe();
         DetectMouseSwipeForUnityEditor();
@@ -45,13 +64,15 @@ public class SwipeSceneChanger : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         isLoadingScene = false;
+        blockSwipeUntilTime = 0f;
+
         FindCurrentSceneIndex();
 
         Debug.Log("Scene loaded: " + scene.name);
         Debug.Log("Current scene index: " + currentSceneIndex);
     }
 
-    void FindCurrentSceneIndex()
+    private void FindCurrentSceneIndex()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
 
@@ -60,18 +81,30 @@ public class SwipeSceneChanger : MonoBehaviour
             if (sceneNames[i] == currentSceneName)
             {
                 currentSceneIndex = i;
-                Debug.Log("Current scene found in array: " + currentSceneName + " at index " + currentSceneIndex);
+
+                Debug.Log(
+                    "Current scene found in array: " +
+                    currentSceneName +
+                    " at index " +
+                    currentSceneIndex
+                );
+
                 return;
             }
         }
 
-        Debug.LogWarning("Current scene name was not found in Scene Names array: " + currentSceneName);
+        Debug.LogWarning(
+            "Current scene name was not found in Scene Names array: " +
+            currentSceneName
+        );
     }
 
-    void DetectTouchSwipe()
+    private void DetectTouchSwipe()
     {
         if (Input.touchCount == 0 || isLoadingScene)
+        {
             return;
+        }
 
         Touch touch = Input.GetTouch(0);
 
@@ -80,18 +113,30 @@ public class SwipeSceneChanger : MonoBehaviour
             startTouchPosition = touch.position;
         }
 
-        if (touch.phase == TouchPhase.Ended)
+        if (
+            touch.phase == TouchPhase.Ended ||
+            touch.phase == TouchPhase.Canceled
+        )
         {
             endTouchPosition = touch.position;
+
+            if (IsSwipeBlocked())
+            {
+                Debug.Log("Room swipe blocked because food was dragged.");
+                return;
+            }
+
             CheckSwipe(startTouchPosition, endTouchPosition);
         }
     }
 
-    void DetectMouseSwipeForUnityEditor()
+    private void DetectMouseSwipeForUnityEditor()
     {
 #if UNITY_EDITOR
         if (isLoadingScene)
+        {
             return;
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -101,23 +146,50 @@ public class SwipeSceneChanger : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             endTouchPosition = Input.mousePosition;
+
+            if (IsSwipeBlocked())
+            {
+                Debug.Log("Room swipe blocked because food was dragged.");
+                return;
+            }
+
             CheckSwipe(startTouchPosition, endTouchPosition);
         }
 #endif
     }
 
-    void CheckSwipe(Vector2 startPosition, Vector2 endPosition)
+    private void CheckSwipe(
+        Vector2 startPosition,
+        Vector2 endPosition
+    )
     {
-        float horizontalSwipe = endPosition.x - startPosition.x;
-        float verticalSwipe = Mathf.Abs(endPosition.y - startPosition.y);
+        if (IsSwipeBlocked())
+        {
+            return;
+        }
 
-        Debug.Log("Swipe checked. Horizontal: " + horizontalSwipe + " Vertical: " + verticalSwipe);
+        float horizontalSwipe = endPosition.x - startPosition.x;
+
+        float verticalSwipe = Mathf.Abs(
+            endPosition.y - startPosition.y
+        );
+
+        Debug.Log(
+            "Swipe checked. Horizontal: " +
+            horizontalSwipe +
+            " Vertical: " +
+            verticalSwipe
+        );
 
         if (Mathf.Abs(horizontalSwipe) < minSwipeDistance)
+        {
             return;
+        }
 
         if (verticalSwipe > maxVerticalSwipe)
+        {
             return;
+        }
 
         if (horizontalSwipe < 0)
         {
@@ -132,7 +204,9 @@ public class SwipeSceneChanger : MonoBehaviour
     public void GoToNextScene()
     {
         if (sceneNames == null || sceneNames.Length == 0)
+        {
             return;
+        }
 
         if (currentSceneIndex < sceneNames.Length - 1)
         {
@@ -148,7 +222,9 @@ public class SwipeSceneChanger : MonoBehaviour
     public void GoToPreviousScene()
     {
         if (sceneNames == null || sceneNames.Length == 0)
+        {
             return;
+        }
 
         if (currentSceneIndex > 0)
         {
@@ -161,16 +237,25 @@ public class SwipeSceneChanger : MonoBehaviour
         }
     }
 
-    void LoadSceneByIndex()
+    private void LoadSceneByIndex()
     {
-        if (currentSceneIndex < 0 || currentSceneIndex >= sceneNames.Length)
+        if (
+            currentSceneIndex < 0 ||
+            currentSceneIndex >= sceneNames.Length
+        )
+        {
             return;
+        }
 
         string sceneToLoad = sceneNames[currentSceneIndex];
 
         if (string.IsNullOrWhiteSpace(sceneToLoad))
         {
-            Debug.LogWarning("Scene name is empty at index: " + currentSceneIndex);
+            Debug.LogWarning(
+                "Scene name is empty at index: " +
+                currentSceneIndex
+            );
+
             return;
         }
 

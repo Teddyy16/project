@@ -29,7 +29,6 @@ public class AppleGameManager : MonoBehaviour
     public TextMeshProUGUI appleCounterText;
     public TextMeshProUGUI gameOverText;
     public TextMeshProUGUI unlockText;
-    public Button backButton;
 
     [Header("Text Sizes")]
     public float uiFontSize = 260f;
@@ -37,7 +36,6 @@ public class AppleGameManager : MonoBehaviour
 
     public float messageFontSize = 170f;
     public float unlockFontSize = 88f;
-    public float buttonFontSize = 60f;
 
     [Header("3D Text Effect")]
     public Color textFaceColor = Color.white;
@@ -85,12 +83,6 @@ public class AppleGameManager : MonoBehaviour
         if (unlockText != null)
         {
             unlockText.gameObject.SetActive(false);
-        }
-
-        if (backButton != null)
-        {
-            backButton.onClick.RemoveAllListeners();
-            backButton.onClick.AddListener(GoBackToPlayroom);
         }
 
         UpdateTimerUI();
@@ -258,18 +250,6 @@ public class AppleGameManager : MonoBehaviour
             unlockFontSize,
             1f
         );
-
-        if (backButton != null)
-        {
-            TextMeshProUGUI buttonText =
-                backButton.GetComponentInChildren<TextMeshProUGUI>();
-
-            ApplyAxolotl3DStyle(
-                buttonText,
-                buttonFontSize,
-                1f
-            );
-        }
     }
 
     private void ApplyAxolotl3DStyle(
@@ -400,19 +380,6 @@ public class AppleGameManager : MonoBehaviour
             rect.anchoredPosition = new Vector2(0f, -30f);
             rect.sizeDelta = new Vector2(1050f, 190f);
         }
-
-        if (backButton != null)
-        {
-            RectTransform rect =
-                backButton.GetComponent<RectTransform>();
-
-            rect.anchorMin = new Vector2(1f, 1f);
-            rect.anchorMax = new Vector2(1f, 1f);
-            rect.pivot = new Vector2(1f, 1f);
-
-            rect.anchoredPosition = new Vector2(-45f, -45f);
-            rect.sizeDelta = new Vector2(300f, 115f);
-        }
     }
 
     private void CreateUIIfMissing()
@@ -484,16 +451,6 @@ public class AppleGameManager : MonoBehaviour
                 1f
             );
         }
-
-        if (backButton == null)
-        {
-            backButton = CreateButton(
-                "BackButton",
-                canvas.transform,
-                "Back",
-                buttonFontSize
-            );
-        }
     }
 
     private TextMeshProUGUI CreateText(
@@ -522,41 +479,6 @@ public class AppleGameManager : MonoBehaviour
         );
 
         return uiText;
-    }
-
-    private Button CreateButton(
-        string objectName,
-        Transform parent,
-        string buttonTextValue,
-        float textSize
-    )
-    {
-        GameObject buttonObject =
-            new GameObject(objectName, typeof(RectTransform));
-
-        buttonObject.transform.SetParent(parent, false);
-
-        Image image = buttonObject.AddComponent<Image>();
-        image.color = new Color(0.95f, 0.35f, 0.65f, 1f);
-
-        Button button = buttonObject.AddComponent<Button>();
-
-        TextMeshProUGUI buttonText = CreateText(
-            "Text",
-            buttonObject.transform,
-            buttonTextValue,
-            textSize,
-            1f
-        );
-
-        RectTransform textRect = buttonText.rectTransform;
-
-        textRect.anchorMin = Vector2.zero;
-        textRect.anchorMax = Vector2.one;
-        textRect.offsetMin = Vector2.zero;
-        textRect.offsetMax = Vector2.zero;
-
-        return button;
     }
 
     public void RestartGame()

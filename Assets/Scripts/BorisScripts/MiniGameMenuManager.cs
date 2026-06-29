@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -21,11 +23,31 @@ public class MiniGameMenuManager : MonoBehaviour
     public string miniGame3SceneName = "FridgeStackingGame";
 
     private bool isLoading;
+    private bool hasStarted;
+
+    private void Awake()
+    {
+        HideMenuImmediately();
+    }
 
     private void Start()
     {
-        SetupButtonClickAreas();
+        SetupMenuButtons();
+        HideMenuImmediately();
 
+        hasStarted = true;
+    }
+
+    private void OnEnable()
+    {
+        if (!hasStarted)
+        {
+            HideMenuImmediately();
+        }
+    }
+
+    private void HideMenuImmediately()
+    {
         if (miniGameMenuPanel != null)
         {
             miniGameMenuPanel.SetActive(false);
@@ -35,41 +57,107 @@ public class MiniGameMenuManager : MonoBehaviour
         {
             playButton.SetActive(true);
         }
+
+        if (messageText != null)
+        {
+            messageText.text = "";
+        }
     }
 
-    private void SetupButtonClickAreas()
+    private void SetupMenuButtons()
     {
         if (miniGameMenuPanel == null)
         {
+            Debug.LogError("MiniGameMenuPanel is not assigned.");
             return;
         }
 
-        SetTransparentPartsNotClickable("MemoryCardGameButton");
-        SetTransparentPartsNotClickable("Game2Button");
-        SetTransparentPartsNotClickable("Game3Button");
-        SetTransparentPartsNotClickable("CloseButton");
+        SetupButton(
+            "MemoryCardGameButton",
+            OpenMemoryGame,
+            new Vector2(0.78f, 0.30f)
+        );
+
+        SetupButton(
+            "Game2Button",
+            OpenMiniGame2,
+            new Vector2(0.78f, 0.30f)
+        );
+
+        SetupButton(
+            "Game3Button",
+            OpenMiniGame3,
+            new Vector2(0.78f, 0.30f)
+        );
+
+        SetupButton(
+            "CloseButton",
+            CloseMenu,
+            new Vector2(0.65f, 0.30f)
+        );
     }
 
-    private void SetTransparentPartsNotClickable(string buttonObjectName)
+    private void SetupButton(
+        string buttonObjectName,
+        UnityAction action,
+        Vector2 visibleClickArea
+    )
     {
-        Transform buttonTransform = miniGameMenuPanel.transform.Find(buttonObjectName);
+        Transform buttonTransform =
+            miniGameMenuPanel.transform.Find(buttonObjectName);
 
         if (buttonTransform == null)
         {
-            Debug.LogWarning("Could not find menu button: " + buttonObjectName);
+            Debug.LogWarning(
+                "Could not find menu button: " + buttonObjectName
+            );
             return;
         }
 
-        Image buttonImage = buttonTransform.GetComponent<Image>();
+        Button button = buttonTransform.GetComponent<Button>();
 
-        if (buttonImage == null)
+        if (button == null)
         {
-            Debug.LogWarning("No Image component on: " + buttonObjectName);
+            button = buttonTransform.GetComponentInChildren<Button>();
+        }
+
+        if (button == null)
+        {
+            Debug.LogWarning(
+                "No Button component found on: " + buttonObjectName
+            );
             return;
         }
 
-        buttonImage.raycastTarget = true;
-        buttonImage.alphaHitTestMinimumThreshold = 0.1f;
+        Image buttonImage = button.GetComponent<Image>();
+
+        if (buttonImage != null)
+        {
+            buttonImage.raycastTarget = true;
+        }
+
+        // Mahame greshni stari OnClick vruzki.
+        button.onClick.RemoveAllListeners();
+
+        // Slaga pravilnata igra za konkretniq buton.
+        button.onClick.AddListener(action);
+
+        // Butonut ostava 800 x 800 vizualno,
+        // no samo sredata mu moje da prihvashta klik.
+        VisibleButtonRaycastArea clickArea =
+            button.GetComponent<VisibleButtonRaycastArea>();
+
+        if (clickArea == null)
+        {
+            clickArea = button.gameObject.AddComponent<
+                VisibleButtonRaycastArea
+            >();
+        }
+
+        clickArea.SetClickArea(
+            visibleClickArea.x,
+            visibleClickArea.y
+        );
     }
 
     public void OpenMenu()
@@ -81,7 +169,9 @@ public class MiniGameMenuManager : MonoBehaviour
 
         if (miniGameMenuPanel == null)
         {
-            Debug.LogError("MiniGameMenuPanel is NOT assigned in Inspector!");
+            Debug.LogError(
+                "MiniGameMenuPanel is NOT assigned in Inspector!"
+            );
             return;
         }
 
@@ -106,15 +196,7 @@ public class MiniGameMenuManager : MonoBehaviour
             return;
         }
 
-        if (miniGameMenuPanel != null)
-        {
-            miniGameMenuPanel.SetActive(false);
-        }
-
-        if (playButton != null)
-        {
-            playButton.SetActive(true);
-        }
+        HideMenuImmediately();
     }
 
     public void OpenMemoryGame()
@@ -169,11 +251,76 @@ public class MiniGameMenuManager : MonoBehaviour
             messageText.text = "Loading...";
         }
 
-        AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(sceneName);
+        AsyncOperation loadingOperation =
+            SceneManager.LoadSceneAsync(sceneName);
 
         while (!loadingOperation.isDone)
         {
             yield return null;
         }
+    }
+}
+
+public class VisibleButtonRaycastArea :
+    MonoBehaviour,
+    ICanvasRaycastFilter
+{
+    private RectTransform rectTransform;
+
+    private float widthPercent = 0.78f;
+    private float heightPercent = 0.30f;
+
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+    }
+
+    public void SetClickArea(
+        float newWidthPercent,
+        float newHeightPercent
+    )
+    {
+        widthPercent = Mathf.Clamp01(newWidthPercent);
+        heightPercent = Mathf.Clamp01(newHeightPercent);
+    }
+
+    public bool IsRaycastLocationValid(
+        Vector2 screenPoint,
+        Camera eventCamera
+    )
+    {
+        if (rectTransform == null)
+        {
+            rectTransform = GetComponent<RectTransform>();
+        }
+
+        Vector2 localPoint;
+
+        bool isInsideRect =
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                rectTransform,
+                screenPoint,
+                eventCamera,
+                out localPoint
+            );
+
+        if (!isInsideRect)
+        {
+            return false;
+        }
+
+        Rect fullRect = rectTransform.rect;
+
+        float clickWidth = fullRect.width * widthPercent;
+        float clickHeight = fullRect.height * heightPercent;
+
+        Rect visibleButtonRect = new Rect(
+            -clickWidth / 2f,
+            -clickHeight / 2f,
+            clickWidth,
+            clickHeight
+        );
+
+        return visibleButtonRect.Contains(localPoint);
     }
 }
